@@ -8,6 +8,7 @@ import interactions
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
+GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
 intents = discord.Intents.default()
 intents.messages = True
@@ -45,7 +46,7 @@ async def on_member_join(member):
 @bot.command(
     name="test",
     description="This is the first command I made!",
-    scope=guild.id,
+    scope=GUILD_ID,
 )
 async def test(ctx: interactions.CommandContext):
     await ctx.send("Hi there!")
