@@ -21,7 +21,8 @@ async def on_message(message):
 
     if 'happy birthday' in message.content.lower():
         await message.channel.send('Happy Birthday! 🎈🎉')
-    elif 'MEGABOT' in message.content.lower():
+
+    if 'megabot' in message.content.lower():
         await message.channel.send('Hello there! 👋')
 
 
