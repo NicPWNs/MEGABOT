@@ -1,7 +1,6 @@
 import os
 
 import discord
-from discord import app_commands
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,12 +8,7 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
-intents = discord.Intents.default()
-intents.messages = True
-intents.members = True
-client = discord.Client(intents=intents)
-
-tree = app_commands.CommandTree(client)
+client = discord.Client(intents=discord.Intents.all())
 guild = discord.utils.get(client.guilds, name=GUILD)
 
 
@@ -33,6 +27,8 @@ async def on_message(message):
 
 @client.event
 async def on_member_join(member):
+
+    guild = discord.utils.get(client.guilds, name=GUILD)
 
     role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
     await member.add_roles(role)
