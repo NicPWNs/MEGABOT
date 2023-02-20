@@ -22,7 +22,6 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: |
-            export PATH="/usr/.local/bin:$PATH"
             sudo yum update
             sudo yum install python3 -y
             sudo yum install python3-pip -y
@@ -30,5 +29,10 @@ jobs:
             sudo yum install python3-devel -y
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
+            cd /home/ec2-user
             python3 -m pip install -r requirements.txt
+            rm .env
+            touch .env
+            echo ${{ secrets.DISCORD_TOKEN }} >> .env
+            echo ${{ secrets.DISCORD_GUILD }} >> .env
             python3 /home/ec2-user/main.py
