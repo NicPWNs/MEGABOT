@@ -36,6 +36,6 @@ async def on_member_join(member):
 
     channel = discord.utils.get(guild.channels, name="main")
 
-    await channel.send(f"I'm watching you @{member.name}#{member.discriminator}")
+    await channel.send(f"I'm watching you <@{member.id}>")
 
 client.run(TOKEN)
