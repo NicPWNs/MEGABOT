@@ -13,6 +13,7 @@ intents = discord.Intents.default()
 intents.messages = True
 intents.members = True
 client = discord.Client(intents=intents)
+
 tree = app_commands.CommandTree(client)
 guild = discord.utils.get(client.guilds, name=GUILD)
 
