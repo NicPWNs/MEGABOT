@@ -14,17 +14,6 @@ client = discord.Client(intents=intents)
 
 
 @client.event
-async def on_ready():
-
-    guild = discord.utils.get(client.guilds, name=GUILD)
-
-    print(
-        f'{client.user} is connected to:\n'
-        f'{guild.name}(id: {guild.id})\n'
-    )
-
-
-@client.event
 async def on_message(message):
 
     if message.author == client.user:
