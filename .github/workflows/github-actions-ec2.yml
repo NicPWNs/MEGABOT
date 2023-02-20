@@ -23,6 +23,7 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: |
             sudo yum update
+            sudo yum upgrade -y
             sudo yum install git -y
             sudo amazon-linux-extras install python3.8 -y
             sudo yum install libffi-devel -y
@@ -30,10 +31,10 @@ jobs:
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             cd /home/ec2-user
-            python -m pip install -r requirements.txt
+            python3 -m pip install -r requirements.txt
             rm .env
             touch .env
             echo ${{ secrets.DISCORD_TOKEN }} >> .env
             echo ${{ secrets.DISCORD_GUILD }} >> .env
             ps -ef | grep "main.py" | awk '{print $2}' | awk 'NR==1{print $1}' | xargs sudo kill
-            python /home/ec2-user/main.py
+            python3 /home/ec2-user/main.py
