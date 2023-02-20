@@ -34,4 +34,8 @@ async def on_member_join(member):
     role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
     await member.add_roles(role)
 
+    channel = discord.utils.get(guild.channels, name="main")
+
+    await channel.send(f"I'm watching you @{member.name}")
+
 client.run(TOKEN)
