@@ -16,7 +16,7 @@ tree = app_commands.CommandTree(client)
 guild = discord.utils.get(client.guilds, name=GUILD)
 
 
-@tree.command(name="test", description="My first application Command", guild=discord.Object(id=guild.id))
+@tree.command(name="test", description="My first application Command", guild=guild)
 async def first_command(interaction):
     await interaction.response.send_message("Test!")
 
