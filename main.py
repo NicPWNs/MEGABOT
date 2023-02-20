@@ -3,6 +3,7 @@ import os
 import discord
 from discord import app_commands
 from dotenv import load_dotenv
+import interactions
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -14,11 +15,7 @@ intents.members = True
 client = discord.Client(intents=intents)
 tree = app_commands.CommandTree(client)
 guild = discord.utils.get(client.guilds, name=GUILD)
-
-
-@tree.command(name="test", description="My first application Command", guild=guild)
-async def first_command(interaction):
-    await interaction.response.send_message("Test!")
+bot = interactions.Client(token=TOKEN)
 
 
 @client.event
@@ -37,8 +34,6 @@ async def on_message(message):
 @client.event
 async def on_member_join(member):
 
-    guild = discord.utils.get(client.guilds, name=GUILD)
-
     role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
     await member.add_roles(role)
 
@@ -47,9 +42,14 @@ async def on_member_join(member):
     await channel.send(f"I'm watching you <@{member.id}>")
 
 
-@client.event
-async def on_ready():
-    guild = discord.utils.get(client.guilds, name=GUILD)
-    await tree.sync(guild=guild)
+@bot.command(
+    name="test",
+    description="This is the first command I made!",
+    scope=guild.id,
+)
+async def test(ctx: interactions.CommandContext):
+    await ctx.send("Hi there!")
+
 
 client.run(TOKEN)
+bot.start()
