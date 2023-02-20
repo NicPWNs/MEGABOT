@@ -23,6 +23,7 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: |
             sudo yum update
+            sudo yum install git -y
             sudo yum install python3 -y
             sudo yum install python3-pip -y
             sudo yum install libffi-devel -y
