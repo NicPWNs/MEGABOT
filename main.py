@@ -24,7 +24,7 @@ async def on_message(message):
     if message.author == client.user:
         return
 
-    if 'happy birthday' in message.content.lower():
+    if 'birthday' in message.content.lower():
         await message.channel.send('Happy Birthday! 🎈🎉')
 
     if 'megabot' in message.content.lower():
