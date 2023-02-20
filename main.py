@@ -12,11 +12,11 @@ intents.message_content = True
 intents.members = True
 client = discord.Client(intents=intents)
 
-guild = discord.utils.get(client.guilds, name=GUILD)
-
 
 @client.event
 async def on_ready():
+
+    guild = discord.utils.get(client.guilds, name=GUILD)
 
     print(
         f'{client.user} is connected to:\n'
@@ -36,6 +36,8 @@ async def on_message(message):
 
 @client.event
 async def on_member_join(member):
+
+    guild = discord.utils.get(client.guilds, name=GUILD)
 
     role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
     await member.add_roles(role)
