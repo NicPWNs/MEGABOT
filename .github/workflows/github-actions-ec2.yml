@@ -22,7 +22,6 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: |
-            pwd
             sudo yum update
             sudo yum install python3 -y
             sudo yum install python3-pip -y
@@ -31,4 +30,4 @@ jobs:
             python3 -m pip install -U "discord.py[voice]"
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
-            python3 /opt/main.py
+            python3 .\home\ec2-users\main.py
