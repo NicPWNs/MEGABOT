@@ -28,6 +28,8 @@ async def on_message(message):
 @client.event
 async def on_member_join(member):
 
+    guild = discord.utils.get(client.guilds, name=GUILD)
+
     role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
     await member.add_roles(role)
 
