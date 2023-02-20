@@ -23,7 +23,7 @@ async def on_message(message):
         await message.channel.send('Happy Birthday! 🎈🎉')
 
     if 'MEGABOT' in message.content.lower():
-        await message.channel.send('Hello! 👋')
+        await message.channel.send('Hello there! 👋')
 
 
 @client.event
