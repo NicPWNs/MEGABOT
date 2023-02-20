@@ -26,7 +26,7 @@ jobs:
             sudo yum install python3 -y
             sudo yum install python3-pip -y
             sudo yum install libffi-devel -y
-            sudo yum install python-dev -y
+            sudo yum install python3-devel -y
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             python3 -m pip install -r requirements.txt
