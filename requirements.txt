@@ -1,3 +1,6 @@
-discord.py
+# Python3 Requirements
+# Use with 'pip install -r requirements.txt'
+# Or pip install -r .\requirements.txt
+# Or pip3 install -r .\requirements.txt
 discord.py[voice]
 python-dotenv
