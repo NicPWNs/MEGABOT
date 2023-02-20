@@ -25,11 +25,11 @@ jobs:
             whoami
             ls -al
             sudo yum update
-            sudo yum install python3
-            sudo yum install python3-pip
-            sudo yum install libffi-devel
-            sudo yum install python-dev
-            python3 -m pip install -U "discord.py[voice]"
+            sudo yum install python3 -y
+            sudo yum install python3-pip -y
+            sudo yum install libffi-devel -y
+            sudo yum install python-dev -y
+            python3 -m pip install -U "discord.py[voice]" -y
             ps -ef | grep "main.py" | awk '{print $2}' | xargs sudo kill
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
