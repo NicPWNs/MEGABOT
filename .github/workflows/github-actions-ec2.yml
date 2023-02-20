@@ -28,6 +28,7 @@ jobs:
             sudo yum install libffi-devel -y
             sudo yum install python-dev -y
             python3 -m pip install -U "discord.py[voice]"
+            sudo su
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             python3 /opt/main.py
