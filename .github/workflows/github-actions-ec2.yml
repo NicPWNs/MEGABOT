@@ -35,4 +35,4 @@ jobs:
             touch .env
             echo ${{ secrets.DISCORD_TOKEN }} >> .env
             echo ${{ secrets.DISCORD_GUILD }} >> .env
-            ps -ef | grep "main.py" | awk '{print $2}' | xargs sudo kill
+            python3 /home/ec2-user/main.py &
