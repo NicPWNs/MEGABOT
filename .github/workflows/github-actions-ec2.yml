@@ -27,7 +27,7 @@ jobs:
             sudo yum install python3-pip -y
             sudo yum install libffi-devel -y
             sudo yum install python-dev -y
-            python3 -m pip install -U "discord.py[voice]"
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
-            python3 .\home\ec2-users\main.py
+            python3 -m pip install -r requirements.txt
+            python3 .\\home\\ec2-user\\main.py
