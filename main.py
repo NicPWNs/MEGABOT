@@ -22,6 +22,9 @@ async def on_message(message):
     if 'happy birthday' in message.content.lower():
         await message.channel.send('Happy Birthday! 🎈🎉')
 
+    if 'MEGABOT' in message.content.lower():
+        await message.channel.send('Hello! 👋')
+
 
 @client.event
 async def on_member_join(member):
