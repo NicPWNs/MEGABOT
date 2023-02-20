@@ -31,4 +31,4 @@ jobs:
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             python3 -m pip install -r requirements.txt
-            python3 ./home/ec2-user/main.py
+            python3 /home/ec2-user/main.py
