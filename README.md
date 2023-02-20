@@ -4,3 +4,4 @@ Another Discord bot for learning and fun. Using discord.py to practice CI/CD wit
 ## 🤖 Commands
 
 ## 💡 To-Do
+- [ ] Add `/` application commands
