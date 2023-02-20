@@ -31,8 +31,7 @@ jobs:
             echo $RSYNC_STDOUT
             cd /home/ec2-user
             python3 -m pip install -r requirements.txt
-            rm .env
-            touch .env
+            cat .env | wc -l
             echo ${{ secrets.DISCORD_TOKEN }} >> .env
             echo ${{ secrets.DISCORD_GUILD }} >> .env
             python3 /home/ec2-user/main.py
