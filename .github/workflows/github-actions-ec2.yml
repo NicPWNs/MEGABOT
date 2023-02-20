@@ -30,7 +30,7 @@ jobs:
             sudo yum install libffi-devel -y
             sudo yum install python-dev -y
             python3 -m pip install -U "discord.py[voice]"
-            ps -ef | grep "main.py" | awk '{print $2}' | xargs sudo kill
+            ps -ef | grep "main.py" | awk '{print $2}' | xargs sudo kill 2>&1
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             python3 /opt/main.py
