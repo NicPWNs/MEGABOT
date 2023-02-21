@@ -1,6 +1,6 @@
 import os
-
 import discord
+from discord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -8,14 +8,15 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
-client = discord.Client(intents=discord.Intents.all())
-guild = discord.utils.get(client.guilds, name=GUILD)
+
+bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
+guild = discord.utils.get(bot.guilds, name=GUILD)
 
 
-@client.event
+@bot.event
 async def on_message(message):
 
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     if 'birthday' in message.content.lower():
@@ -25,10 +26,10 @@ async def on_message(message):
         await message.channel.send('Hello there! 👋')
 
 
-@client.event
+@bot.event
 async def on_member_join(member):
 
-    guild = discord.utils.get(client.guilds, name=GUILD)
+    guild = discord.utils.get(bot.guilds, name=GUILD)
 
     role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
     await member.add_roles(role)
@@ -38,4 +39,4 @@ async def on_member_join(member):
     await channel.send(f"I'm watching you <@{member.id}>")
 
 
-client.run(TOKEN)
+bot.run(TOKEN)
