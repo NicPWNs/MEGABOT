@@ -1,6 +1,6 @@
 import os
+
 import discord
-from discord.ext import commands
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -8,25 +8,14 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
-
-bot = commands.Bot(command_prefix='/', intents=discord.Intents.all())
-guild = discord.utils.get(bot.guilds, name=GUILD)
-
-
-@bot.event
-async def on_ready():
-    print(f"Logged in as {bot.user}")
+client = discord.Client(intents=discord.Intents.all())
+guild = discord.utils.get(client.guilds, name=GUILD)
 
 
-@bot.slash_command(name='hello', description='Test slash command', guild_ids=[GUILD_ID])
-async def hello(ctx: discord.Interaction):
-    await ctx.respond(f"Hello, {ctx.author.mention}!")
-
-
-@bot.event
+@client.event
 async def on_message(message):
 
-    if message.author == bot.user:
+    if message.author == client.user:
         return
 
     if 'birthday' in message.content.lower():
@@ -36,10 +25,10 @@ async def on_message(message):
         await message.channel.send('Hello there! 👋')
 
 
-@bot.event
+@client.event
 async def on_member_join(member):
 
-    guild = discord.utils.get(bot.guilds, name=GUILD)
+    guild = discord.utils.get(client.guilds, name=GUILD)
 
     role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
     await member.add_roles(role)
@@ -49,4 +38,4 @@ async def on_member_join(member):
     await channel.send(f"I'm watching you <@{member.id}>")
 
 
-bot.run(TOKEN)
+client.run(TOKEN)
