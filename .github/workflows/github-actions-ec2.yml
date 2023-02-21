@@ -22,7 +22,7 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: |
-            sudo yum update
+            sudo yum update -y
             sudo yum upgrade -y
             sudo yum install git -y
             sudo amazon-linux-extras install python3.8 -y
