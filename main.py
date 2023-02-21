@@ -18,7 +18,7 @@ async def on_ready():
     print(f"Logged in as {bot.user}")
 
 
-@bot.slash_command(name='hello', description='Test slash command')
+@bot.slash_command(name='hello', description='Test slash command', guild_ids=[GUILD_ID])
 async def hello(ctx: discord.Interaction):
     await ctx.respond(f"Hello, {ctx.author.mention}!")
 
