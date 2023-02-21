@@ -9,7 +9,7 @@ GUILD = os.getenv('DISCORD_GUILD')
 GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
 
-bot = commands.Bot(command_prefix='!', intents=discord.Intents.all())
+bot = commands.Bot(command_prefix='/', intents=discord.Intents.all())
 guild = discord.utils.get(bot.guilds, name=GUILD)
 
 
@@ -18,9 +18,9 @@ async def on_ready():
     print(f"Logged in as {bot.user}")
 
 
-@bot.slash_command(name='/hello', description='Test slash command')
+@bot.slash_command(name='hello', description='Test slash command')
 async def hello(ctx: discord.Interaction):
-    await ctx.respond('Hello, {0}!'.format(ctx.author.mention))
+    await ctx.respond(f"Hello, {ctx.author.mention}!")
 
 
 @bot.event
