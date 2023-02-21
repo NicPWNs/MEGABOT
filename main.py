@@ -14,6 +14,16 @@ guild = discord.utils.get(bot.guilds, name=GUILD)
 
 
 @bot.event
+async def on_ready():
+    print(f"Logged in as {bot.user}")
+
+
+@bot.slash_command(name='/hello', description='Test slash command')
+async def hello(ctx: discord.Interaction):
+    await ctx.respond('Hello, {0}!'.format(ctx.author.mention))
+
+
+@bot.event
 async def on_message(message):
 
     if message.author == bot.user:
