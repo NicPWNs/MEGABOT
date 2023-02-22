@@ -13,7 +13,7 @@ client = discord.Bot()
 
 
 # Application "Slash" Commands
-@client.slash_command()
+@client.slash_command(name="ping", guild_ids=[GUILD_ID])
 async def ping(ctx):
     await ctx.respond("Pong! 🏓")
 
