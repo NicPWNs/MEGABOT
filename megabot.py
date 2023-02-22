@@ -78,10 +78,13 @@ async def age(ctx, prompt):
         'Authorization': str(os.getenv('OPENAI_TOKEN')),
     }
 
-    response = requests.post("https://api.openai.com/v1/completions",
-                             json=params, headers=headers).json()
+    r = requests.post("https://api.openai.com/v1/completions",
+                      json=params, headers=headers).json()
 
-    await ctx.respond(f"{response}")
+    response = r["choices"][0]["text"]
+
+    await ctx.respond("*⏳ Loading...*")
+    await ctx.send_followup(f"{response}")
 
 
 @bot.listen
@@ -90,7 +93,7 @@ async def on_message(message):
     if 'birthday' in message.content.lower():
         await message.channel.send('Happy Birthday! 🎈🎉')
 
-    if 'megabot' in message.content.lower():
+    if 'megabot' or '1077260321833635941' in message.content.lower():
         await message.channel.send('Hello there! 👋')
 
 
