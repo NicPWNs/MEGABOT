@@ -18,6 +18,16 @@ async def ping(ctx):
     await ctx.respond("Pong! 🏓")
 
 
+@client.slash_command(name="age", guild_ids=[GUILD_ID])
+@option(
+    "name",
+    str,
+    description="Name to guess age of."
+)
+async def age(ctx, name):
+    await ctx.respond(f"{name}")
+
+
 @client.event
 async def on_message(message):
 
