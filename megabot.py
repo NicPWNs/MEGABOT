@@ -38,7 +38,7 @@ async def age(ctx, name):
     await ctx.respond(f"{response}")
 
 
-@bot.event
+@bot.listen
 async def on_message(message):
 
     if message.author == bot.user:
@@ -51,7 +51,7 @@ async def on_message(message):
         await message.channel.send('Hello there! 👋')
 
 
-@bot.event
+@bot.listen
 async def on_member_join(member):
 
     guild = discord.utils.get(bot.guilds, name=GUILD)
