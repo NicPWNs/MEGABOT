@@ -4,6 +4,7 @@ import discord
 from discord import option
 from dotenv import load_dotenv
 from slash_commands.ping import ping
+from slash_commands.age import age
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -25,16 +26,8 @@ async def call(ctx):
     input_type=str,
     required=True
 )
-async def age(ctx, name):
-    r = requests.get('https://api.agify.io/?name=' + name).json()
-    age = r["age"]
-
-    if age is None:
-        response = "Name not found!"
-    else:
-        response = f"I guess the age of \"{name}\" is {age}!"
-
-    await ctx.respond(content=f"{response}")
+async def call(ctx, name):
+    await age(ctx, name)
 
 
 @bot.slash_command(name="math", description="Evaluate provided math expression.", guild_ids=[GUILD_ID])
