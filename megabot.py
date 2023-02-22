@@ -22,7 +22,7 @@ async def ping(ctx):
 @option(
     name="name",
     description="Name to guess age of.",
-    input_type=string,
+    input_type="string",
     required=True
 )
 async def age(ctx, name):
@@ -41,7 +41,7 @@ async def age(ctx, name):
 @option(
     name="expression",
     description="Expression to evaluate.",
-    input_type=string,
+    input_type="string",
     required=True
 )
 async def math(ctx, expression):
@@ -60,7 +60,7 @@ async def bless(ctx):
 @option(
     name="prompt",
     description="Prompt for MEGABOT to respond to.",
-    input_type=string,
+    input_type="string",
     required=True
 )
 async def chat(ctx, prompt):
@@ -91,7 +91,7 @@ async def chat(ctx, prompt):
 @option(
     name="details",
     description="Provide the explanation of the photo.",
-    input_type=boolean,
+    input_type="boolean",
     required=False
 )
 async def nasa(ctx, details):
