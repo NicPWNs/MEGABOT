@@ -170,8 +170,8 @@ async def csgo(ctx, username):
 
     for i in range(0, len(types)):
         stat += "**" + \
-            str(r["data"]["segments"][0]["stats"][types[i]]["displayName"]) + \
-            ":**  " + \
+            str(r["data"]["segments"][0]["stats"]
+                [types[i]]["displayName"]) + ":**  " + \
             str(r["data"]["segments"][0]["stats"]
                 [types[i]]["displayValue"]) + "\n"
 
