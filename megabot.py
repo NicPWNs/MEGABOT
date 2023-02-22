@@ -3,6 +3,7 @@ import requests
 import discord
 from discord import option
 from dotenv import load_dotenv
+from slash_commands import ping
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -12,12 +13,7 @@ GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 bot = discord.Bot(intents=discord.Intents.all())
 
 
-# Application "Slash" Commands
-@bot.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
-async def ping(ctx):
-    await ctx.respond(content="Pong! 🏓")
-
-
+@bot.slash_command(name="ping", description="Responds with pong.", callback=ping, guild_ids=[GUILD_ID])
 @bot.slash_command(name="age", description="Guesses the age of a specified name.", guild_ids=[GUILD_ID])
 @option(
     name="name",
