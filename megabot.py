@@ -91,10 +91,9 @@ async def chat(ctx, prompt):
 @option(
     name="details",
     description="Provide the explanation of the photo.",
-    input_type="boolean",
+    input_type=discord.SlashCommandOptionType.boolean,
     required=False,
-    choices=[True, False]
-    default=True
+    choices=["True", "False"]
 )
 async def nasa(ctx, details):
     r = requests.get(
@@ -102,7 +101,7 @@ async def nasa(ctx, details):
 
     desc = ""
 
-    if details is True:
+    if details == "True":
         desc = r["explanation"]
 
     response = r["url"] + "\n" + desc
