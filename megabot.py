@@ -13,7 +13,7 @@ GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 bot = discord.Bot(intents=discord.Intents.all())
 
 
-@bot.slash_command(name="ping", description="Responds with pong.", callback=ping(), guild_ids=[GUILD_ID])
+@bot.slash_command(callback=ping(), name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
 @bot.slash_command(name="age", description="Guesses the age of a specified name.", guild_ids=[GUILD_ID])
 @option(
     name="name",
