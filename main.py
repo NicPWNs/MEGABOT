@@ -1,6 +1,7 @@
 import os
 
 import discord
+from discord import app_commands
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -9,7 +10,13 @@ GUILD = os.getenv('DISCORD_GUILD')
 GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
 client = discord.Client(intents=discord.Intents.all())
+tree = app_commands.CommandTree(client)
 guild = discord.utils.get(client.guilds, name=GUILD)
+
+
+@tree.command(name='hello', description='Say hello', guild=discord.Object(id=GUILD_ID))
+async def say_hello(interaction: discord.Interaction):
+    await interaction.response.send_message("Hello!")
 
 
 @client.event
@@ -37,5 +44,9 @@ async def on_member_join(member):
 
     await channel.send(f"I'm watching you <@{member.id}>")
 
+
+@client.event
+async def on_ready():
+    await tree.sync(guild=discord.Object(id=GUILD_ID))
 
 client.run(TOKEN)
