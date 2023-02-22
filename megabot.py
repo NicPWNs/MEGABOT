@@ -5,6 +5,7 @@ from discord import option
 from dotenv import load_dotenv
 from slash_commands.ping import ping
 from slash_commands.age import age
+from slash_commands.math import math
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
