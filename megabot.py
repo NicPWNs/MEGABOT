@@ -87,6 +87,27 @@ async def chat(ctx, prompt):
     await ctx.edit(content=f"{response}")
 
 
+@bot.slash_command(name="nasa", description="Retrieve the NASA photo of the day.", guild_ids=[GUILD_ID])
+@option(
+    name="details",
+    description="Provide the explanation of the photo.",
+    input_type=bool,
+    required=False
+)
+async def nasa(ctx, details):
+    r = requests.get(
+        'https://api.nasa.gov/planetary/apod?api_key=' + str(os.getenv('OPENAI_TOKEN'))).json()
+
+    desc = ""
+
+    if details is True:
+        desc = r["explanation"]
+
+    response = r["url"] + "\n" + desc
+
+    await ctx.respond(content=f"{response}")
+
+
 @bot.listen('on_message')
 async def on_message(message):
 

@@ -7,9 +7,11 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/age <name>`: Guesses the age of a specified name.
 - `/math <expression>`: Evaluate provided math expression.
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3)
+- `/nasa [details:True]`: Retrieve the NASA photo of the day.
 
 ## 💡 To-Do
 - [x] Add `/` application commands
 - [ ] Migrate all working commands from [BlessThisMess bot](https://github.com/NicPWNs/Discord-BTM-Bot)
+- [ ] Restructure project and commands
 - [ ] Improve CI/CD pipeline with releases/packages
 - [ ] Improve CI/CD with checks/tests (lint)
