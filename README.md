@@ -3,6 +3,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 
 ## 🤖 Commands
 - `/ping`: Responds with pong.
+- `/bless`: Blesses the mess!
 - `/age <name>`: Guesses the age of a specified name.
 - `/math <expression>`: Evaluate provided math expression.
 
