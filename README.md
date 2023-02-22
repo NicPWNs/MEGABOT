@@ -8,6 +8,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/math <expression>`: Evaluate provided math expression.
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3)
 - `/nasa [details:True]`: Retrieve the NASA photo of the day.
+- `/kanye`: Retrieve a random Kanye West quote.
 
 ## 💡 To-Do
 - [x] Add `/` application commands
