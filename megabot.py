@@ -85,7 +85,7 @@ async def age(ctx, prompt):
 
     response = r["choices"][0]["text"]
 
-    await ctx.send_followup(f"{response}")
+    await ctx.edit(f"{response}")
 
 
 @bot.listen
