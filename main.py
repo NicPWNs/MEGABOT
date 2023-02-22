@@ -27,7 +27,8 @@ async def ping(ctx):
 )
 async def age(ctx, name):
     r = requests.get('https://api.agify.io/?name=' + name).json()
-    await ctx.respond(f"{r["age"]}")
+    age = r["age"]
+    await ctx.respond(f"{age}")
 
 
 @client.event
