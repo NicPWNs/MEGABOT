@@ -20,9 +20,10 @@ async def ping(ctx):
 
 @client.slash_command(name="age", guild_ids=[GUILD_ID])
 @option(
-    "name",
-    str,
-    description="Name to guess age of."
+    name="name",
+    description="Name to guess age of.",
+    input_type=str,
+    required=False
 )
 async def age(ctx, name):
     await ctx.respond(f"{name}")
