@@ -32,7 +32,7 @@ async def age(ctx, name):
     if age is None:
         response = "Name not found!"
     else:
-        response = f"I guess the name of {name} is {age}!"
+        response = f"I guess the age of \"{name}\" is {age}!"
 
     await ctx.respond(f"{response}")
 
