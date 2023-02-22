@@ -13,12 +13,12 @@ client = discord.Bot()
 
 
 # Application "Slash" Commands
-@client.slash_command(name="ping", guild_ids=[GUILD_ID])
+@client.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
 async def ping(ctx):
     await ctx.respond("Pong! 🏓")
 
 
-@client.slash_command(name="age", description="Guess age based on given name.", guild_ids=[GUILD_ID])
+@client.slash_command(name="age", description="Guesses the age of a specified name.", guild_ids=[GUILD_ID])
 @option(
     name="name",
     description="Name to guess age of.",
