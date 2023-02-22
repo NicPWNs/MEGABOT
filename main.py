@@ -18,7 +18,7 @@ async def ping(ctx):
     await ctx.respond("Pong! 🏓")
 
 
-@client.slash_command(name="age", guild_ids=[GUILD_ID])
+@client.slash_command(name="age", description="Guess age based on given name.", guild_ids=[GUILD_ID])
 @option(
     name="name",
     description="Name to guess age of.",
@@ -27,7 +27,7 @@ async def ping(ctx):
 )
 async def age(ctx, name):
     r = requests.get('https://api.agify.io/?name=' + name)
-    await ctx.respond(f"{r.json()}")
+    await ctx.respond(f"{r.json().age}")
 
 
 @client.event
