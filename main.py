@@ -9,16 +9,16 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
-client = discord.Bot()
+bot = discord.Bot()
 
 
 # Application "Slash" Commands
-@client.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
+@bot.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
 async def ping(ctx):
     await ctx.respond("Pong! 🏓")
 
 
-@client.slash_command(name="age", description="Guesses the age of a specified name.", guild_ids=[GUILD_ID])
+@bot.slash_command(name="age", description="Guesses the age of a specified name.", guild_ids=[GUILD_ID])
 @option(
     name="name",
     description="Name to guess age of.",
@@ -37,10 +37,10 @@ async def age(ctx, name):
     await ctx.respond(f"{response}")
 
 
-@client.event
+@bot.event
 async def on_message(message):
 
-    if message.author == client.user:
+    if message.author == bot.user:
         return
 
     if 'birthday' in message.content.lower():
@@ -50,10 +50,10 @@ async def on_message(message):
         await message.channel.send('Hello there! 👋')
 
 
-@client.event
+@bot.event
 async def on_member_join(member):
 
-    guild = discord.utils.get(client.guilds, name=GUILD)
+    guild = discord.utils.get(bot.guilds, name=GUILD)
 
     role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
     await member.add_roles(role)
@@ -63,4 +63,4 @@ async def on_member_join(member):
     await channel.send(f"I'm watching you <@{member.id}>")
 
 
-client.run(TOKEN)
+bot.run(TOKEN)
