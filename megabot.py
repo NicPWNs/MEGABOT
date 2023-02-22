@@ -75,7 +75,7 @@ async def age(ctx, prompt):
 
     headers = {
         'Content-Type': 'application/json',
-        'Authorization': os.getenv('OPENAI_TOKEN'),
+        'Authorization': str(os.getenv('OPENAI_TOKEN')),
     }
 
     response = requests.post("https://api.openai.com/v1/completions",
