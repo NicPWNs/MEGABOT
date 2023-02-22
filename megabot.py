@@ -38,6 +38,20 @@ async def age(ctx, name):
     await ctx.respond(f"{response}")
 
 
+@bot.slash_command(name="math", description="Evaluate provided math expression.", guild_ids=[GUILD_ID])
+@option(
+    name="expression",
+    description="Expression to evaluate.",
+    input_type=str,
+    required=True
+)
+async def math(ctx, expression):
+
+    response = str(eval(expression))
+
+    await ctx.respond(f"{response}")
+
+
 @bot.listen
 async def on_message(message):
 
