@@ -28,7 +28,13 @@ async def ping(ctx):
 async def age(ctx, name):
     r = requests.get('https://api.agify.io/?name=' + name).json()
     age = r["age"]
-    await ctx.respond(f"{age}")
+
+    if age is None:
+        response = "Name not found!"
+    else:
+        response = f"I guess the name of {name} is {age}!"
+
+    await ctx.respond(f"{response}")
 
 
 @client.event
