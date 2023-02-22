@@ -1,3 +1,6 @@
+import requests
+
+
 async def age(ctx, name):
     r = requests.get('https://api.agify.io/?name=' + name).json()
     age = r["age"]
