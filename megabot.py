@@ -78,12 +78,13 @@ async def age(ctx, prompt):
         'Authorization': str(os.getenv('OPENAI_TOKEN')),
     }
 
+    await ctx.respond("*⏳ Loading...*")
+
     r = requests.post("https://api.openai.com/v1/completions",
                       json=params, headers=headers).json()
 
     response = r["choices"][0]["text"]
 
-    await ctx.respond("*⏳ Loading...*")
     await ctx.send_followup(f"{response}")
 
 
