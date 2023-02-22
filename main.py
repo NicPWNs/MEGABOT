@@ -13,9 +13,9 @@ tree = app_commands.CommandTree(client)
 
 
 # Application "Slash" Commands
-@tree.command(name='ping', description='Reply with pong.', guild=discord.Object(id=GUILD_ID))
+@tree.command(name='ping', description='Responds with pong.', guild=discord.Object(id=GUILD_ID))
 async def say_hello(interaction: discord.Interaction):
-    await interaction.response.send_message("Pong!")
+    await interaction.response.send_message("Pong! 🏓")
 
 
 @client.event
