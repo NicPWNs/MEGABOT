@@ -9,7 +9,8 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
-bot = discord.Bot()
+intents = discord.Intents.all()
+bot = discord.Bot(intents=intents)
 
 
 # Application "Slash" Commands
