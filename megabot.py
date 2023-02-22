@@ -9,14 +9,13 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
-intents = discord.Intents.all()
-bot = discord.Bot(intents=intents)
+bot = discord.Bot(intents=discord.Intents.all())
 
 
 # Application "Slash" Commands
 @bot.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
 async def ping(ctx):
-    await ctx.respond("Pong! 🏓")
+    await ctx.respond(content="Pong! 🏓")
 
 
 @bot.slash_command(name="age", description="Guesses the age of a specified name.", guild_ids=[GUILD_ID])
@@ -35,7 +34,7 @@ async def age(ctx, name):
     else:
         response = f"I guess the age of \"{name}\" is {age}!"
 
-    await ctx.respond(f"{response}")
+    await ctx.respond(content=f"{response}")
 
 
 @bot.slash_command(name="math", description="Evaluate provided math expression.", guild_ids=[GUILD_ID])
@@ -49,12 +48,12 @@ async def math(ctx, expression):
 
     response = str(eval(expression))
 
-    await ctx.respond(f"{response}")
+    await ctx.respond(content=f"{response}")
 
 
 @bot.slash_command(name="bless", description="Blesses the mess!", guild_ids=[GUILD_ID])
 async def bless(ctx):
-    await ctx.respond("The mess has been blessed! ✨")
+    await ctx.respond(content="The mess has been blessed! ✨")
 
 
 @bot.slash_command(name="chat", description="Chat with MEGABOT.", guild_ids=[GUILD_ID])
@@ -64,7 +63,7 @@ async def bless(ctx):
     input_type=str,
     required=True
 )
-async def age(ctx, prompt):
+async def chat(ctx, prompt):
 
     params = {
         'model': 'text-davinci-003',
@@ -78,14 +77,14 @@ async def age(ctx, prompt):
         'Authorization': str(os.getenv('OPENAI_TOKEN')),
     }
 
-    await ctx.respond("*⏳ Loading...*")
+    await ctx.respond(content="*⏳ Loading...*")
 
     r = requests.post("https://api.openai.com/v1/completions",
                       json=params, headers=headers).json()
 
     response = r["choices"][0]["text"]
 
-    await ctx.edit(f"{response}")
+    await ctx.edit(content=f"{response}")
 
 
 @bot.listen
