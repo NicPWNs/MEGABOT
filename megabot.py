@@ -37,11 +37,8 @@ async def call(ctx, name):
     input_type=str,
     required=True
 )
-async def math(ctx, expression):
-
-    response = str(eval(expression))
-
-    await ctx.respond(content=f"{response}")
+async def call(ctx, expression):
+    await math(ctx, expression)
 
 
 @bot.slash_command(name="bless", description="Blesses the mess!", guild_ids=[GUILD_ID])
