@@ -87,17 +87,20 @@ async def chat(ctx, prompt):
     await ctx.edit(content=f"{response}")
 
 
-@bot.listen
+@bot.listen('on_message')
 async def on_message(message):
+
+    if message.author == bot.user:
+        return
 
     if 'birthday' in message.content.lower():
         await message.channel.send('Happy Birthday! 🎈🎉')
 
-    if 'megabot' or '1077260321833635941' in message.content.lower():
+    if 'megabot' in message.content.lower():
         await message.channel.send('Hello there! 👋')
 
 
-@bot.listen
+@bot.listen('on_member_join')
 async def on_member_join(member):
 
     guild = discord.utils.get(bot.guilds, name=GUILD)
