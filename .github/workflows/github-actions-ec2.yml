@@ -37,5 +37,6 @@ jobs:
             echo ${{ secrets.DISCORD_GUILD }} >> .env
             echo ${{ secrets.DISCORD_GUILD_ID }} >> .env
             echo ${{ secrets.OPENAI_TOKEN }} >> .env
+            echo ${{ secrets.NASA_KEY }} >> .env
             ps -ef | grep "megabot.py" | awk '{print $2}' | awk 'NR==1{print $1}' | xargs sudo kill 2>/dev/null
             python3 /home/ec2-user/megabot.py >/dev/null &

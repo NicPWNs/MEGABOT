@@ -96,7 +96,7 @@ async def chat(ctx, prompt):
 )
 async def nasa(ctx, details):
     r = requests.get(
-        'https://api.nasa.gov/planetary/apod?api_key=' + str(os.getenv('OPENAI_TOKEN'))).json()
+        'https://api.nasa.gov/planetary/apod?api_key=' + str(os.getenv('NASA_KEY'))).json()
 
     desc = ""
 
