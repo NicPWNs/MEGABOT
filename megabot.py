@@ -41,9 +41,6 @@ async def age(ctx, name):
 @bot.listen
 async def on_message(message):
 
-    if message.author == bot.user:
-        return
-
     if 'birthday' in message.content.lower():
         await message.channel.send('Happy Birthday! 🎈🎉')
 
