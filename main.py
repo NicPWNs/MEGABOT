@@ -1,6 +1,7 @@
 import os
+import requests
 import discord
-from discord import app_commands
+from discord import option
 from dotenv import load_dotenv
 
 load_dotenv()
@@ -8,14 +9,13 @@ TOKEN = os.getenv('DISCORD_TOKEN')
 GUILD = os.getenv('DISCORD_GUILD')
 GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
-client = discord.Client(intents=discord.Intents.all())
-tree = app_commands.CommandTree(client)
+client = discord.Bot()
 
 
 # Application "Slash" Commands
-@tree.command(name='ping', description='Responds with pong.', guild=discord.Object(id=GUILD_ID))
-async def say_hello(interaction: discord.Interaction):
-    await interaction.response.send_message("Pong! 🏓")
+@client.slash_command()
+async def ping(ctx):
+    await ctx.respond("Pong! 🏓")
 
 
 @client.event
@@ -42,11 +42,6 @@ async def on_member_join(member):
     channel = discord.utils.get(guild.channels, name="main")
 
     await channel.send(f"I'm watching you <@{member.id}>")
-
-
-@client.event
-async def on_ready():
-    await tree.sync(guild=discord.Object(id=GUILD_ID))
 
 
 client.run(TOKEN)
