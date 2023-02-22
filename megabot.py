@@ -79,7 +79,7 @@ async def age(ctx, prompt):
     }
 
     response = requests.post("https://api.openai.com/v1/completions",
-                             params, headers=headers).json()
+                             json=params, headers=headers).json()
 
     await ctx.respond(f"{response}")
 
