@@ -93,7 +93,8 @@ async def chat(ctx, prompt):
     description="Provide the explanation of the photo.",
     input_type="boolean",
     required=False,
-    default="True"
+    choices=[True, False]
+    default=True
 )
 async def nasa(ctx, details):
     r = requests.get(
