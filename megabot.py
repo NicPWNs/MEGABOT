@@ -52,6 +52,11 @@ async def math(ctx, expression):
     await ctx.respond(f"{response}")
 
 
+@bot.slash_command(name="bless", description="Blesses the mess!", guild_ids=[GUILD_ID])
+async def bless(ctx):
+    await ctx.respond("The mess has been blessed! ✨")
+
+
 @bot.listen
 async def on_message(message):
 
