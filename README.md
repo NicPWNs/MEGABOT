@@ -7,3 +7,6 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 
 ## 💡 To-Do
 - [x] Add `/` application commands
+- [ ] Migrate all working commands from BlessThisMess bot
+- [ ] Improve CI/CD pipeline with releases/packages
+- [ ] Improve CI/CD with checks/tests (lint)
