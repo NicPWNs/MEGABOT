@@ -22,7 +22,7 @@ async def ping(ctx):
 @option(
     name="name",
     description="Name to guess age of.",
-    input_type="string",
+    input_type=str,
     required=True
 )
 async def age(ctx, name):
@@ -41,7 +41,7 @@ async def age(ctx, name):
 @option(
     name="expression",
     description="Expression to evaluate.",
-    input_type="string",
+    input_type=str,
     required=True
 )
 async def math(ctx, expression):
@@ -60,7 +60,7 @@ async def bless(ctx):
 @option(
     name="prompt",
     description="Prompt for MEGABOT to respond to.",
-    input_type="string",
+    input_type=str,
     required=True
 )
 async def chat(ctx, prompt):
@@ -105,6 +105,16 @@ async def nasa(ctx, details):
         desc = r["explanation"]
 
     response = r["url"] + "\n" + desc
+
+    await ctx.respond(content=f"{response}")
+
+
+@bot.slash_command(name="kanye", description="Retrieve a random Kanye West quote.", guild_ids=[GUILD_ID])
+async def kanye(ctx):
+    r = requests.get('https://api.kanye.rest/').json()
+
+    quote = r["quote"]
+    response = f"<:kanye:256651070829363202>💬  ❝ {quote} ❞"
 
     await ctx.respond(content=f"{response}")
 
