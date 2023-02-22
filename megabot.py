@@ -57,6 +57,35 @@ async def bless(ctx):
     await ctx.respond("The mess has been blessed! ✨")
 
 
+@bot.slash_command(name="chat", description="Chat with MEGABOT.", guild_ids=[GUILD_ID])
+@option(
+    name="prompt",
+    description="Prompt for MEGABOT to respond to.",
+    input_type=str,
+    required=True
+)
+async def age(ctx, prompt):
+
+    params = {
+        'model': 'text-davinci-003',
+        'prompt': prompt,
+        'max_tokens': 4000,
+        'temperature': 1,
+    }
+
+    headers = {
+        'Content-Type': 'application/json',
+        'Authorization': os.getenv('OPENAI_TOKEN'),
+    }
+
+    r = requests.post("https://api.openai.com/v1/completions",
+                      params, headers).json()
+
+    response = r
+
+    await ctx.respond(f"{response}")
+
+
 @bot.listen
 async def on_message(message):
 
