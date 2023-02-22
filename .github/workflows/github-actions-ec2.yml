@@ -25,7 +25,6 @@ jobs:
             sudo yum update -y
             sudo yum upgrade -y
             sudo yum install git -y
-            sudo amazon-linux-extras install python3.8 -y
             sudo yum install libffi-devel -y
             sudo yum install python3-devel -y
           SCRIPT_AFTER: |
