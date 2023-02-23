@@ -8,6 +8,7 @@ from slash_commands.age import age
 from slash_commands.math import math
 from slash_commands.bless import bless
 from slash_commands.chat import chat
+from slash_commands.nasa import nasa
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -68,18 +69,8 @@ async def call(ctx, prompt):
     required=False,
     choices=["True", "False"]
 )
-async def nasa(ctx, details):
-    r = requests.get(
-        'https://api.nasa.gov/planetary/apod?api_key=' + str(os.getenv('NASA_KEY'))).json()
-
-    desc = ""
-
-    if details == "True":
-        desc = r["explanation"]
-
-    response = r["url"] + "\n" + desc
-
-    await ctx.respond(content=f"{response}")
+async def call(ctx, details):
+    await nasa(ctx, details)
 
 
 @bot.slash_command(name="kanye", description="Retrieve a random Kanye West quote.", guild_ids=[GUILD_ID])
