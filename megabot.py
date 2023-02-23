@@ -1,5 +1,4 @@
 import os
-import requests
 import discord
 from discord import option
 from dotenv import load_dotenv
@@ -10,6 +9,7 @@ from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.nasa import nasa
 from slash_commands.kanye import kanye
+from slash_commands.csgo import csgo
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -86,56 +86,8 @@ async def call(ctx):
     input_type=discord.SlashCommandOptionType.string,
     required=True
 )
-async def csgo(ctx, username):
-
-    headers = {
-        "TRN-Api-Key": os.getenv('TRN_KEY'),
-    }
-
-    await ctx.respond(content="*⏳ Loading...*")
-
-    r = requests.get(
-        'https://public-api.tracker.gg/v2/csgo/standard/profile/steam/' + username, headers=headers).json()
-
-    handle = r["data"]["platformInfo"]["platformUserHandle"]
-
-    types = [
-        "timePlayed",
-        "score",
-        "kills",
-        "deaths",
-        "kd",
-        "damage",
-        "headshots",
-        "shotsFired",
-        "shotsHit",
-        "shotsAccuracy",
-        "snipersKilled",
-        "bombsPlanted",
-        "bombsDefused",
-        "moneyEarned",
-        "hostagesRescued",
-        "mvp",
-        "wins",
-        "ties",
-        "matchesPlayed",
-        "losses",
-        "roundsPlayed",
-        "roundsWon",
-        "wlPercentage",
-        "headshotPct",
-    ]
-
-    stat = f"__**{handle} Stats:**__\n"
-
-    for i in range(0, len(types)):
-        stat += "**" + \
-            str(r["data"]["segments"][0]["stats"]
-                [types[i]]["displayName"]) + ":**  " + \
-            str(r["data"]["segments"][0]["stats"]
-                [types[i]]["displayValue"]) + "\n"
-
-    await ctx.edit(content=f"{stat}")
+async def call(ctx, username):
+    await csgo(ctx, username)
 
 
 @bot.listen('on_message')
