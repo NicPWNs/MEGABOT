@@ -12,11 +12,12 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/nasa [details:True]`: Retrieve the NASA photo of the day.
 - `/kanye`: Retrieve a random Kanye West quote.
 - `/csgo <username>`: Retrieve CS:GO stats.
+- `/streak [stats:True]`: Keep a daily streak going!
 
 ## 💡 To-Do
 
 - [x] Add `/` application commands
-- [ ] Migrate all working commands from [BlessThisMess bot](https://github.com/NicPWNs/Discord-BTM-Bot)
+- [x] Migrate all working commands from [BlessThisMess bot](https://github.com/NicPWNs/Discord-BTM-Bot)
 - [x] Restructure project and commands
 - [ ] Improve CI/CD pipeline with releases/packages
 - [ ] Improve CI/CD with checks/tests (lint)
