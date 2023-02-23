@@ -22,5 +22,11 @@ async def streak(ctx, stats):
         }
     )
 
-    content = "Good!"
+    data = table.get_item(
+        Key={
+            'id': ctx.user.id
+        }
+    )
+
+    content = data["Items"]["streak"]
     await ctx.edit(content=f"{content}")
