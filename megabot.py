@@ -6,6 +6,7 @@ from dotenv import load_dotenv
 from slash_commands.ping import ping
 from slash_commands.age import age
 from slash_commands.math import math
+from slash_commands.bless import bless
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -43,8 +44,8 @@ async def call(ctx, expression):
 
 
 @bot.slash_command(name="bless", description="Blesses the mess!", guild_ids=[GUILD_ID])
-async def bless(ctx):
-    await ctx.respond(content="The mess has been blessed! ✨")
+async def call(ctx):
+    await bless(ctx)
 
 
 @bot.slash_command(name="chat", description="Chat with MEGABOT.", guild_ids=[GUILD_ID])
