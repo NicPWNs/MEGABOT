@@ -28,5 +28,5 @@ async def streak(ctx, stats):
         }
     )
 
-    content = data["Items"]["streak"]
+    content = data["Items"]
     await ctx.edit(content=f"{content}")
