@@ -24,7 +24,7 @@ async def streak(ctx, stats):
 
     data = table.get_item(
         Key={
-            'id': ctx.user.id
+            'id': ctx.author.id
         }
     )
 
