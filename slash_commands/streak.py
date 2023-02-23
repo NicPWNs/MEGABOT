@@ -16,6 +16,6 @@ async def streak(ctx, stats):
         }
     )
 
-    content = response['Item']
+    content = response['Item']['stat']
 
     await ctx.edit(content=f"{content}")
