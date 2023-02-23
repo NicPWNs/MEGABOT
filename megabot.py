@@ -1,16 +1,13 @@
-import os
-import discord
-from discord import option
 from dotenv import load_dotenv
-from slash_commands.ping import ping
-from slash_commands.age import age
-from slash_commands.math import math
-from slash_commands.bless import bless
-from slash_commands.chat import chat
-from slash_commands.nasa import nasa
-from slash_commands.kanye import kanye
-from slash_commands.csgo import csgo
-from slash_commands.streak import streak
+from discord import option
+import discord
+import os
+from os.path import dirname, basename, isfile, join
+import glob
+modules = glob.glob(join(dirname(__file__), "/slash_commands/*.py"))
+__all__ = [basename(f)[:-3] for f in modules if isfile(f)
+           and not f.endswith('__init__.py')]
+
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
