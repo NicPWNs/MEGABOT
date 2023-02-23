@@ -1,5 +1,6 @@
 import boto3
 from boto3.dynamodb.conditions import Key
+from datetime import datetime
 
 
 async def streak(ctx, stats):
@@ -28,5 +29,13 @@ async def streak(ctx, stats):
         }
     )
 
-    content = data['Item']['streak']
-    await ctx.edit(content=f"{content}")
+    dataLength = int(data['ResponseMetadata']
+                     ['HTTPHeaders']['content-length'])
+
+    # 2023-02-22 21:11:05.800895
+    if dataLength > 5:
+        storedLastMid = datetime.fromisoformat(data['Item']['lastMid'])
+        storedNextMid = datetime.fromisoformat(data['Item']['nextMid'])
+        storedSkipMid = datetime.fromisoformat(data['Item']['skipMid'])
+
+    await ctx.edit(content=f"{storedNextMid}")
