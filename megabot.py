@@ -9,6 +9,7 @@ from slash_commands.math import math
 from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.nasa import nasa
+from slash_commands.kanye import kanye
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -74,13 +75,8 @@ async def call(ctx, details):
 
 
 @bot.slash_command(name="kanye", description="Retrieve a random Kanye West quote.", guild_ids=[GUILD_ID])
-async def kanye(ctx):
-    r = requests.get('https://api.kanye.rest/').json()
-
-    quote = r["quote"]
-    response = f"<:kanye:1078059327891439657>💬  ❝ {quote} ❞"
-
-    await ctx.respond(content=f"{response}")
+async def call(ctx):
+    await kanye(ctx)
 
 
 @bot.slash_command(name="csgo", description="Retrieve CS:GO stats.", guild_ids=[GUILD_ID])
