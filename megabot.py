@@ -10,6 +10,7 @@ from slash_commands.chat import chat
 from slash_commands.nasa import nasa
 from slash_commands.kanye import kanye
 from slash_commands.csgo import csgo
+from slash_commands.streak import streak
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -114,6 +115,18 @@ async def call(ctx):
 )
 async def call(ctx, username):
     await csgo(ctx, username)
+
+
+@bot.slash_command(name="streak", description="Keep a daily streak going!", guild_ids=[GUILD_ID])
+@option(
+    name="stats",
+    description="Get streak stats.",
+    input_type=discord.SlashCommandOptionType.boolean,
+    required=False,
+    choices=["True", "False"]
+)
+async def call(ctx, stats):
+    await streak(ctx, stats)
 
 
 bot.run(TOKEN)
