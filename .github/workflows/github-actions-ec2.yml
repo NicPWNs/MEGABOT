@@ -34,6 +34,7 @@ jobs:
             echo $RSYNC_STDOUT
             cd /home/ec2-user
             python3 -m pip install -r requirements.txt
+            export AWS_DEFAULT_REGION=us-east-1
             rm .env
             touch .env
             echo ${{ secrets.DISCORD_TOKEN }} >> .env
