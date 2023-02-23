@@ -1,16 +1,11 @@
 import os
-import requests
+import boto3
 
 
-async def nasa(ctx, details):
-    r = requests.get(
-        'https://api.nasa.gov/planetary/apod?api_key=' + str(os.getenv('NASA_KEY'))).json()
+async def streak(ctx, stats):
 
-    desc = ""
+    await ctx.respond(content="*⏳ Loading...*")
 
-    if details == "True":
-        desc = r["explanation"]
+    content = "Good!"
 
-    response = r["url"] + "\n" + desc
-
-    await ctx.respond(content=f"{response}")
+    await ctx.edit(content=f"{content}")

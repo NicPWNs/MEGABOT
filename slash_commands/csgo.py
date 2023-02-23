@@ -4,11 +4,11 @@ import requests
 
 async def csgo(ctx, username):
 
+    await ctx.respond(content="*⏳ Loading...*")
+
     headers = {
         "TRN-Api-Key": os.getenv('TRN_KEY'),
     }
-
-    await ctx.respond(content="*⏳ Loading...*")
 
     r = requests.get(
         'https://public-api.tracker.gg/v2/csgo/standard/profile/steam/' + username, headers=headers).json()

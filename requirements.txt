@@ -7,3 +7,4 @@ py-cord[voice]
 py-cord[speed]
 python-dotenv
 requests
+boto3
