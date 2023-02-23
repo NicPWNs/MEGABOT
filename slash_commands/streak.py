@@ -10,12 +10,17 @@ async def streak(ctx, stats):
     ddb = boto3.resource('dynamodb')
     table = ddb.Table(TABLE)
 
-    response = table.get_item(
+    dataStats = table.get_item(
         Key={
             'id': 'allTimeStreak'
         }
     )
 
-    content = response['Item']['stat']
+    dataCurrent = table.get_item(
+        Key={
+            'id': 'currentStreak'
+        }
+    )
 
+    content = "Good!"
     await ctx.edit(content=f"{content}")
