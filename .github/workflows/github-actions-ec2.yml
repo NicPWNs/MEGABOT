@@ -28,6 +28,8 @@ jobs:
             sudo yum install libffi-devel -y
             sudo yum install python3-devel -y
             sudo amazon-linux-extras install python3.8 -y
+            sudo rm /usr/bin/python3
+            sudo ln -s /usr/bin/python3.8 /usr/bin/python
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             cd /home/ec2-user
