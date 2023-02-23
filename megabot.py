@@ -7,6 +7,7 @@ from slash_commands.ping import ping
 from slash_commands.age import age
 from slash_commands.math import math
 from slash_commands.bless import bless
+from slash_commands.chat import chat
 
 load_dotenv()
 TOKEN = os.getenv('DISCORD_TOKEN')
@@ -55,28 +56,8 @@ async def call(ctx):
     input_type=str,
     required=True
 )
-async def chat(ctx, prompt):
-
-    params = {
-        'model': 'text-davinci-003',
-        'prompt': prompt,
-        'max_tokens': 4000,
-        'temperature': 1,
-    }
-
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': str(os.getenv('OPENAI_TOKEN')),
-    }
-
-    await ctx.respond(content="*⏳ Loading...*")
-
-    r = requests.post("https://api.openai.com/v1/completions",
-                      json=params, headers=headers).json()
-
-    response = r["choices"][0]["text"]
-
-    await ctx.edit(content=f"{response}")
+async def call(ctx, prompt):
+    await chat(ctx, prompt)
 
 
 @bot.slash_command(name="nasa", description="Retrieve the NASA photo of the day.", guild_ids=[GUILD_ID])
