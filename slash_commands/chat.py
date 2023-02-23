@@ -1,3 +1,6 @@
+import requests
+
+
 async def chat(ctx, prompt):
 
     params = {
