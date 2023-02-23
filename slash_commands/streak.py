@@ -24,9 +24,9 @@ async def streak(ctx, stats):
 
     data = table.get_item(
         Key={
-            'id': ctx.author.id
+            'id': str(ctx.author.id)
         }
     )
 
-    content = data["Items"]
+    content = data['Item']['streak']
     await ctx.edit(content=f"{content}")
