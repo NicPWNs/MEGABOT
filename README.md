@@ -4,7 +4,6 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 
 ## 🤖 Commands
 
-
 - `/age <name>`: Guesses the age of a specified name.
 - `/bless`: Blesses the mess!
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3)
