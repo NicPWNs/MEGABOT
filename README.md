@@ -4,14 +4,15 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 
 ## 🤖 Commands
 
-- `/ping`: Responds with pong.
-- `/bless`: Blesses the mess!
+
 - `/age <name>`: Guesses the age of a specified name.
-- `/math <expression>`: Evaluate provided math expression.
+- `/bless`: Blesses the mess!
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3)
-- `/nasa [details:True]`: Retrieve the NASA photo of the day.
-- `/kanye`: Retrieve a random Kanye West quote.
 - `/csgo <username>`: Retrieve CS:GO stats.
+- `/kanye`: Retrieve a random Kanye West quote.
+- `/math <expression>`: Evaluate provided math expression.
+- `/nasa [details:True]`: Retrieve the NASA photo of the day.
+- `/ping`: Responds with pong.
 - `/streak [stats:True]`: Keep a daily streak going!
 
 ## 💡 To-Do
