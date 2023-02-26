@@ -13,8 +13,8 @@ from slash_commands.kanye import kanye
 from slash_commands.kill import kill
 from slash_commands.math import math
 from slash_commands.nasa import nasa
-from slash_commands.play import play
 from slash_commands.ping import ping
+from slash_commands.play import play
 from slash_commands.streak import streak
 from slash_commands.test import test
 
@@ -139,6 +139,12 @@ if __name__ == "__main__":
         await kill(ctx)
 
     @bot.slash_command(name="play", description="Plays music.", guild_ids=[GUILD_ID])
+    @option(
+        name="search",
+        description="Music to search for.",
+        input_type=str,
+        required=True
+    )
     async def call(ctx):
         await play(ctx)
 
