@@ -1,7 +1,7 @@
-import requests
+#!/usr/bin/env python3
 import boto3
-from boto3.dynamodb.conditions import Key
 from datetime import datetime, timedelta
+from emoji import random_emoji
 
 
 async def streak(ctx, stats):
@@ -178,8 +178,10 @@ async def streak(ctx, stats):
         emote = "💀"
     elif streak < 100:
         emote = "💎"
-    else:
+    elif streak < 125:
         emote = "💯"
+    else:
+        emote = random_emoji()
 
     statMessage = ""
 
@@ -200,6 +202,6 @@ async def streak(ctx, stats):
             str(ctx.user.id) + ">"
 
     content = prefix + "Your streak is: " + \
-        str(streak) + "   " + emote + statMessage
+        str(streak) + "  " + emote + statMessage
 
     await ctx.edit(content=f"{content}")
