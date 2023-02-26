@@ -4,6 +4,8 @@ import discord
 from discord import option
 from dotenv import load_dotenv
 
+from listeners.on_message import on_message
+from listeners.on_member_join import on_member_join
 from slash_commands.age import age
 from slash_commands.bless import bless
 from slash_commands.chat import chat
@@ -25,28 +27,12 @@ if __name__ == "__main__":
     bot = discord.Bot(intents=discord.Intents.all())
 
     @bot.listen('on_message')
-    async def on_message(message):
-
-        if message.author == bot.user:
-            return
-
-        if 'birthday' in message.content.lower():
-            await message.channel.send('Happy Birthday! 🎈🎉')
-
-        if 'megabot' in message.content.lower():
-            await message.channel.send('Hello there! 👋')
+    async def call(message):
+        on_message(message, bot)
 
     @bot.listen('on_member_join')
-    async def on_member_join(member):
-
-        guild = discord.utils.get(bot.guilds, name=GUILD)
-
-        role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
-        await member.add_roles(role)
-
-        channel = discord.utils.get(guild.channels, name="main")
-
-        await channel.send(f"I'm watching you <@{member.id}>")
+    async def call(member):
+        on_member_join(member)
 
     @bot.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
     async def call(ctx):
