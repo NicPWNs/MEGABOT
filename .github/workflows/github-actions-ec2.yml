@@ -38,6 +38,7 @@ jobs:
             touch .env
             echo ${{ secrets.DISCORD_TOKEN }} >> .env
             echo ${{ secrets.DISCORD_GUILD_ID }} >> .env
+            echo ${{ secrets.OWNER_ID }} >> .env
             echo ${{ secrets.OPENAI_TOKEN }} >> .env
             echo ${{ secrets.NASA_KEY }} >> .env
             echo ${{ secrets.TRN_KEY }} >> .env
