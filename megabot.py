@@ -1,8 +1,9 @@
 #!/usr/bin/env python3
-from dotenv import load_dotenv
-from discord import option
-import discord
 import os
+import discord
+from discord import option
+from dotenv import load_dotenv
+
 from slash_commands.age import age
 from slash_commands.bless import bless
 from slash_commands.chat import chat
