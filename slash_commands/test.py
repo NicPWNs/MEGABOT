@@ -10,7 +10,7 @@ async def test(ctx, startTime):
     hostname = platform.node()
     pid = os.getpid()
     py = sys.version[0:3]
-    runTime = time.time() - startTime
+    runTime = int(time.time() - startTime)
 
     test1 = f"MEGABOT is running on {hostname} on PID {pid}\n"
     test2 = f"MEGABOT is running on Python version {py}\n"
