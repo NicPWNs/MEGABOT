@@ -6,5 +6,6 @@ py-cord
 py-cord[voice]
 py-cord[speed]
 python-dotenv
+youtube-dl
 requests
 boto3
