@@ -33,7 +33,7 @@ async def streak(ctx, stats):
     dataLength = int(data['ResponseMetadata']
                      ['HTTPHeaders']['content-length'])
 
-    # 2023-02-22 21:11:05.800895
+    # Format: 2023-02-22 21:11:05.800895
     if dataLength > 5:
         storedLastMid = datetime.fromisoformat(data['Item']['lastMid'])
         storedNextMid = datetime.fromisoformat(data['Item']['nextMid'])
