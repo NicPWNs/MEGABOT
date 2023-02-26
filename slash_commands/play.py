@@ -1,52 +1,48 @@
 #!/usr/bin/env python3
+import time
 import discord
-import youtube_dl
-import asyncio
-
-
-class YTDLSource():
-    def __init__(self, source, *, data, volume=0.5):
-        super().__init__(source, volume)
-        self.data = data
-        self.title = data.get('title')
-        self.url = ""
-
-    @classmethod
-    async def from_url(cls, url, *, loop=None, stream=False):
-        loop = loop or asyncio.get_event_loop()
-        data = await loop.run_in_executor(None, lambda: ytdl.extract_info(url, download=not stream))
-        if 'entries' in data:
-            data = data['entries'][0]
-        filename = data['title'] if stream else ytdl.prepare_filename(data)
-        return filename
+import yt_dlp
 
 
 async def play(ctx, search):
 
-    youtube_dl.utils.bug_reports_message = lambda: ''
+    if ctx.author.voice is None:
+        await ctx.send("You are not in a voice channel!")
 
-    ytdl_format_options = {
-        'format': 'bestaudio/best',
-        'restrictfilenames': True,
-        'noplaylist': True,
-        'nocheckcertificate': True,
-        'ignoreerrors': False,
-        'logtostderr': False,
+    ydl_opts = {
         'quiet': True,
+        'outtmpl': "media/%(id)s",
+        'default_search': 'ytsearch',
+        'format': 'bestaudio/best',
+        'prefer_ffmpeg': True,
+        'force_overwrites': True,
+        'nocheckcertificate': True,
         'no_warnings': True,
-        'default_search': 'auto',
-        'source_address': '0.0.0.0'
+        'noplaylist': True,
+        'postprocessors': [{
+            'key': 'FFmpegExtractAudio',
+            'preferredcodec': 'mp3',
+            'preferredquality': '192',
+        }],
     }
 
-    ffmpeg_options = {
-        'options': '-vn'
-    }
+    FFMPEG_OPTIONS = {
+        'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
 
-    ytdl = youtube_dl.YoutubeDL(ytdl_format_options)
+    channel = ctx.author.voice.channel
+    voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
 
-    filename = await YTDLSource.from_url(search, loop=bot.loop)
+    if voice and voice.is_connected():
+        await voice.move_to(channel)
+    else:
+        voice = await channel.connect()
 
-    server = ctx.message.guild
-    voice_channel = server.voice_client
+    ctx.voice_client.stop()
 
-    voice_channel.play(discord.FFmpegOpusAudio(filename))
+    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
+        info = ydl.extract_info(url=search, download=False)
+        url = info["entries"][0]["formats"][0]['url']
+
+        source = await discord.FFmpegOpusAudio.from_probe(source=url, method='fallback', **FFMPEG_OPTIONS)
+        voice.play(source)
+        voice.is_playing()

@@ -24,7 +24,7 @@ jobs:
           SCRIPT_BEFORE: |
             sudo yum update -y
             sudo yum upgrade -y
-            sudo yum install git libffi-devel python3-devel -y
+            sudo yum install git libffi-devel ffmpeg ffprobe python3-devel -y
             sudo timedatectl set-timezone America/New_York
             sudo amazon-linux-extras install python3.8 -y
             sudo rm /usr/bin/python3
