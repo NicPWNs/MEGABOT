@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import boto3
 from datetime import datetime, timedelta
-from emoji import random_emoji
+from random_emoji import random_emoji
 
 
 async def streak(ctx, stats):
