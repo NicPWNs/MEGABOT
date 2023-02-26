@@ -31,7 +31,7 @@ if __name__ == "__main__":
     async def on_message(message):
 
         if 'testing its event listeners' in message.content.lower():
-            await message.channel.send('Testing Done! ✅')
+            await message.channel.send('✅ MEGABOT Testing Done!')
 
         if message.author == bot.user:
             return
