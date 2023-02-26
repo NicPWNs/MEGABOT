@@ -15,7 +15,7 @@ from slash_commands.ping import ping
 from slash_commands.streak import streak
 
 
-def main():
+if __name__ == "__main__":
 
     load_dotenv()
     TOKEN = os.getenv('DISCORD_TOKEN')
@@ -123,7 +123,3 @@ def main():
         await streak(ctx, stats)
 
     bot.run(TOKEN)
-
-
-if __name__ == "__main__":
-    main()
