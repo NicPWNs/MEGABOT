@@ -30,6 +30,9 @@ if __name__ == "__main__":
     @bot.listen('on_message')
     async def on_message(message):
 
+        if 'testing its event listeners' in message.content.lower():
+            await message.channel.send('Testing Done! ✅')
+
         if message.author == bot.user:
             return
 
@@ -38,9 +41,6 @@ if __name__ == "__main__":
 
         if 'megabot' in message.content.lower():
             await message.channel.send('Hello there! 👋')
-
-        if 'testing its event listeners' in message.content.lower():
-            await message.channel.send('Testing Done! ✅')
 
     @bot.listen('on_member_join')
     async def on_member_join(member):
