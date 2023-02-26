@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import os
+import time
 import discord
 from discord import option
 from dotenv import load_dotenv
@@ -13,9 +14,12 @@ from slash_commands.math import math
 from slash_commands.nasa import nasa
 from slash_commands.ping import ping
 from slash_commands.streak import streak
+from slash_commands.test import test
 
 
 if __name__ == "__main__":
+
+    startTime = time.time()
 
     load_dotenv()
     TOKEN = os.getenv('DISCORD_TOKEN')
@@ -34,6 +38,9 @@ if __name__ == "__main__":
 
         if 'megabot' in message.content.lower():
             await message.channel.send('Hello there! 👋')
+
+        if 'testing its event listeners' in message.content.lower():
+            await message.channel.send('Testing Done! ✅')
 
     @bot.listen('on_member_join')
     async def on_member_join(member):
@@ -120,5 +127,9 @@ if __name__ == "__main__":
     )
     async def call(ctx, stats):
         await streak(ctx, stats)
+
+    @bot.slash_command(name="test", description="Test MEGABOT.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await test(ctx, startTime)
 
     bot.run(TOKEN)
