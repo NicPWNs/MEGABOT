@@ -10,6 +10,7 @@ from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.csgo import csgo
 from slash_commands.kanye import kanye
+from slash_commands.kill import kill
 from slash_commands.math import math
 from slash_commands.nasa import nasa
 from slash_commands.ping import ping
@@ -131,5 +132,9 @@ if __name__ == "__main__":
     @bot.slash_command(name="test", description="Test MEGABOT.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await test(ctx, startTime)
+
+    @bot.slash_command(name="kill", description="Stop MEGABOT. (Admin Only)", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await kill(ctx)
 
     bot.run(TOKEN)
