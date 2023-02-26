@@ -21,7 +21,6 @@ if __name__ == "__main__":
 
     load_dotenv()
     TOKEN = os.getenv('DISCORD_TOKEN')
-    GUILD = os.getenv('DISCORD_GUILD')
     GUILD_ID = os.getenv('DISCORD_GUILD_ID')
 
     bot = discord.Bot(intents=discord.Intents.all())
@@ -32,7 +31,7 @@ if __name__ == "__main__":
 
     @bot.listen('on_member_join')
     async def call(member):
-        on_member_join(member)
+        on_member_join(member, bot)
 
     @bot.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
     async def call(ctx):
