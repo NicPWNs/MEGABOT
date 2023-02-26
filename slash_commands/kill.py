@@ -5,7 +5,7 @@ import sys
 
 async def kill(ctx):
 
-    if ctx.user.id == os.getenv('OWNER_ID'):
+    if str(ctx.user.id) == str(os.getenv('OWNER_ID')):
         pid = os.getpid()
 
         content = f"🛑 **Stopping MEGABOT on PID {pid} !**"
