@@ -12,10 +12,10 @@ async def test(ctx, startTime):
     py = sys.version[0:3]
     runTime = int(time.time() - startTime)
 
-    test1 = f"MEGABOT is running on {hostname} on PID {pid}\n"
-    test2 = f"MEGABOT is running on Python version {py}\n"
-    test3 = f"MEGABOT has been running for {runTime}s\n"
-    test4 = f"MEGABOT is testing its event listeners:"
+    test1 = f"⚙️ MEGABOT is running on {hostname} (PID {pid})\n"
+    test2 = f"🐍 MEGABOT is running on Python version {py}\n"
+    test3 = f"⏲️ MEGABOT has been running for {runTime}s\n"
+    test4 = f"👂 MEGABOT is testing its event listeners:"
 
     content = test1 + test2 + test3 + test4
 
