@@ -9,10 +9,12 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3)
 - `/csgo <username>`: Retrieve CS:GO stats.
 - `/kanye`: Retrieve a random Kanye West quote.
+- `/kill`: Stop the bot's process.
 - `/math <expression>`: Evaluate provided math expression.
 - `/nasa [details:True]`: Retrieve the NASA photo of the day.
 - `/ping`: Responds with pong.
 - `/streak [stats:True]`: Keep a daily streak going!
+- `/test`: Run a series of tests on the bot.
 
 ## 💡 To-Do
 
