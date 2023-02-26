@@ -13,5 +13,5 @@ async def kill(ctx):
 
         sys.exit()
     else:
-        content = f"👅 Nice try! <@{ctx.user.id}> **Permission Denied** ❌"
+        content = f"❌ **Permission Denied.** Nice try <@{ctx.user.id}>!"
         await ctx.respond(content=content)
