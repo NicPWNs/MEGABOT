@@ -178,8 +178,8 @@ async def streak(ctx, stats):
         emote = "💀"
     elif streak < 100:
         emote = "💎"
-    elif streak < 125:
-        emote = "💯"
+    elif streak < 101:
+        emote = "💯 - *Welcome to Party Mode*"
     else:
         emote = random_emoji()
 

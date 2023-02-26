@@ -19,7 +19,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - [x] Add `/` application commands
 - [x] Migrate all working commands from [BlessThisMess](https://github.com/NicPWNs/Discord-BTM-Bot)
 - [x] Restructure project and commands
-- [ ] Add random emoji to `/streak` > 125
+- [x] Add random emoji to `/streak` > 100
 - [ ] Fix DST for `/streak` ?
 - [ ] Add `/emote`. Was broken on [BlessThisMess](https://github.com/NicPWNs/Discord-BTM-Bot)
 - [ ] Improve CI/CD pipeline with releases/packages

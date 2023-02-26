@@ -5,6 +5,7 @@ from itertools import accumulate
 
 # Unicode Version 15.0
 # https://www.unicode.org/charts/#symbols
+
 EMOJI_RANGES_UNICODE = [
     # https://www.unicode.org/charts/PDF/U2600.pdf
     ('\U00002600', '\U000026FF'),
@@ -27,7 +28,7 @@ def random_emoji():
     count = [ord(r[-1]) - ord(r[0]) + 1 for r in EMOJI_RANGES_UNICODE]
     weightDist = list(accumulate(count))
 
-    # Get one point in the multiple ranges
+    # Get one index in the multiple ranges
     indexIndex = randrange(weightDist[-1])
 
     # Select the correct range
