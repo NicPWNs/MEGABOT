@@ -145,7 +145,7 @@ if __name__ == "__main__":
         input_type=str,
         required=True
     )
-    async def call(ctx):
-        await play(ctx)
+    async def call(ctx, search):
+        await play(ctx, search)
 
     bot.run(TOKEN)
