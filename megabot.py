@@ -160,7 +160,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await pause(ctx)
 
-    @bot.slash_command(name="resume", description="Resumes music. ", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="resume", description="Resumes music.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await resume(ctx)
 
