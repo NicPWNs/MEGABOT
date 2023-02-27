@@ -27,7 +27,8 @@ jobs:
             sudo yum install git libffi-devel python3-devel -y
             wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
             tar xvf ffmpeg-release-amd64-static.tar.xz
-            mv ffmpeg-*-amd64-static/ff* /usr/local/bin/
+            sudo mv ffmpeg-*-amd64-static/ff* /usr/local/bin/
+            sudo rm -rf ffmpeg*
             sudo timedatectl set-timezone America/New_York
             sudo amazon-linux-extras install python3.8 -y
             sudo rm /usr/bin/python3
