@@ -38,7 +38,7 @@ async def play(ctx, search):
 
     voice.play(discord.FFmpegPCMAudio(source=f"media/{id}.mp3"))
     voice.source = discord.PCMVolumeTransformer(
-        original=voice.source, volume=0.075)
+        original=voice.source, volume=0.1)
 
     content = f"Playing ! "
 

@@ -24,7 +24,7 @@ jobs:
           SCRIPT_BEFORE: |
             sudo yum update -y
             sudo yum upgrade -y
-            sudo yum install git libffi-devel python3-devel -y
+            sudo yum install git libffi-devel python3-devel opus -y
             wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
             tar xvf ffmpeg-release-amd64-static.tar.xz
             sudo mv ffmpeg-*-amd64-static/ff* /usr/local/bin/
