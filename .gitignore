@@ -160,8 +160,8 @@ cython_debug/
 #.idea/
 
 # Other
-.exe
-.mp3
-.wav
+*.exe
+*.mp3
+*.wav
 downloaded.txt
 media/
