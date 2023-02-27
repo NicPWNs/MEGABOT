@@ -1,24 +1,21 @@
 #!/usr/bin/env python3
-import time
+import json
 import discord
-import yt_dlp
+from yt_dlp import YoutubeDL
 
 
 async def play(ctx, search):
 
-    if ctx.author.voice is None:
-        await ctx.send("You are not in a voice channel!")
+    await ctx.respond(content="*⏳ Loading...*")
 
-    ydl_opts = {
+    ytdlOpts = {
         'quiet': True,
         'outtmpl': "media/%(id)s",
         'default_search': 'ytsearch',
+        'no_post_overwrites': True,
+        'no-part': True,
         'format': 'bestaudio/best',
         'prefer_ffmpeg': True,
-        'force_overwrites': True,
-        'nocheckcertificate': True,
-        'no_warnings': True,
-        'noplaylist': True,
         'postprocessors': [{
             'key': 'FFmpegExtractAudio',
             'preferredcodec': 'mp3',
@@ -26,23 +23,23 @@ async def play(ctx, search):
         }],
     }
 
-    FFMPEG_OPTIONS = {
-        'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+    with YoutubeDL(ytdlOpts) as ytdl:
+        info = ytdl.extract_info(search, download=False)
+
+    id = info["entries"][0]["id"]
+
+    ytdlOpts['download_archive'] = 'downloaded.txt'
+
+    with YoutubeDL(ytdlOpts) as ytdl:
+        ytdl.download(search)
 
     channel = ctx.author.voice.channel
-    voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+    voice = await channel.connect()
 
-    if voice and voice.is_connected():
-        await voice.move_to(channel)
-    else:
-        voice = await channel.connect()
+    voice.play(discord.FFmpegPCMAudio(source=f"media/{id}.mp3"))
+    voice.source = discord.PCMVolumeTransformer(
+        original=voice.source, volume=0.075)
 
-    ctx.voice_client.stop()
+    content = "Playing!"
 
-    with yt_dlp.YoutubeDL(ydl_opts) as ydl:
-        info = ydl.extract_info(url=search, download=False)
-        url = info["entries"][0]["formats"][0]['url']
-
-        source = await discord.FFmpegOpusAudio.from_probe(source=url, method='fallback', **FFMPEG_OPTIONS)
-        voice.play(source)
-        voice.is_playing()
+    await ctx.edit(content=content)

@@ -163,3 +163,5 @@ cython_debug/
 .exe
 .mp3
 .wav
+.txt
+media/
