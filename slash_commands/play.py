@@ -20,16 +20,9 @@ ytdlOpts = {
 }
 
 
-async def play(ctx, search, queue, stop):
+async def play(ctx, search, queue):
 
     await ctx.respond(content="*⏳ Loading...*")
-
-    if stop:
-        voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-        await voice.disconnect()
-        content = f"**🔇  Music Stopped!**"
-        await ctx.edit(content=content)
-        return
 
     channel = ctx.author.voice.channel
     voice = await channel.connect()
