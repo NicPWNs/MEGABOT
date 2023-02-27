@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import json
 import discord
 from yt_dlp import YoutubeDL
 
@@ -9,7 +8,7 @@ ytdlOpts = {
     'outtmpl': "media/%(id)s",
     'default_search': 'ytsearch',
     'no_post_overwrites': True,
-    'no-part': True,
+    'no_part': True,
     'format': 'bestaudio/best',
     'prefer_ffmpeg': True,
     'postprocessors': [{
@@ -22,7 +21,13 @@ ytdlOpts = {
 
 async def play(ctx, search, queue):
 
+    info = {}
+
     await ctx.respond(content="*⏳ Loading...*")
+
+    if not ctx.author.voice:
+        await ctx.edit(content=f"**❌  <@{ctx.user.id}> is not connected to a voice channel!**")
+        return
 
     channel = ctx.author.voice.channel
     voice = await channel.connect()
@@ -50,5 +55,7 @@ def getSource(search, id):
         ytdl.download(search)
 
     source = f"media/{id}.mp3"
+
+    del ytdlOpts['download_archive']
 
     return source

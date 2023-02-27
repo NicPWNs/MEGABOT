@@ -13,8 +13,10 @@ from slash_commands.kanye import kanye
 from slash_commands.kill import kill
 from slash_commands.math import math
 from slash_commands.nasa import nasa
+from slash_commands.pause import pause
 from slash_commands.ping import ping
 from slash_commands.play import play
+from slash_commands.resume import resume
 from slash_commands.stop import stop
 from slash_commands.streak import streak
 from slash_commands.test import test
@@ -148,10 +150,18 @@ if __name__ == "__main__":
         required=True
     )
     async def call(ctx, search):
-        await play(ctx, search, queue, stop=False)
+        await play(ctx, search, queue)
 
     @bot.slash_command(name="stop", description="Stops music.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await stop(ctx)
+
+    @bot.slash_command(name="pause", description="Pauses music.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await pause(ctx)
+
+    @bot.slash_command(name="resume", description="Resumes music.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await resume(ctx)
 
     bot.run(TOKEN)
