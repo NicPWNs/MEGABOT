@@ -1,8 +1,8 @@
-__pycache__/
 .env
 .venv
 env/
 venv/
+__pycache__/
 *.exe
 *.mp3
 *.wav
