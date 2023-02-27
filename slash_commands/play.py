@@ -27,6 +27,7 @@ async def play(ctx, search):
         info = ytdl.extract_info(search, download=False)
 
     id = info["entries"][0]["id"]
+    title = info["entries"][0]["title"]
 
     ytdlOpts['download_archive'] = 'downloaded.txt'
 
@@ -40,6 +41,6 @@ async def play(ctx, search):
     voice.source = discord.PCMVolumeTransformer(
         original=voice.source, volume=0.1)
 
-    content = f"Playing ! "
+    content = f"🎵  Playing `{title}`"
 
     await ctx.edit(content=content)
