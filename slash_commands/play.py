@@ -40,6 +40,6 @@ async def play(ctx, search):
 
     id = info["entries"][0]["id"]
 
-    content = f"Playing !"
+    content = f"Playing ! "
 
     await ctx.edit(content=content)
