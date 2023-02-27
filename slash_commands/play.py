@@ -40,7 +40,7 @@ async def play(ctx, search, queue):
 
     voice.play(discord.FFmpegPCMAudio(source=getSource(search, id)))
     voice.source = discord.PCMVolumeTransformer(
-        original=voice.source, volume=0.1)
+        original=voice.source, volume=0.25)
 
     content = f"**🎵  Playing `{title}`**"
 
