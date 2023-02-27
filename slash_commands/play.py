@@ -26,6 +26,8 @@ async def play(ctx, search):
     with YoutubeDL(ytdlOpts) as ytdl:
         info = ytdl.extract_info(search, download=False)
 
+    id = info["entries"][0]["id"]
+
     ytdlOpts['download_archive'] = 'downloaded.txt'
 
     with YoutubeDL(ytdlOpts) as ytdl:
@@ -37,8 +39,6 @@ async def play(ctx, search):
     voice.play(discord.FFmpegPCMAudio(source=f"media/{id}.mp3"))
     voice.source = discord.PCMVolumeTransformer(
         original=voice.source, volume=0.075)
-
-    id = info["entries"][0]["id"]
 
     content = f"Playing ! "
 
