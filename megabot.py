@@ -138,7 +138,6 @@ if __name__ == "__main__":
     @bot.slash_command(name="test", description="Test MEGABOT.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await test(ctx, startTime)
-        await ctx.channel.send('⌛ Testing event listeners...')
 
     @bot.slash_command(name="kill", description="Stop MEGABOT. (Admin Only)", guild_ids=[GUILD_ID])
     async def call(ctx):

@@ -22,3 +22,5 @@ async def test(ctx, startTime):
     content += f"👂 MEGABOT is testing event listeners:\n‏"
 
     await ctx.respond(content=content)
+
+    await ctx.channel.send('⌛ Testing event listeners...')
