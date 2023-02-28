@@ -178,7 +178,7 @@ if __name__ == "__main__":
         input_type=int,
         required=True
     )
-    async def call(ctx):
-        await rpg(ctx)
+    async def call(ctx, age, startingcash):
+        await rpg(ctx, age, startingcash)
 
     bot.run(TOKEN)
