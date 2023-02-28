@@ -3,18 +3,33 @@
 #
 
 async def retirement(ctx, age, startingcash, yearlysavings, desiredincome, growthrate):
-    money = startingcash
-    growthrate = (growthrate / 100) + 1
+
+    sustainingyear = 0
+    halfwaymoney = 0
+    testage = 0
     ageset = False
+    startingage = int(age)
+    age = int(age)
+    startingcash = float(startingcash)
+    yearlysavings = float(yearlysavings)
+    desiredincome = float(desiredincome)
+    growthrate = float(growthrate)
+
+    money = startingcash
+
+    growthrate = (growthrate / 100) + 1
+
     while age < 60:
         money = (money + yearlysavings) * growthrate
         annualdividends = money * .04
 
-        if age == (60-age)/2:
+        testage = int(((60-age)/2) + (startingage))
+
+        if age == testage:
             halfwaymoney = money
 
         if annualdividends >= desiredincome and ageset is False:
-            sustainingyear = age
+            sustainingyear = str(age)
             ageset = True
         age = age + 1
     investmentworth = money
@@ -26,8 +41,12 @@ async def retirement(ctx, age, startingcash, yearlysavings, desiredincome, growt
     # sustainingyear => user's age when desired yearly income
     #                   is met by investment dividends.
 
-    content = f"Investment value at 60 years old => {str(investmentworth)} \n"
-    content += f"Annual Dividends at 60 years old => {str(annualdividends)} \n"
+    if sustainingyear == 0:
+        sustainingyear = str("you'll be dead, buddy")
+
+    content = f"_______________ \n Investment value at 60 years old => {str(int(investmentworth))} \n"
+    content += f"Annual Dividends at 60 years old => {str(int(annualdividends))} \n"
     content += f"Age you can live off dividends => {str(sustainingyear)} \n"
-    content += f"Investment value halfway to retirement => {str(halfwaymoney)} \n"
+    content += f"Investment value halfway to retirement => {str(int(halfwaymoney))} \n"
+    # content += f"Age {str(testage)}"  # USED FOR TESTING
     await ctx.respond(content=content)
