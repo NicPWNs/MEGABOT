@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
 
 
-async def josh(ctx):
+async def rpg(ctx):
     await ctx.respond(content="Bobby Fischer ")

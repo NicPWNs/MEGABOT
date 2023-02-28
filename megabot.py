@@ -9,7 +9,7 @@ from slash_commands.age import age
 from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.csgo import csgo
-from slash_commands.josh import josh
+from slash_commands.rpg import rpg
 from slash_commands.kanye import kanye
 from slash_commands.kill import kill
 from slash_commands.math import math
@@ -165,8 +165,8 @@ if __name__ == "__main__":
     async def call(ctx):
         await resume(ctx)
 
-    @bot.slash_command(name="josh", description="Josh's test command.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="rpg", description="survive on the moon", guild_ids=[GUILD_ID])
     async def call(ctx):
-        await josh(ctx)
+        await rpg(ctx)
 
     bot.run(TOKEN)
