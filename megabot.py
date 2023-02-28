@@ -9,7 +9,7 @@ from slash_commands.age import age
 from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.csgo import csgo
-from slash_commands.rpg import rpg
+from slash_commands.retirement import retirement
 from slash_commands.kanye import kanye
 from slash_commands.kill import kill
 from slash_commands.math import math
@@ -165,7 +165,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await resume(ctx)
 
-    @bot.slash_command(name="rpg", description="Survive on the moon.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="retirement", description="Retirement calculator for your planning pleasure.", guild_ids=[GUILD_ID])
     @option(
         name="age",
         description="How old are you?",
@@ -174,11 +174,29 @@ if __name__ == "__main__":
     )
     @option(
         name="startingcash",
-        description="Current Investments",
+        description="Current investments",
         input_type=int,
         required=True
     )
-    async def call(ctx, age, startingcash):
-        await rpg(ctx, age, startingcash)
+    @option(
+        name="yearlysavings",
+        description="Money saved each year",
+        input_type=int,
+        required=True
+    )
+    @option(
+        name="desiredincome",
+        description="Desired yearly income at retirement",
+        input_type=int,
+        required=True
+    )
+    @option(
+        name="growthrate",
+        description="Optimistic => %, Expected => %, Conservative => % ",
+        input_type=int,
+        required=True
+    )
+    async def call(ctx, age, startingcash, yearlysavings, desiredincome, growthrate):
+        await retirement(ctx, age, startingcash, yearlysavings, desiredincome, growthrate)
 
     bot.run(TOKEN)
