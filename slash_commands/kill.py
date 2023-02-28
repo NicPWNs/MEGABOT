@@ -7,7 +7,7 @@ import discord
 async def kill(ctx):
 
     guild = discord.utils.get(ctx.bot.guilds, name="MEGACORD")
-    role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
+    role = discord.utils.get(guild.roles, name="MEGAKILLERS")
 
     if role in ctx.user.roles:
 
