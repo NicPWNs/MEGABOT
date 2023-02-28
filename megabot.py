@@ -37,6 +37,7 @@ if __name__ == "__main__":
     @bot.listen('on_message')
     async def on_message(message):
 
+        # Supports slash_commands/test.py
         if 'testing event listeners...' in message.content.lower():
             await message.edit('\n\n✅ MEGABOT Testing Done!')
 
