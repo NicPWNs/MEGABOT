@@ -13,7 +13,7 @@ async def kill(ctx):
 
         pid = os.getpid()
 
-        content = f"🛑 **Stopping MEGABOT on PID {pid} !**"
+        content = f"🛑 **Stopping MEGABOT on PID: {pid} !**"
         await ctx.respond(content=content)
 
         sys.exit()
