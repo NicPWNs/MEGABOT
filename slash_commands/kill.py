@@ -1,11 +1,16 @@
 #!/usr/bin/env python3
 import os
 import sys
+import discord
 
 
 async def kill(ctx):
 
-    if str(ctx.user.id) == str(os.getenv('OWNER_ID')):
+    guild = discord.utils.get(ctx.bot.guilds, name="MEGACORD")
+    role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
+
+    if role in ctx.user.roles:
+
         pid = os.getpid()
 
         content = f"🛑 **Stopping MEGABOT on PID {pid} !**"
