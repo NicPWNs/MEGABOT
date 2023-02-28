@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
-
+# inputs are as follows
+#
 
 async def retirement(ctx, age, startingcash, yearlysavings, desiredincome, growthrate):
     money = startingcash
@@ -15,6 +16,7 @@ async def retirement(ctx, age, startingcash, yearlysavings, desiredincome, growt
         if annualdividends >= desiredincome and ageset is False:
             sustainingyear = age
             ageset = True
+        age = age + 1
     investmentworth = money
 
     # outputs variables are as follows
