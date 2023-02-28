@@ -2,4 +2,4 @@
 
 
 async def josh(ctx):
-    await ctx.respond(content="Bobby Fischer")
+    await ctx.respond(content="Bobby Fischer ")
