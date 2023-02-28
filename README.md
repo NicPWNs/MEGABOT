@@ -12,7 +12,11 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/kill`: Stop the bot's process.
 - `/math <expression>`: Evaluate provided math expression.
 - `/nasa [details:True]`: Retrieve the NASA photo of the day.
+- `/pause`: Pauses music.
 - `/ping`: Responds with pong.
+- `/play`: Plays music.
+- `/resume`: Resumes music.
+- `/stop`: Stops music.
 - `/streak [stats:True]`: Keep a daily streak going!
 - `/test`: Run a series of tests on the bot.
 
@@ -23,6 +27,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - [x] Restructure project and commands
 - [x] Add random emoji to `/streak` > 100
 - [x] Fix DST for `/streak`
+- [x] Add `/play`. Music!
+- [ ] Add `/queue` and `/skip` to music
 - [ ] Improve CI/CD with checks/tests (lint)
 - [ ] Add `/emote`. Was broken on [BlessThisMess](https://github.com/NicPWNs/Discord-BTM-Bot)
-- [ ] Add `/play`. Music!

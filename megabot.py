@@ -146,7 +146,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="play", description="Plays music.", guild_ids=[GUILD_ID])
     @option(
         name="search",
-        description="Music to search for.",
+        description="Song to search for on YouTube.",
         input_type=str,
         required=True
     )
@@ -165,7 +165,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await resume(ctx)
 
-    @bot.slash_command(name="rpg", description="survive on the moon", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="rpg", description="Survive on the moon.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await rpg(ctx)
 
