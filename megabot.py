@@ -37,7 +37,7 @@ if __name__ == "__main__":
     @bot.listen('on_message')
     async def on_message(message):
 
-        if 'testing its event listeners' in message.content.lower():
+        if '⌛ Testing event listeners...' in message.content.lower():
             await message.channel.send('\n\n✅ MEGABOT Testing Done!')
 
         if message.author == bot.user:
@@ -138,7 +138,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="test", description="Test MEGABOT.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await test(ctx, startTime)
-        await ctx.channel.send('testing its event listeners')
+        await ctx.channel.send('⌛ Testing event listeners...')
 
     @bot.slash_command(name="kill", description="Stop MEGABOT. (Admin Only)", guild_ids=[GUILD_ID])
     async def call(ctx):
