@@ -19,6 +19,6 @@ async def test(ctx, startTime):
     content = f"⚙️ MEGABOT is running on **{hostname}** (PID {pid})\n\n"
     content += f"🐍 MEGABOT is running on **Python v{py}**\n\n"
     content += f"⏲️ MEGABOT is running for **{runTime}s**\n\n"
-    content += f"👂 MEGABOT is testing its event listeners:\n‏"
+    content += f"👂 MEGABOT is testing event listeners:\n‏"
 
     await ctx.respond(content=content)
