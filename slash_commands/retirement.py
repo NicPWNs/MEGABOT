@@ -12,7 +12,7 @@ async def retirement(ctx, age, startingcash, yearlysavings, desiredincome, growt
 
         if age == (60-age)/2:
             halfwaymoney = money
-        # PROBLEM PROBLEM PROBLEM, annualdividends will never exactly equal desiredincome
+
         if annualdividends >= desiredincome and ageset is False:
             sustainingyear = age
             ageset = True

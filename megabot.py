@@ -200,3 +200,4 @@ if __name__ == "__main__":
         await retirement(ctx, age, startingcash, yearlysavings, desiredincome, growthrate)
 
     bot.run(TOKEN)
+# start
