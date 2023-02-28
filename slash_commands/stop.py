@@ -7,8 +7,12 @@ async def stop(ctx):
     await ctx.respond(content="*⏳ Loading...*")
 
     voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-    await voice.disconnect()
+    try:
+        await voice.disconnect()
 
-    content = f"**🔇  Music Stopped!**"
+        content = f"**🔇  Music Stopped!**"
+
+    except:
+        content = f"**❌  MEGABOT is not connected!**"
 
     await ctx.edit(content=content)
