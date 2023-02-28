@@ -166,6 +166,18 @@ if __name__ == "__main__":
         await resume(ctx)
 
     @bot.slash_command(name="rpg", description="Survive on the moon.", guild_ids=[GUILD_ID])
+    @option(
+        name="age",
+        description="How old are you?",
+        input_type=int,
+        required=True
+    )
+    @option(
+        name="startingcash",
+        description="Current Investments",
+        input_type=int,
+        required=True
+    )
     async def call(ctx):
         await rpg(ctx)
 
