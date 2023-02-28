@@ -14,5 +14,6 @@ async def stop(ctx):
 
     except:
         content = f"**❌  MEGABOT is not connected!**"
+        pass
 
     await ctx.edit(content=content)
