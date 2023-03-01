@@ -24,7 +24,7 @@ async def play(ctx, search, queue):
 
     info = {}
 
-    await ctx.respond(content="*⏳ Loading...*")
+    response = await ctx.respond(content="*⏳ Loading...*")
 
     if not ctx.author.voice:
         await ctx.edit(content=f"**❌  <@{ctx.user.id}> is not connected to a voice channel!**")
@@ -50,7 +50,7 @@ async def play(ctx, search, queue):
                           description=f"{title}"
                         )
 
-    await ctx.edit(embed=embed)
+    await response.edit(embed=embed)
 
 
 def getSource(search, id):
