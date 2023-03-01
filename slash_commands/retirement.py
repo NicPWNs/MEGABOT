@@ -44,9 +44,9 @@ async def retirement(ctx, age, startingcash, yearlysavings, desiredincome, growt
     if sustainingyear == 0:
         sustainingyear = str("you'll be dead, buddy")
 
-    content = f"_______________ \n Investment value at 60 years old => {str(int(investmentworth))} \n"
-    content += f"Annual Dividends at 60 years old => {str(int(annualdividends))} \n"
+    content = f"_______________ \n Investment value at 60 years old => {str(format(int(investmentworth), ',d'))} \n"
+    content += f"Annual Dividends at 60 years old => {str(format(int(annualdividends), ',d'))} \n"
     content += f"Age you can live off dividends => {str(sustainingyear)} \n"
     content += f"Investment value halfway to retirement => {str(int(halfwaymoney))} \n"
-    # content += f"Age {str(testage)}"  # USED FOR TESTING
+    # content += f"Age {str(testage)}"  # USED FOR TESTING.
     await ctx.respond(content=content)
