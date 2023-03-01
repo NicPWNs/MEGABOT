@@ -23,7 +23,10 @@ async def play(ctx, search, queue):
 
     info = {}
 
-    await ctx.respond(content="*⏳ Loading...*")
+    embed = discord.Embed(color="green", title="Test Title")
+
+    # await ctx.respond(content="*⏳ Loading...*")
+    await ctx.respond(content=embed)
 
     if not ctx.author.voice:
         await ctx.edit(content=f"**❌  <@{ctx.user.id}> is not connected to a voice channel!**")
@@ -41,8 +44,6 @@ async def play(ctx, search, queue):
     voice.play(discord.FFmpegPCMAudio(source=getSource(search, id)))
     voice.source = discord.PCMVolumeTransformer(
         original=voice.source, volume=0.25)
-
-    embed = discord.Embed(color="green", title=title)
 
     content = f"**🎵  Playing `{title}`**"
 
