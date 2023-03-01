@@ -43,7 +43,8 @@ async def play(ctx, search, queue):
         original=voice.source, volume=0.25)
 
     embed = discord.Embed(color=0x2a9d8f,
-                          description=f"**🎵  Playing `{title}`**"
+                          title=f"🎵  Now Playing",
+                          description=f"{title}"
                         )
 
     await ctx.edit(embed=embed)
