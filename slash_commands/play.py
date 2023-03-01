@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import re
 import discord
 from yt_dlp import YoutubeDL
 
@@ -38,11 +39,13 @@ async def play(ctx, search, queue):
     id = info["entries"][0]["id"]
     title = info["entries"][0]["title"]
 
+    title = re.sub("\[.*\]", "", title)
+
     voice.play(discord.FFmpegPCMAudio(source=getSource(search, id)))
     voice.source = discord.PCMVolumeTransformer(
         original=voice.source, volume=0.25)
 
-    embed = discord.Embed(color=0x2a9d8f,
+    embed = discord.Embed(color=0x5daced,
                           title=f"🎵  Now Playing",
                           description=f"{title}"
                         )
