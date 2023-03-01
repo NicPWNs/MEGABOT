@@ -9,3 +9,4 @@ python-dotenv
 requests
 yt-dlp
 boto3
+random-unicode-emoji
