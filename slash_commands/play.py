@@ -24,7 +24,12 @@ async def play(ctx, search, queue):
 
     info = {}
 
-    response = await ctx.respond(content="*⏳ Loading...*")
+    embed = discord.Embed(color=0xfee9b6,
+                          title=f"⏳  Loading...",
+                          description=f"Downloading Song Choice"
+                        )
+
+    response = await ctx.respond(embed=embed)
 
     if not ctx.author.voice:
         await ctx.edit(content=f"**❌  <@{ctx.user.id}> is not connected to a voice channel!**")
