@@ -25,11 +25,11 @@ async def play(ctx, search, queue):
     info = {}
 
     embed = discord.Embed(color=0xfee9b6,
-                          title=f"⏳  Loading...",
-                          description=f"Downloading Song Choice"
+                          title="⏳  Searching...",
+                          description=f"**Request:** {search}"
                         )
 
-    response = await ctx.respond(embed=embed)
+    response = await ctx.channel.send(embed=embed)
 
     if not ctx.author.voice:
         await ctx.edit(content=f"**❌  <@{ctx.user.id}> is not connected to a voice channel!**")
@@ -43,6 +43,7 @@ async def play(ctx, search, queue):
 
     id = info["entries"][0]["id"]
     title = info["entries"][0]["title"]
+    thumbnail = info["entries"][0]["thumbnail"]
 
     title = re.sub("\[.*\]", "", title)
 
@@ -53,7 +54,7 @@ async def play(ctx, search, queue):
     embed = discord.Embed(color=0x5daced,
                           title=f"🎵  Now Playing",
                           description=f"{title}"
-                        )
+                        ).set_thumbnail(url=thumbnail)
 
     await response.edit(embed=embed)
 
