@@ -42,9 +42,11 @@ async def play(ctx, search, queue):
     voice.source = discord.PCMVolumeTransformer(
         original=voice.source, volume=0.25)
 
+    embed = discord.Embed(color="green", title=title)
+
     content = f"**🎵  Playing `{title}`**"
 
-    await ctx.edit(content=content)
+    await ctx.edit(content=embed)
 
 
 def getSource(search, id):
