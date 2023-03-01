@@ -37,8 +37,9 @@ if __name__ == "__main__":
     @bot.listen('on_message')
     async def on_message(message):
 
-        if 'testing its event listeners' in message.content.lower():
-            await message.channel.send('\n\n✅ MEGABOT Testing Done!')
+        # Supports slash_commands/test.py
+        if 'testing event listeners...' in message.content.lower():
+            await message.edit('\n\n✅ MEGABOT Testing Done!')
 
         if message.author == bot.user:
             return
@@ -103,7 +104,7 @@ if __name__ == "__main__":
     @option(
         name="details",
         description="Provide the explanation of the photo.",
-        input_type=discord.SlashCommandOptionType.boolean,
+        input_type=bool,
         required=False,
         choices=["True", "False"]
     )
@@ -118,7 +119,7 @@ if __name__ == "__main__":
     @option(
         name="username",
         description="User on Steam, a Steam ID, Steam Community URI, or Steam Vanity Username.",
-        input_type=discord.SlashCommandOptionType.string,
+        input_type=str,
         required=True
     )
     async def call(ctx, username):
@@ -128,7 +129,7 @@ if __name__ == "__main__":
     @option(
         name="stats",
         description="Get streak stats.",
-        input_type=discord.SlashCommandOptionType.boolean,
+        input_type=bool,
         required=False,
         choices=["True", "False"]
     )

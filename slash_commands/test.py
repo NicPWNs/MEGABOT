@@ -13,11 +13,14 @@ async def test(ctx, startTime):
     py = sys.version[0:3]
     runTime = str(datetime.timedelta(seconds=int(time.time() - startTime)))
 
-    test1 = f"⚙️ MEGABOT is running on {hostname} (PID {pid})\n\n"
-    test2 = f"🐍 MEGABOT is running on Python v{py}\n\n"
-    test3 = f"⏲️ MEGABOT has been running for {runTime}s\n\n"
-    test4 = f"👂 MEGABOT is testing its event listeners:\n‏"
+    if "ec2" in hostname:
+        hostname = "AWS"
 
-    content = test1 + test2 + test3 + test4
+    content = f"⚙️ MEGABOT is running on **{hostname}** (PID {pid})\n\n"
+    content += f"🐍 MEGABOT is running on **Python v{py}**\n\n"
+    content += f"⏲️ MEGABOT is running for **{runTime}s**\n\n"
+    content += f"👂 MEGABOT is testing event listeners:\n‏"
 
     await ctx.respond(content=content)
+
+    await ctx.channel.send('⌛ Testing event listeners...')
