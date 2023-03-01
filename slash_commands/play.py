@@ -23,7 +23,7 @@ async def play(ctx, search, queue):
 
     info = {}
 
-    embed = discord.Embed(color="green", title="Test Title")
+    embed = discord.Embed(color=0xFF5733, title="Test Title", description="Test Description")
 
     # await ctx.respond(content="*⏳ Loading...*")
     await ctx.respond(embed=embed)
@@ -47,7 +47,7 @@ async def play(ctx, search, queue):
 
     content = f"**🎵  Playing `{title}`**"
 
-    await ctx.edit(content=embed)
+    # await ctx.edit(content=embed)
 
 
 def getSource(search, id):
