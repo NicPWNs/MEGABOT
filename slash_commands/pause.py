@@ -4,23 +4,24 @@ import discord
 
 async def pause(ctx):
 
-    await ctx.respond(content="*⏳ Loading...*")
+    embed = discord.Embed(color=0xfee9b6,
+                        title="⏳  Loading...")
+
+    interaction = await ctx.respond(embed=embed)
 
     voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
 
     try:
         if voice.is_paused():
             voice.resume()
-
-            content = f"**▶️  Music Resumed!**"
+            embed = discord.Embed(color=0x3a88c2, title="▶️  Music Resumed")
 
         else:
             voice.pause()
-
-            content = f"**⏸️  Music Paused!**"
+            embed = discord.Embed(color=0x3a88c2, title="⏸️  Music Paused")
 
     except:
-        content = f"**❌  MEGABOT is not connected!**"
+        embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice")
         pass
 
-    await ctx.edit(content=content)
+    await interaction.edit_original_response(embed=embed)

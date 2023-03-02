@@ -4,6 +4,7 @@ import time
 import discord
 from discord import option
 from dotenv import load_dotenv
+from random_unicode_emoji import random_emoji
 
 from slash_commands.age import age
 from slash_commands.bless import bless
@@ -43,6 +44,11 @@ if __name__ == "__main__":
 
         if message.author == bot.user:
             return
+
+        try:
+            await message.add_reaction(random_emoji())
+        except:
+            pass
 
         if 'birthday' in message.content.lower():
             await message.channel.send('Happy Birthday! 🎈🎉')

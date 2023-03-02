@@ -4,16 +4,19 @@ import discord
 
 async def stop(ctx):
 
-    await ctx.respond(content="*⏳ Loading...*")
+    embed = discord.Embed(color=0xfee9b6,
+                        title="⏳  Loading...")
+
+    interaction = await ctx.respond(embed=embed)
 
     voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
     try:
         await voice.disconnect()
+        embed = discord.Embed(color=0xdd2f45, title="🔇  Music Stopped")
 
-        content = f"**🔇  Music Stopped!**"
 
     except:
-        content = f"**❌  MEGABOT is not connected!**"
+        embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice")
         pass
 
-    await ctx.edit(content=content)
+    await interaction.edit_original_response(embed=embed)
