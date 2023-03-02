@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import re
+import json
 import discord
 from yt_dlp import YoutubeDL
 
@@ -10,6 +11,7 @@ ytdlOpts = {
     'default_search': 'ytsearch',
     'no_post_overwrites': True,
     'no_part': True,
+    # 'download_archive': 'downloaded.txt',
     'format': 'bestaudio/best',
     'prefer_ffmpeg': True,
     'postprocessors': [{
@@ -19,24 +21,35 @@ ytdlOpts = {
     }],
 }
 
+FFMPEG_OPTS = {'before_options': '-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5', 'options': '-vn'}
+
 
 async def play(ctx, search, queue):
 
     info = {}
 
     embed = discord.Embed(color=0xfee9b6,
-                          title="⏳  Searching...",
-                          description=f"**Request:** {search}"
+                        title="⏳  Searching...",
+                        description=f"**Request:** {search}"
                         )
 
-    response = await ctx.channel.send(embed=embed)
+    interaction = await ctx.respond(embed=embed)
 
     if not ctx.author.voice:
-        await ctx.edit(content=f"**❌  <@{ctx.user.id}> is not connected to a voice channel!**")
+        embed = discord.Embed(color=0xdd2f45,
+                          title="❌  Error",
+                          description=f"<@{ctx.user.id}> is not connected to a voice channel!"
+                        ).set_thumbnail(url=ctx.user.display_avatar)
+
+        await interaction.edit_original_response(embed=embed)
         return
 
     channel = ctx.author.voice.channel
-    voice = await channel.connect()
+    try:
+        voice = await channel.connect()
+    except:
+        voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+        await voice.move_to(channel)
 
     with YoutubeDL(ytdlOpts) as ytdl:
         info = ytdl.extract_info(search, download=False)
@@ -44,30 +57,19 @@ async def play(ctx, search, queue):
     id = info["entries"][0]["id"]
     title = info["entries"][0]["title"]
     thumbnail = info["entries"][0]["thumbnail"]
+    url = info["entries"][0]["formats"][0]['url']
+    source = f"media/{id}.mp3"
 
     title = re.sub("\[.*\]", "", title)
 
-    voice.play(discord.FFmpegPCMAudio(source=getSource(search, id)))
-    voice.source = discord.PCMVolumeTransformer(
-        original=voice.source, volume=0.25)
+    source = await discord.FFmpegOpusAudio.from_probe(source=url, **FFMPEG_OPTS)
+    voice.play(source)
+    # voice.source = discord.PCMVolumeTransformer(
+    #     original=voice.source, volume=0.25)
 
     embed = discord.Embed(color=0x5daced,
-                          title=f"🎵  Now Playing",
+                          title="🎵  Now Playing",
                           description=f"{title}"
                         ).set_thumbnail(url=thumbnail)
 
-    await response.edit(embed=embed)
-
-
-def getSource(search, id):
-
-    ytdlOpts['download_archive'] = 'downloaded.txt'
-
-    with YoutubeDL(ytdlOpts) as ytdl:
-        ytdl.download(search)
-
-    source = f"media/{id}.mp3"
-
-    del ytdlOpts['download_archive']
-
-    return source
+    await interaction.edit_original_response(embed=embed)
