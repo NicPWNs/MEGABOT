@@ -10,7 +10,7 @@ from slash_commands.age import age
 from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.csgo import csgo
-from slash_commands.retirement import retirement
+from slash_commands.emote import emote
 from slash_commands.kanye import kanye
 from slash_commands.kill import kill
 from slash_commands.math import math
@@ -18,6 +18,7 @@ from slash_commands.nasa import nasa
 from slash_commands.pause import pause
 from slash_commands.ping import ping
 from slash_commands.play import play
+from slash_commands.retirement import retirement
 from slash_commands.resume import resume
 from slash_commands.stop import stop
 from slash_commands.streak import streak
@@ -171,6 +172,23 @@ if __name__ == "__main__":
     @bot.slash_command(name="resume", description="Resumes music.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await resume(ctx)
+
+    @bot.slash_command(name="emote", description="Resumes music.", guild_ids=[GUILD_ID])
+    @option(
+        name="search",
+        description="Emote to search for.",
+        input_type=str,
+        required=True
+    )
+    @option(
+        name="add",
+        description="Add emote to server?",
+        input_type=bool,
+        required=False,
+        choices=["True", "False"]
+    )
+    async def call(ctx, search, add):
+        await emote(ctx, search, add)
 
     @bot.slash_command(name="retirement", description="Retirement calculator for your planning pleasure.", guild_ids=[GUILD_ID])
     @option(

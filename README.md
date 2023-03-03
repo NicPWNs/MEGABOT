@@ -24,10 +24,10 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 
 - [x] Add `/` application commands
 - [x] Migrate all working commands from [BlessThisMess](https://github.com/NicPWNs/Discord-BTM-Bot)
+- [x] Add `/emote`. Was broken on [BlessThisMess](https://github.com/NicPWNs/Discord-BTM-Bot)
 - [x] Restructure project and commands
 - [x] Add random emoji to `/streak` > 100
 - [x] Fix DST for `/streak`
 - [x] Add `/play`. Music!
 - [ ] Add `/queue` and `/skip` to music
 - [ ] Improve CI/CD with checks/tests (lint)
-- [ ] Add `/emote`. Was broken on [BlessThisMess](https://github.com/NicPWNs/Discord-BTM-Bot)
