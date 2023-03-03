@@ -10,7 +10,9 @@ from random_unicode_emoji import random_emoji
 from slash_commands.age import age
 from slash_commands.bless import bless
 from slash_commands.chat import chat
+from slash_commands.coin import coin
 from slash_commands.csgo import csgo
+from slash_commands.dice import dice
 from slash_commands.emote import emote
 from slash_commands.kanye import kanye
 from slash_commands.kill import kill
@@ -243,5 +245,13 @@ if __name__ == "__main__":
     )
     async def call(ctx, age, startingcash, yearlysavings, desiredincome, growthrate):
         await retirement(ctx, age, startingcash, yearlysavings, desiredincome, growthrate)
+
+    @bot.slash_command(name="coin", description="Flip a coin.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await coin(ctx)
+
+    @bot.slash_command(name="dice", description="Roll a dice.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await dice(ctx)
 
     bot.run(TOKEN)
