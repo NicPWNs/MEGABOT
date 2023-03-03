@@ -8,6 +8,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/bless`: Blesses the mess!
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3)
 - `/csgo <username>`: Retrieve CS:GO stats.
+- `/emote <search> [add:true]`: Search for a 7TV emote. Optionally add it to the Discord guild.
 - `/kanye`: Retrieve a random Kanye West quote.
 - `/kill`: Stop the bot's process.
 - `/math <expression>`: Evaluate provided math expression.
