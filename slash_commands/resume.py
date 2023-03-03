@@ -4,8 +4,7 @@ import discord
 
 async def resume(ctx):
 
-    embed = discord.Embed(color=0xfee9b6,
-                        title="⏳  Loading...")
+    embed = discord.Embed(color=0xfee9b6, title="⏳  Loading...")
 
     interaction = await ctx.respond(embed=embed)
 
