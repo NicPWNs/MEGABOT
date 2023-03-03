@@ -39,4 +39,5 @@ jobs:
             aws configure set default.region us-east-1
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
             ps -ef | grep "megabot.py" | awk '{print $2}' | awk 'NR==1{print $1}' | xargs sudo kill 2>/dev/null
+            sudo rm ./media/*.part
             python3 /home/ec2-user/megabot.py >/dev/null &
