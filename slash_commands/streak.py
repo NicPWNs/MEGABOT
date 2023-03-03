@@ -1,7 +1,20 @@
 #!/usr/bin/env python3
 import boto3
+import discord
+from random import random, randint
 from datetime import datetime, timedelta
 from random_unicode_emoji import random_emoji
+
+
+async def get_random_emoji(ctx):
+    if random() < .8:
+        return random_emoji()
+    else:
+        guild = discord.utils.get(ctx.bot.guilds, name="MEGACORD")
+        emojis = await guild.fetch_emojis()
+        idx = randint(0, len(emojis) - 1)
+        emoji = emojis[idx]
+        return emoji
 
 
 async def streak(ctx, stats):
@@ -181,7 +194,7 @@ async def streak(ctx, stats):
     elif streak < 101:
         emote = "💯 - *Welcome to Party Mode*"
     else:
-        emote = random_emoji()
+        emote = str(await get_random_emoji(ctx))
 
     statMessage = ""
 
