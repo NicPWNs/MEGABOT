@@ -95,11 +95,9 @@ async def emote(ctx, search, add):
         content = url + uri
 
         if add == "True":
-            try:
-                emote = await ctx.guild.create_custom_emoji(name=name, image=image)
-                content = f"✅   **Emote Added To Server**   {emote}"
-            except:
-                content = f"❌   **Emote NOT Added To Server**"
+            emote = await ctx.guild.create_custom_emoji(name=name, image=image)
+            content = f"✅   **Emote Added To Server**   {emote}"
+
     except:
         content = "❌   **Emote Not Found! Try Again**"
         pass
