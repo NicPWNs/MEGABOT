@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import time
+from random import random, randint
 import discord
 from discord import option
 from dotenv import load_dotenv
@@ -47,7 +48,15 @@ if __name__ == "__main__":
             return
 
         try:
-            await message.add_reaction(random_emoji())
+            if random() < .6:
+                if random() < .8:
+                    await message.add_reaction(random_emoji())
+                else:
+                    guild = discord.utils.get(bot.guilds, name="MEGACORD")
+                    emojis = await guild.fetch_emojis()
+                    idx = randint(0, len(emojis) - 1)
+                    emoji = emojis[idx]
+                    await message.add_reaction(emoji)
         except:
             pass
 
