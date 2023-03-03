@@ -46,6 +46,7 @@ async def play(ctx, search, queue):
 
     id = info["entries"][0]["id"]
     title = re.sub("\[.*\]", "", info["entries"][0]["title"])
+    title = re.sub("\().*\)", "", title)
     thumbnail = info["entries"][0]["thumbnail"]
     source = f"media/{id}.mp3"
 
