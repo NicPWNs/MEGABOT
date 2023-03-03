@@ -19,7 +19,10 @@ async def get_random_emoji(ctx):
 
 async def streak(ctx, stats):
 
-    await ctx.respond(content="*⏳ Loading...*")
+    embed = discord.Embed(color=0xfee9b6,
+                        title="⏳  Loading...")
+
+    interaction = await ctx.respond(embed=embed)
 
     TABLE = "discord-streak"
     ddb = boto3.resource('dynamodb')
@@ -199,7 +202,7 @@ async def streak(ctx, stats):
     statMessage = ""
 
     if stats == "True":
-        statMessage = "\n\n📊  __**Streak Stats**__\n**All-Time Highest Streak:** " + \
+        statMessage = "\n\n📊\n**All-Time Highest Streak:** " + \
             str(dataStats['Item']['stat']) + \
             " *by* <@" + \
             str(dataStats['Item']['userId']) + \
@@ -215,6 +218,13 @@ async def streak(ctx, stats):
             str(ctx.user.id) + ">"
 
     content = prefix + "Your streak is: " + \
-        str(streak) + "  " + emote + statMessage
+        str(streak) + "  " + emote
 
-    await ctx.edit(content=f"{content}")
+    color = 0x5965f3
+
+    if "missed" in prefix:
+        color = 0xdd2f45
+
+    embed = discord.Embed(color=color, title=content, description=statMessage)
+
+    await interaction.edit_original_response(embed=embed)
