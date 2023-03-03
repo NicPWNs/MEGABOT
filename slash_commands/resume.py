@@ -19,7 +19,7 @@ async def resume(ctx):
             embed = discord.Embed(color=0xdd2f45, title="❌  Music Is Not Paused")
 
     except:
-        embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice")
+        embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice").set_thumbnail(url=ctx.bot.user.avatar.url)
         pass
 
     await interaction.edit_original_response(embed=embed)
