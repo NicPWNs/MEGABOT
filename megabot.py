@@ -21,6 +21,7 @@ from slash_commands.ping import ping
 from slash_commands.play import play
 from slash_commands.retirement import retirement
 from slash_commands.resume import resume
+from slash_commands.stock import stock
 from slash_commands.stop import stop
 from slash_commands.streak import streak
 from slash_commands.test import test
@@ -198,6 +199,16 @@ if __name__ == "__main__":
     )
     async def call(ctx, search, add):
         await emote(ctx, search, add)
+
+    @bot.slash_command(name="stock", description="Searches a stock price.", guild_ids=[GUILD_ID])
+    @option(
+        name="symbol",
+        description="Stock symbol to search for (ie. PLTR).",
+        input_type=str,
+        required=True
+    )
+    async def call(ctx, symbol):
+        await stock(ctx, symbol)
 
     @bot.slash_command(name="retirement", description="Retirement calculator for your planning pleasure.", guild_ids=[GUILD_ID])
     @option(

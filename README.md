@@ -18,6 +18,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/play`: Plays music.
 - `/resume`: Resumes music.
 - `/stop`: Stops music.
+- `/stock`: Searches a stock price.
 - `/streak [stats:True]`: Keep a daily streak going!
 - `/test`: Run a series of tests on the bot.
 
