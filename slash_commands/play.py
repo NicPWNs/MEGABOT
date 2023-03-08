@@ -9,7 +9,7 @@ import nest_asyncio
 nest_asyncio.apply()
 
 
-async def spot(ctx, search, queue):
+async def play(ctx, search, queue):
 
     embed = discord.Embed(color=0xfee9b6,
                         title="⏳  Searching...",
