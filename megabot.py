@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
 import os
 import time
-from random import random, randint
 import discord
 from discord import option
 from dotenv import load_dotenv
+from random import random, randint
 from random_unicode_emoji import random_emoji
 
 from slash_commands.age import age
