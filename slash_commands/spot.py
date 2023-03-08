@@ -1,8 +1,12 @@
 #!/usr/bin/env python3
 import os
-import time
+import asyncio
+import nest_asyncio
 import discord
-from spotdl import Spotdl
+import spotdl
+
+
+nest_asyncio.apply()
 
 
 async def spot(ctx, search, queue):
@@ -23,25 +27,23 @@ async def spot(ctx, search, queue):
         await interaction.edit_original_response(embed=embed)
         return
 
-    spotdl = Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(os.getenv('SPOTIFY_SECRET')), cache_path='./cache', headless=True)
-
-    song = spotdl.search([search])[0]
+    sdl = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(os.getenv('SPOTIFY_SECRET')), downloader_settings=None, headless=True, loop=asyncio.get_event_loop())
+    song = sdl.search([search])[0]
     title = song.name
     cover = song.cover_url
-    path = spotdl.download(song)
+    song, path = sdl.download(song)
 
     channel = ctx.author.voice.channel
 
     try:
-        voice = await channel.connect(timeout=600.0)
+        voice = await channel.connect()
     except:
         voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
         await voice.move_to(channel)
 
     try:
         voice.play(discord.FFmpegPCMAudio(source=path))
-        voice.source = discord.PCMVolumeTransformer(
-            original=voice.source, volume=0.25)
+        voice.source = discord.PCMVolumeTransformer(original=voice.source, volume=0.25)
     except:
         pass
 
