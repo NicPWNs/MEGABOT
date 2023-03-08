@@ -6,9 +6,9 @@ py-cord
 py-cord[voice]
 py-cord[speed]
 python-dotenv
+nest-asyncio
 openai
 requests
-yt-dlp
 spotdl
 boto3
 random-unicode-emoji
