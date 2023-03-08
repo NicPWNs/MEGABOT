@@ -1,27 +1,27 @@
 #!/usr/bin/env python3
 import os
-import requests
+import openai
 
 
 async def chat(ctx, prompt):
 
-    params = {
-        'model': 'gpt-3.5-turbo',
-        'messages': [{"role": "system", "content": "You are a relaxed, sarcastic, and funny bot friend, named MEGABOT."},
-                     {'role': 'user', 'content': prompt}],
-        'user': str(ctx.user.id)
-    }
-
-    headers = {
-        'Content-Type': 'application/json',
-        'Authorization': str(os.getenv('OPENAI_TOKEN')),
-    }
+    openai.api_key = str(os.getenv('OPENAI_TOKEN'))
 
     await ctx.respond(content='*⏳ Loading...*')
 
-    r = requests.post('https://api.openai.com/v1/chat/completions',
-                      json=params, headers=headers).json()
-
-    response = r['choices'][0]['message']['content']
-
-    await ctx.edit(content=f'{response}')
+    stream = []
+    try:
+        for r in openai.ChatCompletion.create(model='gpt-3.5-turbo',
+                                            messages=[{"role": "system", "content": "You are a relaxed, sarcastic, and funny bot friend, named MEGABOT."},
+                                                        {'role': 'user', 'content': prompt}],
+                                            user=str(ctx.user.id),
+                                            stream=True):
+            try:
+                stream.append(r.choices[0].delta.content)
+                result = "".join(stream).strip()
+                await ctx.edit(content=f'{result}')
+            except:
+                pass
+    except:
+        await ctx.edit(content=f'❌ **ERROR: ChatGPT is currently overloaded. Please try again.**')
+        return

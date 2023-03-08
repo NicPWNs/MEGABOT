@@ -6,6 +6,7 @@ py-cord
 py-cord[voice]
 py-cord[speed]
 python-dotenv
+openai
 requests
 yt-dlp
 boto3
