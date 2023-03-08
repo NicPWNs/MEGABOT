@@ -7,9 +7,8 @@ async def chat(ctx, prompt):
 
     params = {
         'model': 'gpt-3.5-turbo',
-        'prompt': prompt,
-        'max_tokens': 4000,
-        'temperature': 1,
+        'messages': [{'role': 'user', 'content': prompt}],
+        'user': ctx.user.id
     }
 
     headers = {
@@ -17,11 +16,11 @@ async def chat(ctx, prompt):
         'Authorization': str(os.getenv('OPENAI_TOKEN')),
     }
 
-    await ctx.respond(content="*⏳ Loading...*")
+    await ctx.respond(content='*⏳ Loading...*')
 
-    r = requests.post("https://api.openai.com/v1/completions",
+    r = requests.post('https://api.openai.com/v1/chat/completions',
                       json=params, headers=headers).json()
 
-    response = r["choices"][0]["text"]
+    response = r['choices'][0]['message']['content']
 
-    await ctx.edit(content=f"{response}")
+    await ctx.edit(content=f'{response}')

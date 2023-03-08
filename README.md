@@ -8,7 +8,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 
 - `/age <name>`: Guesses the age of a specified name.
 - `/bless`: Blesses the mess!
-- `/chat <prompt>`: Chat with MEGABOT. (GPT3)
+- `/chat <prompt>`: Chat with MEGABOT. (GPT3.5)
 - `/coin`: Flip a coin.
 - `/csgo <username>`: Retrieve CS:GO stats.
 - `/dice`: Roll a dice.
