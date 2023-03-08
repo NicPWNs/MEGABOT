@@ -9,6 +9,12 @@ async def chat(ctx, prompt):
 
     await ctx.respond(content='*⏳ Loading...*')
 
+    moderation = openai.Moderation.create(input=prompt)
+    flag = moderation.results[0].flagged
+    if flag:
+        await ctx.edit(content=f'❌ **ERROR: Your prompt is innapropriate.**')
+        return
+
     stream = []
     try:
         for r in openai.ChatCompletion.create(model='gpt-3.5-turbo',
