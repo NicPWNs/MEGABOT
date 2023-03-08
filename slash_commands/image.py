@@ -5,7 +5,7 @@ import openai
 
 async def image(ctx, prompt):
 
-    openai.api_key = str(os.getenv('OPENAI_TOKEN'))
+    openai.api_key = os.getenv('OPENAI_TOKEN')
 
     await ctx.respond(content='*⏳ Loading...*')
 
