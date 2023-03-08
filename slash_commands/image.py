@@ -15,8 +15,11 @@ async def image(ctx, prompt):
         await ctx.edit(content=f'❌ **ERROR: Your prompt is innapropriate.**')
         return
 
-    r = openai.Image.create(prompt=prompt, n=1, size="1024x1024", user=str(ctx.user.id))
+    try:
+        r = openai.Image.create(prompt=prompt, n=1, size="1024x1024", user=str(ctx.user.id))
 
-    image = r.data[0].url
+        image = r.data[0].url
 
-    await ctx.edit(content=image)
+        await ctx.edit(content=image)
+    except:
+        await ctx.edit(content=f'❌ **ERROR: Your prompt may contain safety issues. Please try a different prompt.**')

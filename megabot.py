@@ -10,6 +10,7 @@ from random_unicode_emoji import random_emoji
 from slash_commands.age import age
 from slash_commands.bless import bless
 from slash_commands.chat import chat
+from slash_commands.code import code
 from slash_commands.coin import coin
 from slash_commands.csgo import csgo
 from slash_commands.dice import dice
@@ -264,5 +265,15 @@ if __name__ == "__main__":
     )
     async def call(ctx, prompt):
         await image(ctx, prompt)
+
+    @bot.slash_command(name="code", description="Write code with AI.", guild_ids=[GUILD_ID])
+    @option(
+        name="prompt",
+        description="Prompt for code to be written from.",
+        input_type=str,
+        required=True
+    )
+    async def call(ctx, prompt):
+        await code(ctx, prompt)
 
     bot.run(TOKEN)
