@@ -13,6 +13,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/csgo <username>`: Retrieve CS:GO stats.
 - `/dice`: Roll a dice.
 - `/emote <search> [add:true]`: Search for a 7TV emote. Optionally add it to the Discord guild.
+- `/image`: Generate an image with AI.
 - `/kanye`: Retrieve a random Kanye West quote.
 - `/kill`: Stop the bot's process.
 - `/math <expression>`: Evaluate provided math expression.

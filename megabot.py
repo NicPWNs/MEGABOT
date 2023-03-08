@@ -14,6 +14,7 @@ from slash_commands.coin import coin
 from slash_commands.csgo import csgo
 from slash_commands.dice import dice
 from slash_commands.emote import emote
+from slash_commands.image import image
 from slash_commands.kanye import kanye
 from slash_commands.kill import kill
 from slash_commands.math import math
@@ -253,5 +254,15 @@ if __name__ == "__main__":
     @bot.slash_command(name="dice", description="Roll a dice.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await dice(ctx)
+
+    @bot.slash_command(name="image", description="Generate an image with AI.", guild_ids=[GUILD_ID])
+    @option(
+        name="prompt",
+        description="Prompt for image to be generated from.",
+        input_type=str,
+        required=True
+    )
+    async def call(ctx, prompt):
+        await image(ctx, prompt)
 
     bot.run(TOKEN)
