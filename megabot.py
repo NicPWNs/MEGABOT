@@ -25,7 +25,6 @@ from slash_commands.ping import ping
 from slash_commands.play import play
 from slash_commands.retirement import retirement
 from slash_commands.resume import resume
-from slash_commands.spot import spot
 from slash_commands.stock import stock
 from slash_commands.stop import stop
 from slash_commands.streak import streak
@@ -276,15 +275,5 @@ if __name__ == "__main__":
     )
     async def call(ctx, prompt):
         await code(ctx, prompt)
-
-    @bot.slash_command(name="spot", description="Plays music.", guild_ids=[GUILD_ID])
-    @option(
-        name="search",
-        description="Song to search for on Spotify.",
-        input_type=str,
-        required=True
-    )
-    async def call(ctx, search):
-        await spot(ctx, search, queue)
 
     bot.run(TOKEN)

@@ -1,29 +1,15 @@
 #!/usr/bin/env python3
-import re
-import time
+import os
 import discord
-from yt_dlp import YoutubeDL
+import spotdl
+import asyncio
+import nest_asyncio
 
 
-ytdlOpts = {
-    'quiet': True,
-    'outtmpl': "media/%(id)s",
-    'default_search': 'ytsearch',
-    'no_post_overwrites': True,
-    'no_part': True,
-    'format': 'bestaudio/best',
-    'prefer_ffmpeg': True,
-    'extact_audio': True,
-    'audio_format': "mp3",
-    'postprocessors': [{
-        'key': 'FFmpegExtractAudio',
-        'preferredcodec': 'mp3',
-        'preferredquality': '192',
-    }],
-}
+nest_asyncio.apply()
 
 
-async def play(ctx, search, queue):
+async def spot(ctx, search, queue):
 
     embed = discord.Embed(color=0xfee9b6,
                         title="⏳  Searching...",
@@ -41,46 +27,29 @@ async def play(ctx, search, queue):
         await interaction.edit_original_response(embed=embed)
         return
 
-    info = YoutubeDL(ytdlOpts).extract_info(search, download=False)
-    ytdlOpts['download_archive'] = 'downloaded.txt'
-
-    id = info["entries"][0]["id"]
-    title = re.sub("\[.*\]", "", info["entries"][0]["title"])
-    title = re.sub("\(.*\)", "", title)
-    thumbnail = info["entries"][0]["thumbnail"]
-    source = f"media/{id}.mp3"
-
-    if id not in open("downloaded.txt").read():
-        embed = discord.Embed(color=0x77b354,
-                          title="📥  Downloading...",
-                          description=f"\"{title}\" is a new request."
-                        ).set_thumbnail(url=thumbnail) \
-                         .set_footer(text="Please be patient")
-
-        await interaction.edit_original_response(embed=embed)
-
-    YoutubeDL(ytdlOpts).download(search)
-    ytdlOpts.pop('download_archive')
+    sdl = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(os.getenv('SPOTIFY_SECRET')), downloader_settings=None, headless=True, loop=asyncio.get_event_loop())
+    song = sdl.search([search])[0]
+    title = song.name
+    cover = song.cover_url
+    song, path = sdl.download(song)
 
     channel = ctx.author.voice.channel
 
     try:
-        voice = await channel.connect(timeout=600.0)
+        voice = await channel.connect()
     except:
         voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
         await voice.move_to(channel)
-    time.sleep(1)
 
     try:
-        voice.play(discord.FFmpegPCMAudio(source=source))
-        voice.source = discord.PCMVolumeTransformer(
-            original=voice.source, volume=0.25)
+        voice.play(discord.FFmpegPCMAudio(source=path))
+        voice.source = discord.PCMVolumeTransformer(original=voice.source, volume=0.25)
     except:
         pass
 
     embed = discord.Embed(color=0x5daced,
                           title="🎵  Now Playing",
                           description=f"{title}"
-                        ).set_thumbnail(url=thumbnail)
+                        ).set_thumbnail(url=cover)
 
     await interaction.edit_original_response(embed=embed)
