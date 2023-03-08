@@ -7,9 +7,9 @@ async def chat(ctx, prompt):
 
     params = {
         'model': 'gpt-3.5-turbo',
-        'messages': [{"role": "system", "content": "You are a relaxed, sarcastic, and funny friend."},
+        'messages': [{"role": "system", "content": "You are a relaxed, sarcastic, and funny bot friend, named MEGABOT."},
                      {'role': 'user', 'content': prompt}],
-        'user': ctx.user.id
+        'user': str(ctx.user.id)
     }
 
     headers = {
