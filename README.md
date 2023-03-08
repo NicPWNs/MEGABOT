@@ -9,7 +9,9 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/age <name>`: Guesses the age of a specified name.
 - `/bless`: Blesses the mess!
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3)
+- `/coin`: Flip a coin.
 - `/csgo <username>`: Retrieve CS:GO stats.
+- `/dice`: Roll a dice.
 - `/emote <search> [add:true]`: Search for a 7TV emote. Optionally add it to the Discord guild.
 - `/kanye`: Retrieve a random Kanye West quote.
 - `/kill`: Stop the bot's process.
