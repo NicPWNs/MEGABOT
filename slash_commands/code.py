@@ -5,18 +5,18 @@ import openai
 
 async def code(ctx, prompt):
 
-    openai.api_key = os.getenv('OPENAI_TOKEN')
-
     await ctx.respond(content='*⏳ Loading...*')
 
+    openai.api_key = os.getenv('OPENAI_TOKEN')
+
     moderation = openai.Moderation.create(input=prompt)
-    flag = moderation.results[0].flagged
-    if flag:
+
+    if moderation.results[0].flagged:
         await ctx.edit(content=f'❌ **ERROR: Your prompt is innapropriate.**')
         return
 
+    stream = []
     try:
-        stream = []
         for r in openai.Completion.create(model="code-davinci-002", prompt=prompt, stream=True):
             stream.append(r.choices[0].text)
             result = "".join(stream).strip()
