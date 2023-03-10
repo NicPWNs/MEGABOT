@@ -10,8 +10,8 @@ async def image(ctx, prompt):
     await ctx.respond(content='*⏳ Loading...*')
 
     moderation = openai.Moderation.create(input=prompt)
-    flag = moderation.results[0].flagged
-    if flag:
+
+    if moderation.results[0].flagged:
         await ctx.edit(content=f'❌ **ERROR: Your prompt is innapropriate.**')
         return
 
