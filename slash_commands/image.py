@@ -20,6 +20,8 @@ async def image(ctx, prompt):
 
         image = r.data[0].url
 
-        await ctx.edit(content=image)
+        content = image + f"\n ❝ {prompt} ❞"
+
+        await ctx.edit(content=content)
     except:
         await ctx.edit(content=f'❌ **ERROR: Your prompt may contain safety issues. Please try a different prompt.**')
