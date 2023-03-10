@@ -37,4 +37,5 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - [x] Fix DST for `/streak`
 - [x] Add `/play`. Music!
 - [ ] Add `/queue` and `/skip` to music
+- [ ] Add logging
 - [ ] Improve CI/CD with checks/tests (lint)
