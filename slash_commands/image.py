@@ -20,17 +20,27 @@ async def image(ctx, prompt):
     moderation = openai.Moderation.create(input=prompt)
 
     if moderation.results[0].flagged:
-        await ctx.edit(content=f'❌ **ERROR: Your prompt is innapropriate.**')
+        embed = discord.Embed(color=0xdd2f45,
+                          title="❌  Error",
+                          description=f"Your prompt is innapropriate."
+                        ).set_thumbnail(url=ctx.user.display_avatar)
+
+        await interaction.edit_original_response(embed=embed)
         return
 
-    #try:
-    r = openai.Image.create(prompt=prompt, n=1, size="1024x1024", user=str(ctx.user.id))
+    try:
+        r = openai.Image.create(prompt=prompt, n=1, size="1024x1024", user=str(ctx.user.id))
 
-    url = r.data[0].url
+        url = r.data[0].url
 
-    embed = discord.Embed(color=0x5965f3, title=f"\" {str.title(prompt)} \"", description=f"by <@{ctx.user.id}>").set_image(url=url)
+        embed = discord.Embed(color=0x5965f3, title=f"\" {str.title(prompt)} \"", description=f"by <@{ctx.user.id}>").set_image(url=url)
 
-    await interaction.edit_original_response(embed=embed)
+        await interaction.edit_original_response(embed=embed)
 
-    #except:f
-    # await ctx.edit(content=f'❌ **ERROR: Your prompt may contain safety issues. Please try a different prompt.**')
+    except:
+        embed = discord.Embed(color=0xdd2f45,
+                          title="❌  Error",
+                          description=f"Your prompt may contain safety issues. Please try a different prompt."
+                        ).set_thumbnail(url=ctx.user.display_avatar)
+
+        await interaction.edit_original_response(embed=embed)
