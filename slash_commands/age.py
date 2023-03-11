@@ -8,7 +8,7 @@ async def age(ctx, name):
     age = r["age"]
 
     if age is None:
-        response = "Name not found!"
+        response = f"Name \"{name}\" not found!"
     else:
         response = f"I guess the age of \"{name}\" is **{age}**!"
 
