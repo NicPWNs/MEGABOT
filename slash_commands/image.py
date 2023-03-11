@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import os
-import io
-import base64
+import string
 import openai
 import discord
 
@@ -33,7 +32,7 @@ async def image(ctx, prompt):
 
         url = r.data[0].url
 
-        embed = discord.Embed(color=0x5965f3, title=f"\" {str.title(prompt)} \"", description=f"by <@{ctx.user.id}>").set_image(url=url)
+        embed = discord.Embed(color=0x5965f3, title=f"\" {string.capwords(prompt)} \"", description=f"by <@{ctx.user.id}>").set_image(url=url)
 
         await interaction.edit_original_response(embed=embed)
 
