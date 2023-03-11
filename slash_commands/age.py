@@ -10,7 +10,7 @@ async def age(ctx, name):
     if age is None:
         response = "Name not found!"
     else:
-        response = f"I guess the age of \"{name}\" is {age}!"
+        response = f"I guess the age of \"{name}\" is **{age}**!"
 
     embed = discord.Embed(color=0x3a88c2, title="🔢  Age Guesser", description=response)
 
