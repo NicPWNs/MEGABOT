@@ -7,6 +7,8 @@ async def age(ctx, name):
     r = requests.get('https://api.agify.io/?name=' + name).json()
     age = r["age"]
 
+    name = str.title(name)
+
     if age is None:
         response = f"Name \"{name}\" not found!"
     else:
