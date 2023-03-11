@@ -21,7 +21,7 @@ async def pause(ctx):
             embed = discord.Embed(color=0x3a88c2, title="⏸️  Music Paused")
 
     except:
-        embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice").set_thumbnail(url=ctx.bot.user.avatar.url)
+        embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice").set_thumbnail(url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/thumbnail.gif")
         pass
 
     await interaction.edit_original_response(embed=embed)
