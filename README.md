@@ -1,6 +1,6 @@
 # MEGABOT Discord Bot
 
-![ezgif-4-25ba780d60](https://user-images.githubusercontent.com/23003787/222802744-34fa733e-32d2-4093-be09-7a9d433f9df2.gif)
+!(thumbnail.gif)
 
 Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to practice CI/CD with GitHub actions and EC2. Not serverless, unfortunately. 😞
 
