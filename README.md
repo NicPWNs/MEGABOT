@@ -1,6 +1,6 @@
 # MEGABOT Discord Bot
 
-!(/thumbnail.gif)
+![](/thumbnail.gif)
 
 Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to practice CI/CD with GitHub actions and EC2. Not serverless, unfortunately. 😞
 
