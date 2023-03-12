@@ -13,7 +13,7 @@ async def kill(ctx):
 
         pid = os.getpid()
 
-        embed = discord.Embed(color=0xdd2f45, title="🛑  Stopping MEGABOT", description=f"<@{ctx.bot.id}> killed on PID {pid} !")
+        embed = discord.Embed(color=0xdd2f45, title="🛑  Stopping MEGABOT", description=f"<@{ctx.bot.user.id}> killed on PID {pid} !")
         await ctx.respond(embed=embed)
 
         # sys.exit()
