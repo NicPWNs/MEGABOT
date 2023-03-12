@@ -13,11 +13,11 @@ async def kill(ctx):
 
         pid = os.getpid()
 
-        content = f"🛑 **Stopping MEGABOT on PID {pid} !**"
-        await ctx.respond(content=content)
+        embed = discord.Embed(color=0xdd2f45, title="🛑  Stopping MEGABOT", description=f"MEGABOT killed on PID {pid} !")
+        await ctx.respond(embed=embed)
 
-        sys.exit()
+        # sys.exit()
 
     else:
-        content = f"❌ **Permission Denied.** Nice try <@{ctx.user.id}>!"
-        await ctx.respond(content=content)
+        embed = discord.Embed(color=0xdd2f45, title="❌ Permission Denied", description=f"Nice try <@{ctx.user.id}>!")
+        await ctx.respond(embed=embed)
