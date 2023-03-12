@@ -2,7 +2,7 @@ name: Push-to-EC2
 
 on:
   schedule:
-    - cron: "0 * * * *"
+    - cron: "50 * * * *"
   push:
     branches:
       - main
