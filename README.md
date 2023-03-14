@@ -4,7 +4,7 @@
 
 Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to practice CI/CD with GitHub actions and EC2. Not serverless, unfortunately. 😞
 
-> Makes use of my own Python package [random-unicode-emoji](https://github.com/NicPWNs/random_unicode_emoji)
+> Some commands use my own Python package: [random-unicode-emoji](https://github.com/NicPWNs/random_unicode_emoji)
 
 ## 🤖 Commands
 
