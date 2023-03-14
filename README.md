@@ -21,6 +21,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/pause`: Pauses music.
 - `/ping`: Responds with pong.
 - `/play`: Plays music.
+- `/randomemoji`: Return a random emoji.
 - `/resume`: Resumes music.
 - `/stop`: Stops music.
 - `/stock`: Searches a stock price.
