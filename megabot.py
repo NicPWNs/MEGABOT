@@ -23,6 +23,7 @@ from slash_commands.nasa import nasa
 from slash_commands.pause import pause
 from slash_commands.ping import ping
 from slash_commands.play import play
+from slash_commands.randomemoji import randomemoji
 from slash_commands.retirement import retirement
 from slash_commands.resume import resume
 from slash_commands.stock import stock
@@ -275,5 +276,9 @@ if __name__ == "__main__":
     )
     async def call(ctx, prompt):
         await code(ctx, prompt)
+
+    @bot.slash_command(name="randomemoji", description="Return a random emoji.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await randomemoji(ctx)
 
     bot.run(TOKEN)
