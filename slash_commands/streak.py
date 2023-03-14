@@ -105,7 +105,7 @@ async def streak(ctx, stats):
                 Item={
                     'id': 'currentStreak',
                     'stat': '0',
-                    'username': 'MEGABOT',
+                    'username': str(ctx.bot.user.name),
                     'userId': str(ctx.bot.user.id)
                 }
             )
