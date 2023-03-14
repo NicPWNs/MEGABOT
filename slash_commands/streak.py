@@ -7,7 +7,7 @@ from random_unicode_emoji import random_emoji
 
 
 async def get_random_emoji(ctx):
-    if random() < .8:
+    if random() < .7:
         return random_emoji()
     else:
         guild = discord.utils.get(ctx.bot.guilds, name="MEGACORD")
