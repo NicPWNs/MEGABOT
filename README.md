@@ -2,9 +2,10 @@
 
 ![MEGACORD LOGO](/thumbnail.gif)
 
-Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to practice CI/CD with GitHub actions and EC2. Not serverless, unfortunately. 😞
+Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to practice CI/CD with [GitHub actions](https://github.com/NicPWNs/MEGABOT/actions) and EC2. Not serverless, unfortunately. 😞
 
 > Some commands use my own Python package: [random-unicode-emoji](https://github.com/NicPWNs/random_unicode_emoji)
+> Originally based off my first bot: [BlessThisMess](https://github.com/NicPWNs/Discord-BTM-Bot)
 
 ## 🤖 Commands
 
