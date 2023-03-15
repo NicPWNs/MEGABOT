@@ -88,7 +88,7 @@ async def emote(ctx, search, add):
         imageReq = requests.get(url + uri)
         image = imageReq.content
 
-        if imageReq.status_code == 404:
+        if imageReq.status_code != 200:
             uri = "/1x.gif"
             image = requests.get(url + uri).content
 
