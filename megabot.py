@@ -282,7 +282,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await randomemoji(ctx)
 
-    pids = list(map(int, check_output(["pidof", "python3"]).split())).pop(os.getpid())
+    pids = list(map(int, check_output(["pidof", "python3"]).split())).pop(str(os.getpid()))
     for p in pids:
         os.kill(p)
 
