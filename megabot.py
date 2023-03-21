@@ -282,7 +282,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await randomemoji(ctx)
 
-    pids = map(int,check_output(["pidof", "python3"]).split())
+    pids = list(int,check_output(["pidof", "python3"]).split())
     print(pids)
 
     bot.run(TOKEN)
