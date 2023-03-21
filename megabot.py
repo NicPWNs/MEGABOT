@@ -282,7 +282,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await randomemoji(ctx)
 
-    # Kill bot already running
+    # Kill current MEGABOT
     for p in list(map(int, check_output(["pidof", "python3"]).split())):
         if os.getpid() != p:
             os.kill(p, signal.SIGKILL)
