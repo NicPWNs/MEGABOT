@@ -4,6 +4,7 @@ import time
 import discord
 from discord import option
 from dotenv import load_dotenv
+from subprocess import check_output
 from random import random, randint
 from random_unicode_emoji import random_emoji
 
@@ -280,5 +281,8 @@ if __name__ == "__main__":
     @bot.slash_command(name="randomemoji", description="Return a random emoji.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await randomemoji(ctx)
+
+    pids = map(int,check_output(["pidof", "python3"]).split())
+    print(pids)
 
     bot.run(TOKEN)
