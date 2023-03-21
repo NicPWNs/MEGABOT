@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import os
 import time
+import signal
 import discord
 from discord import option
 from dotenv import load_dotenv
@@ -285,6 +286,6 @@ if __name__ == "__main__":
     pids = list(map(int, check_output(["pidof", "python3"]).split()))
     for p in pids:
         if str(os.getpid()) != p:
-            os.kill(p)
+            os.kill(p, signal.SIGKILL)
 
     bot.run(TOKEN)
