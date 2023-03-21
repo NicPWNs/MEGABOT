@@ -283,7 +283,8 @@ if __name__ == "__main__":
         await randomemoji(ctx)
 
     # Kill current MEGABOT
-    for p in list(map(int, check_output(["pidof", "python3"]).split())):
+    pids = list(map(int, check_output(["pidof", "python3"]).split()))
+    for p in pids:
         if os.getpid() != p:
             os.kill(p, signal.SIGKILL)
 
