@@ -30,7 +30,6 @@ from slash_commands.stop import stop
 from slash_commands.streak import streak
 from slash_commands.test import test
 
-queue = []
 
 if __name__ == "__main__":
 
@@ -173,7 +172,7 @@ if __name__ == "__main__":
         required=True
     )
     async def call(ctx, search):
-        await play(ctx, search, queue)
+        await play(ctx, search)
 
     @bot.slash_command(name="stop", description="Stops music.", guild_ids=[GUILD_ID])
     async def call(ctx):
