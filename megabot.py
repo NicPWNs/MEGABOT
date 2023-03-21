@@ -3,7 +3,6 @@ import os
 import time
 import signal
 import discord
-from discord import option
 from dotenv import load_dotenv
 from subprocess import check_output
 from random import random, randint
@@ -91,7 +90,7 @@ if __name__ == "__main__":
         await ping(ctx)
 
     @bot.slash_command(name="age", description="Guesses the age of a specified name.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="name",
         description="Name to guess age of.",
         input_type=str,
@@ -101,7 +100,7 @@ if __name__ == "__main__":
         await age(ctx, name)
 
     @bot.slash_command(name="math", description="Evaluate provided math expression.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="expression",
         description="Expression to evaluate.",
         input_type=str,
@@ -115,7 +114,7 @@ if __name__ == "__main__":
         await bless(ctx)
 
     @bot.slash_command(name="chat", description="Chat with MEGABOT.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="prompt",
         description="Prompt for MEGABOT to respond to.",
         input_type=str,
@@ -125,7 +124,7 @@ if __name__ == "__main__":
         await chat(ctx, prompt)
 
     @bot.slash_command(name="nasa", description="Retrieve the NASA photo of the day.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="details",
         description="Provide the explanation of the photo.",
         input_type=bool,
@@ -140,7 +139,7 @@ if __name__ == "__main__":
         await kanye(ctx)
 
     @bot.slash_command(name="csgo", description="Retrieve CS:GO stats.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="username",
         description="User on Steam, a Steam ID, Steam Community URI, or Steam Vanity Username.",
         input_type=str,
@@ -150,7 +149,7 @@ if __name__ == "__main__":
         await csgo(ctx, username)
 
     @bot.slash_command(name="streak", description="Keep a daily streak going!", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="stats",
         description="Get streak stats.",
         input_type=bool,
@@ -169,7 +168,7 @@ if __name__ == "__main__":
         await kill(ctx)
 
     @bot.slash_command(name="play", description="Plays music.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="search",
         description="Song to search for on YouTube.",
         input_type=str,
@@ -191,13 +190,13 @@ if __name__ == "__main__":
         await resume(ctx)
 
     @bot.slash_command(name="emote", description="Resumes music.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="search",
         description="Emote to search for.",
         input_type=str,
         required=True
     )
-    @option(
+    @discord.option(
         name="add",
         description="Add emote to server?",
         input_type=bool,
@@ -208,7 +207,7 @@ if __name__ == "__main__":
         await emote(ctx, search, add)
 
     @bot.slash_command(name="stock", description="Searches a stock price.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="symbol",
         description="Stock symbol to search for (ie. PLTR).",
         input_type=str,
@@ -218,31 +217,31 @@ if __name__ == "__main__":
         await stock(ctx, symbol)
 
     @bot.slash_command(name="retirement", description="Retirement calculator for your planning pleasure.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="age",
         description="How old are you?",
         input_type=int,
         required=True
     )
-    @option(
+    @discord.option(
         name="startingcash",
         description="Current investments",
         input_type=int,
         required=True
     )
-    @option(
+    @discord.option(
         name="yearlysavings",
         description="Money saved each year",
         input_type=int,
         required=True
     )
-    @option(
+    @discord.option(
         name="desiredincome",
         description="Desired yearly income at retirement",
         input_type=int,
         required=True
     )
-    @option(
+    @discord.option(
         name="growthrate",
         description="Optimistic => %, Expected => %, Conservative => % ",
         input_type=int,
@@ -260,7 +259,7 @@ if __name__ == "__main__":
         await dice(ctx)
 
     @bot.slash_command(name="image", description="Generate an image with AI.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="prompt",
         description="Prompt for image to be generated from.",
         input_type=str,
@@ -270,7 +269,7 @@ if __name__ == "__main__":
         await image(ctx, prompt)
 
     @bot.slash_command(name="code", description="Write code with AI.", guild_ids=[GUILD_ID])
-    @option(
+    @discord.option(
         name="prompt",
         description="Prompt for code to be written from.",
         input_type=str,
