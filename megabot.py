@@ -285,7 +285,7 @@ if __name__ == "__main__":
     # Kill current MEGABOT
     pids = list(map(int, check_output(["pidof", "python3"]).split()))
     for p in pids:
-        if os.getpid() != p:
+        if int(os.getpid()) != int(p):
             os.kill(p, signal.SIGKILL)
 
     bot.run(TOKEN)
