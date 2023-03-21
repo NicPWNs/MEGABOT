@@ -1,10 +1,8 @@
 #!/usr/bin/env python3
 import os
 import time
-import signal
 import discord
 from dotenv import load_dotenv
-from subprocess import check_output
 from random import random, randint
 from random_unicode_emoji import random_emoji
 
@@ -281,11 +279,5 @@ if __name__ == "__main__":
     @bot.slash_command(name="randomemoji", description="Return a random emoji.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await randomemoji(ctx)
-
-    # Kill current MEGABOT
-    pids = list(map(int, check_output(["pidof", "python3"]).split()))
-    for p in pids:
-        if int(os.getpid()) != int(p):
-            os.kill(p, signal.SIGKILL)
 
     bot.run(TOKEN)
