@@ -52,7 +52,7 @@ if __name__ == "__main__":
             return
 
         try:
-            if random() < .2:
+            if random() < .4:
                 if random() < .8:
                     await message.add_reaction(random_emoji())
                 else:
