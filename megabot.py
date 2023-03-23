@@ -45,7 +45,6 @@ if __name__ == "__main__":
     @bot.listen('on_message')
     async def on_message(message):
 
-        # Supports slash_commands/test.py
         if 'testing event listeners...' in message.content.lower():
             await message.edit('\n\n✅ MEGABOT Testing Done!')
 
@@ -55,7 +54,7 @@ if __name__ == "__main__":
         try:
             if random() < .25:
                 emojis = await guild.fetch_emojis()
-                for _ in range(0,6):
+                for _ in range(0,5):
                     emojis = emojis + emojis
                 await message.add_reaction(random_emoji(custom=emojis)[0])
 
