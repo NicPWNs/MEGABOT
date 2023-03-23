@@ -188,6 +188,8 @@ async def streak(ctx, stats):
     else:
         guild = discord.utils.get(ctx.bot.guilds, name="MEGACORD")
         emojis = await guild.fetch_emojis()
+        for _ in range(0,6):
+            emojis = emojis + emojis
         emote = str(await random_emoji(custom=emojis)[0])
 
     statMessage = ""
