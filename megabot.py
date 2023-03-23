@@ -2,8 +2,8 @@
 import os
 import time
 import discord
-from dotenv import load_dotenv
 from random import random
+from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
 
 from slash_commands.age import age
