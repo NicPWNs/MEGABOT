@@ -272,7 +272,7 @@ if __name__ == "__main__":
     async def call(ctx, prompt):
         await code(ctx, prompt)
 
-    @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji. No Discord emojis.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await random_unicode_emoji(ctx)
 
