@@ -3,7 +3,7 @@ import os
 import time
 import discord
 from dotenv import load_dotenv
-from random import random, randint
+from random import random
 from random_unicode_emoji import random_emoji
 
 from slash_commands.age import age

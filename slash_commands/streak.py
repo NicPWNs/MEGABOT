@@ -1,7 +1,6 @@
 #!/usr/bin/env python3
 import boto3
 import discord
-from random import random, randint
 from datetime import datetime, timedelta
 from random_unicode_emoji import random_emoji
 
@@ -190,7 +189,7 @@ async def streak(ctx, stats):
         emojis = await guild.fetch_emojis()
         for _ in range(0,6):
             emojis = emojis + emojis
-        emote = str(await random_emoji(custom=emojis)[0])
+        emote = str(random_emoji(custom=emojis)[0])
 
     statMessage = ""
 
