@@ -5,7 +5,7 @@ import requests
 
 async def emote(ctx, search, add):
 
-    await ctx.respond(content="*⏳ Loading...*")
+    await ctx.respond(content="⏳ Loading...")
 
     query = {
   "operationName": "SearchEmotes",
