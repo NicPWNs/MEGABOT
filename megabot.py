@@ -52,15 +52,13 @@ if __name__ == "__main__":
             return
 
         try:
-            if random() < .4:
-                if random() < .8:
-                    await message.add_reaction(random_emoji())
-                else:
-                    guild = discord.utils.get(bot.guilds, name="MEGACORD")
-                    emojis = await guild.fetch_emojis()
-                    idx = randint(0, len(emojis) - 1)
-                    emoji = emojis[idx]
-                    await message.add_reaction(emoji)
+            if random() < .25:
+                guild = discord.utils.get(bot.guilds, name="MEGACORD")
+                emojis = await guild.fetch_emojis()
+                for _ in range(0,7):
+                    emojis = emojis + emojis
+                await message.add_reaction(random_emoji(custom=emojis)[0])
+
         except:
             pass
 

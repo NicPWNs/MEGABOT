@@ -38,7 +38,7 @@ jobs:
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             python3 -m pip install -r requirements.txt
-            pip install random-unicode-emoji -U
+            pip3 install random-unicode-emoji -U
             aws configure set default.region us-east-1
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
             killall python3
