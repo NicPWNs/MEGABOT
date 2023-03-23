@@ -55,7 +55,7 @@ if __name__ == "__main__":
             if random() < .25:
                 guild = discord.utils.get(bot.guilds, name="MEGACORD")
                 emojis = await guild.fetch_emojis()
-                for _ in range(0,7):
+                for _ in range(0,6):
                     emojis = emojis + emojis
                 await message.add_reaction(random_emoji(custom=emojis)[0])
 
