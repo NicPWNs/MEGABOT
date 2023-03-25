@@ -1,10 +1,12 @@
 #!/usr/bin/env python3
 import os
+import re
 import shutil
 import random
 import discord
 import requests
 import asyncio
+from difflib import SequenceMatcher
 from colorthief import ColorThief
 
 async def album(ctx, genre="hip-hop"):
@@ -32,8 +34,7 @@ async def album(ctx, genre="hip-hop"):
     artist = "Various Artists"
 
     while artist == "Various Artists":
-        offset = str(random.randint(0, 350))
-        album = requests.get(f'https://api.spotify.com/v1/search?q=genre%3A{genre}&type=track&market=NA&limit=1&offset={offset}', headers=headers).json()['tracks']['items'][0]['album']
+        album = requests.get(f'https://api.spotify.com/v1/search?q=genre%3A{genre}&type=track&market=NA&limit=1&offset={str(random.randint(0, 350))}', headers=headers).json()['tracks']['items'][0]['album']
         cover = album['images'][0]['url']
         artist = album['artists'][0]['name']
 
@@ -62,7 +63,11 @@ async def album(ctx, genre="hip-hop"):
     await msg.delete()
 
     text = f"❌ {ctx.user.name} is Incorrect! The artist is {artist}"
-    if msg.content.lower() == artist.lower():
+
+    guess = re.sub("[^A-Z]", "", msg.content.lower(), 0, re.IGNORECASE)
+    answer = re.sub("[^A-Z]", "", artist.lower(), 0, re.IGNORECASE)
+
+    if SequenceMatcher(a=guess, b=answer).ratio() >= 0.9:
         text = f"✅ {ctx.user.name} is Correct! The artist is {artist}"
 
     embed = discord.Embed(color=color,
