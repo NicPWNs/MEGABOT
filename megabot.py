@@ -14,6 +14,7 @@ from slash_commands.coin import coin
 from slash_commands.csgo import csgo
 from slash_commands.dice import dice
 from slash_commands.emote import emote
+from slash_commands.guess import guess
 from slash_commands.image import image
 from slash_commands.kanye import kanye
 from slash_commands.kill import kill
@@ -276,5 +277,9 @@ if __name__ == "__main__":
     @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji. No Discord emojis.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await random_unicode_emoji(ctx)
+
+    @bot.slash_command(name="guess", description="Play a guessing game.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await guess(ctx)
 
     bot.run(TOKEN)

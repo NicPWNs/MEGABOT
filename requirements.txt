@@ -12,3 +12,4 @@ requests
 spotdl
 boto3
 random-unicode-emoji
+colorthief
