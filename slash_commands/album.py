@@ -32,7 +32,7 @@ async def album(ctx, genre="hip-hop"):
     artist = "Various Artists"
 
     while artist == "Various Artists":
-        offset = random.randint(0, 250)
+        offset = str(random.randint(0, 350))
         album = requests.get(f'https://api.spotify.com/v1/search?q=genre%3A{genre}&type=track&market=NA&limit=1&offset={offset}', headers=headers).json()['tracks']['items'][0]['album']
         cover = album['images'][0]['url']
         artist = album['artists'][0]['name']

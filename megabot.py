@@ -283,7 +283,7 @@ if __name__ == "__main__":
         name="genre",
         description="Pick a genre. Hip-Hop is default.",
         input_type=bool,
-        required=False,
+        required=True,
         choices=["hip-hop", "pop", "rock", "alternative", "hard-rock", "party"]
     )
     async def call(ctx, genre):
