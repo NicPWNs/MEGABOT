@@ -43,7 +43,7 @@ async def album(ctx, genre="hip-hop"):
     color = int('%02x%02x%02x' % color.get_color(quality=1), 16)
 
     embed = discord.Embed(color=color,
-                          title="🖼️  Guess the Artist of this Album Cover!"
+                          title="💽  Guess the Artist of this Album Cover!"
                         ).set_image(url=cover)
 
     await interaction.edit_original_response(embed=embed)
@@ -54,7 +54,7 @@ async def album(ctx, genre="hip-hop"):
         text = f"❌ {ctx.user.name} did not guess within 60 seconds!"
 
         embed = discord.Embed(color=color,
-                          title="🖼️  Guess the Artist of this Album Cover!"
+                          title="💽  Guess the Artist of this Album Cover!"
                         ).set_image(url=cover).set_footer(text=text, icon_url=ctx.user.display_avatar)
 
         await interaction.edit_original_response(embed=embed)
@@ -66,7 +66,7 @@ async def album(ctx, genre="hip-hop"):
         text = f"✅ {ctx.user.name} is Correct! The artist is {artist}"
 
     embed = discord.Embed(color=color,
-                          title="🖼️  Guess the Artist of this Album Cover!"
+                          title="💽  Guess the Artist of this Album Cover!"
                         ).set_image(url=cover).set_footer(text=text, icon_url=ctx.user.display_avatar)
 
     await interaction.edit_original_response(embed=embed)
