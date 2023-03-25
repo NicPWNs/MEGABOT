@@ -7,7 +7,7 @@ import requests
 import asyncio
 from colorthief import ColorThief
 
-async def guess(ctx):
+async def guess(ctx, genre="Hip-Hop"):
 
     def check(msg):
         return msg.author.id == ctx.user.id
@@ -33,7 +33,7 @@ async def guess(ctx):
 
     while artist == "Various Artists":
         offset = random.randint(0, 250)
-        album = requests.get('https://api.spotify.com/v1/search?q=genre%3Ahip-hop&type=track&market=NA&limit=1&offset=' + str(offset), headers=headers).json()['tracks']['items'][0]['album']
+        album = requests.get(f'https://api.spotify.com/v1/search?q=genre%3A{genre}&type=track&market=NA&limit=1&offset={offset}', headers=headers).json()['tracks']['items'][0]['album']
         cover = album['images'][0]['url']
         artist = album['artists'][0]['name']
 
