@@ -7,7 +7,7 @@ import requests
 import asyncio
 from colorthief import ColorThief
 
-async def guess(ctx, genre="Hip-Hop"):
+async def album(ctx, genre="Hip-Hop"):
 
     def check(msg):
         return msg.author.id == ctx.user.id
