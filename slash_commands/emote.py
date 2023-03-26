@@ -3,7 +3,7 @@ import os
 import requests
 
 
-async def emote(ctx, search, add):
+async def emote(ctx, search, add, id):
 
     await ctx.respond(content="⏳ Loading...")
 
@@ -79,27 +79,34 @@ async def emote(ctx, search, add):
 
     headers = {"authorization": str(os.getenv('7TV_TOKEN')), "content-type": "application/json"}
 
-    r = requests.post("https://7tv.io/v3/gql", headers=headers, json=query).json()
-    try:
+    if id:
+        r = requests.get(f"https://7tv.io/v3/emotes/{search}").json()
+        name = r["name"]
+        url = f"https://cdn.7tv.app/emote/{search}"
+        uri = "/2x.png"
+
+    else:
+      r = requests.post("https://7tv.io/v3/gql", headers=headers, json=query).json()
+      try:
         url = "http:" + r["data"]["emotes"]["items"][0]["host"]["url"]
         uri = "/2x.png"
         name = r["data"]["emotes"]["items"][0]["name"]
 
-        imageReq = requests.get(url + uri)
-        image = imageReq.content
-
-        if imageReq.status_code != 200:
-            uri = "/1x.gif"
-            image = requests.get(url + uri).content
-
-        content = url + uri
-
-        if add == "True":
-            emote = await ctx.guild.create_custom_emoji(name=name, image=image)
-            content = f"✅   **Emote Added To Server**   {emote}"
-
-    except:
+      except:
         content = "❌   **Emote Not Found! Try Again**"
         pass
+
+    imageReq = requests.get(url + uri)
+    image = imageReq.content
+
+    if imageReq.status_code != 200:
+        uri = "/1x.gif"
+        image = requests.get(url + uri).content
+
+    content = url + uri
+
+    if add == "True":
+        emote = await ctx.guild.create_custom_emoji(name=name, image=image)
+        content = f"✅   **Emote Added To Server**   {emote}"
 
     await ctx.edit(content=content)

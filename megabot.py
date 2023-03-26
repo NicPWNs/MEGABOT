@@ -185,7 +185,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await resume(ctx)
 
-    @bot.slash_command(name="emote", description="Resumes music.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="emote", description="Search for a 7TV emote.", guild_ids=[GUILD_ID])
     @discord.option(
         name="search",
         description="Emote to search for.",
@@ -199,8 +199,15 @@ if __name__ == "__main__":
         required=False,
         choices=["True", "False"]
     )
-    async def call(ctx, search, add):
-        await emote(ctx, search, add)
+    @discord.option(
+        name="id",
+        description="Search by 7TV emote ID.",
+        input_type=bool,
+        required=False,
+        choices=["True", "False"]
+    )
+    async def call(ctx, search, add, id):
+        await emote(ctx, search, add, id)
 
     @bot.slash_command(name="stock", description="Searches a stock price.", guild_ids=[GUILD_ID])
     @discord.option(
