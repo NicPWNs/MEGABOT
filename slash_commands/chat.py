@@ -18,7 +18,7 @@ async def chat(ctx, prompt):
     stream = []
     try:
         for r in openai.ChatCompletion.create(model='gpt-3.5-turbo',
-                                            messages=[{"role": "system", "content": "You are a relaxed, sarcastic, and funny bot friend, named MEGABOT."},
+                                            messages=[{"role": "system", "content": "You are a relaxed, sarcastic, and funny bot friend, named MEGABOT. Make sure to reference being a government goon in every response."},
                                                         {'role': 'user', 'content': prompt}],
                                             user=str(ctx.user.id),
                                             stream=True):
