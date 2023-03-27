@@ -11,6 +11,7 @@ from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
 
 from slash_commands.age import age
+from slash_commands.album import album
 from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.code import code
@@ -18,18 +19,16 @@ from slash_commands.coin import coin
 from slash_commands.csgo import csgo
 from slash_commands.dice import dice
 from slash_commands.emote import emote
-from slash_commands.album import album
 from slash_commands.image import image
 from slash_commands.kanye import kanye
 from slash_commands.kill import kill
 from slash_commands.math import math
 from slash_commands.nasa import nasa
-from slash_commands.pause import pause
 from slash_commands.ping import ping
 from slash_commands.play import play
+from slash_commands.queue import queue
 from slash_commands.random_unicode_emoji import random_unicode_emoji
 from slash_commands.retirement import retirement
-from slash_commands.resume import resume
 from slash_commands.stock import stock
 from slash_commands.stop import stop
 from slash_commands.streak import streak
@@ -47,6 +46,7 @@ if __name__ == "__main__":
     bot = discord.Bot(intents=discord.Intents.all())
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
 
+    queued = []
     nest_asyncio.apply()
     SDL = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
@@ -178,19 +178,20 @@ if __name__ == "__main__":
         required=True
     )
     async def call(ctx, search):
-        await play(ctx, search, SDL)
+        await play(ctx, search, queued, SDL, skip=False)
+
+    @bot.slash_command(name="skip", description="Skip the current song.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        search =""
+        await play(ctx, search, queued, SDL, skip=True)
 
     @bot.slash_command(name="stop", description="Stops music.", guild_ids=[GUILD_ID])
     async def call(ctx):
-        await stop(ctx)
+        await stop(ctx, queued)
 
-    @bot.slash_command(name="pause", description="Pauses music.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="queue", description="Show the current music queue.", guild_ids=[GUILD_ID])
     async def call(ctx):
-        await pause(ctx)
-
-    @bot.slash_command(name="resume", description="Resumes music.", guild_ids=[GUILD_ID])
-    async def call(ctx):
-        await resume(ctx)
+        await queue(ctx, queued)
 
     @bot.slash_command(name="emote", description="Search for a 7TV emote.", guild_ids=[GUILD_ID])
     @discord.option(

@@ -2,7 +2,7 @@
 import discord
 
 
-async def stop(ctx):
+async def stop(ctx, queued):
 
     embed = discord.Embed(color=0xfee9b6,
                         title="⏳  Loading...")
@@ -12,6 +12,7 @@ async def stop(ctx):
     voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
     try:
         await voice.disconnect()
+        queued.clear()
         embed = discord.Embed(color=0xdd2f45, title="🔇  Music Stopped")
 
 
