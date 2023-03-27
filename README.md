@@ -10,12 +10,14 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 ## 🤖 Commands
 
 - `/age <name>`: Guesses the age of a specified name.
+- `/album [genre:...]`: Play an album artist guessing game.
 - `/bless`: Blesses the mess!
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3.5)
+- `/code <prompt>`: Write code with AI.
 - `/coin`: Flip a coin.
 - `/csgo <username>`: Retrieve CS:GO stats.
 - `/dice`: Roll a dice.
-- `/emote <search> [add:true]`: Search for a 7TV emote. Optionally add it to the Discord guild.
+- `/emote <search> [add:True] [id:True]`: Search for a 7TV emote. Optionally add it to the Discord guild.
 - `/image`: Generate an image with AI.
 - `/kanye`: Retrieve a random Kanye West quote.
 - `/kill`: Stop the bot's process.
@@ -24,10 +26,11 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/pause`: Pauses music.
 - `/ping`: Responds with pong.
 - `/play`: Plays music.
-- `/randomemoji`: Return a random emoji.
+- `/random-unicode-emoji`: Return a random Unicode emoji. No Discord emojis.
 - `/resume`: Resumes music.
-- `/stop`: Stops music.
+- `/retirement`: Retirement calculator for your planning pleasure. (Developed by @NavyBoy37)
 - `/stock`: Searches a stock price.
+- `/stop`: Stops music.
 - `/streak [stats:True]`: Keep a daily streak going!
 - `/test`: Run a series of tests on the bot.
 
