@@ -28,9 +28,15 @@ async def play(ctx, search, queued, SDL, skip):
         embed = discord.Embed(color=0xfee9b6, title="⏳  Loading...")
         interaction = await ctx.respond(embed=embed)
 
-        embed = discord.Embed(color=0x5daced, title="⏭️  Skipping Song!")
+        voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
 
-        await queuer(ctx, queued, interaction, embed)
+        if not voice:
+            embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice").set_thumbnail(url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/thumbnail.gif")
+            await interaction.edit_original_response(embed=embed)
+
+        else:
+            embed = discord.Embed(color=0x5daced, title="⏭️  Skipping Song!")
+            await queuer(ctx, queued, interaction, embed)
 
     else:
 
