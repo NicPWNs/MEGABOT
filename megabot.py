@@ -1,7 +1,11 @@
 #!/usr/bin/env python3
 import os
 import time
+import spotdl
+import asyncio
+import nest_asyncio
 import discord
+
 from random import random
 from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
@@ -42,6 +46,9 @@ if __name__ == "__main__":
 
     bot = discord.Bot(intents=discord.Intents.all())
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
+
+    nest_asyncio.apply()
+    SDL = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
     @bot.listen('on_message')
     async def on_message(message):
@@ -171,7 +178,7 @@ if __name__ == "__main__":
         required=True
     )
     async def call(ctx, search):
-        await play(ctx, search)
+        await play(ctx, search, SDL)
 
     @bot.slash_command(name="stop", description="Stops music.", guild_ids=[GUILD_ID])
     async def call(ctx):
