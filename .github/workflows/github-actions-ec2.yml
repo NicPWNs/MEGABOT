@@ -37,7 +37,7 @@ jobs:
             sudo ln -s /usr/bin/python3.8 /usr/bin/python3
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
-            python3 -m pip install -r requirements.txt --upgrade
+            pip3 install -r requirements.txt --upgrade
             aws configure set default.region us-east-1
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
             killall python3
