@@ -1,15 +1,8 @@
 #!/usr/bin/env python3
-import os
 import discord
-import spotdl
-import asyncio
-import nest_asyncio
 
 
-nest_asyncio.apply()
-
-
-async def play(ctx, search):
+async def play(ctx, search, SDL):
 
     embed = discord.Embed(color=0xfee9b6,
                         title="⏳  Searching...",
@@ -27,11 +20,10 @@ async def play(ctx, search):
         await interaction.edit_original_response(embed=embed)
         return
 
-    sdl = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(os.getenv('SPOTIFY_SECRET')), downloader_settings=None, headless=True, loop=asyncio.get_event_loop())
-    song = sdl.search([search])[0]
+    song = SDL.search([search])[0]
     title = song.name
     cover = song.cover_url
-    song, path = sdl.download(song)
+    song, path = SDL.download(song)
 
     channel = ctx.author.voice.channel
 
