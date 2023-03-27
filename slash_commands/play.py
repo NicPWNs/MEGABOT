@@ -41,7 +41,7 @@ async def play(ctx, search, queued, SDL, skip):
     else:
 
         embed = discord.Embed(color=0xfee9b6,
-                            title="⏳  Searching...",
+                            title="⏳  Downloading...",
                             description=f"**Request:** \"{search}\""
                             )
 
