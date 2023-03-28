@@ -48,8 +48,10 @@ if __name__ == "__main__":
 
     queued = []
     nest_asyncio.apply()
-    SDL = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
+    SDL = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(
+        os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
+    # Event Listeners
     @bot.listen('on_message')
     async def on_message(message):
 
@@ -63,7 +65,7 @@ if __name__ == "__main__":
             if random() < .25:
                 guild = discord.utils.get(bot.guilds, name="MEGACORD")
                 emojis = await guild.fetch_emojis()
-                for _ in range(0,6):
+                for _ in range(0, 6):
                     emojis = emojis + emojis
                 await message.add_reaction(random_emoji(custom=emojis)[0])
 
@@ -88,6 +90,7 @@ if __name__ == "__main__":
 
         await channel.send(f"I'm watching you <@{member.id}>")
 
+    # Slash Commands
     @bot.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await ping(ctx)
@@ -182,7 +185,7 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="skip", description="Skip the current song.", guild_ids=[GUILD_ID])
     async def call(ctx):
-        search =""
+        search = ""
         await play(ctx, search, queued, SDL, skip=True)
 
     @bot.slash_command(name="stop", description="Stops music.", guild_ids=[GUILD_ID])
