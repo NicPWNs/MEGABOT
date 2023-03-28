@@ -54,7 +54,7 @@ if __name__ == "__main__":
     # Event Listeners
     @bot.listen('on_ready')
     async def on_ready():
-        await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="You..."))
+        await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="You..."))
 
     @bot.listen('on_message')
     async def on_message(message):
