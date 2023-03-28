@@ -16,7 +16,8 @@ async def queuer(ctx, queued, interaction, embed):
 
     while len(queued) > 0:
         voice.play(discord.FFmpegPCMAudio(source=queued[0]))
-        voice.source = discord.PCMVolumeTransformer(original=voice.source, volume=0.25)
+        voice.source = discord.PCMVolumeTransformer(
+            original=voice.source, volume=0.25)
         length = float(ffmpeg.probe(queued[0])['format']['duration'])
         queued.pop(0)
         await asyncio.sleep(length)
@@ -31,7 +32,8 @@ async def play(ctx, search, queued, SDL, skip):
         voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
 
         if not voice:
-            embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice").set_thumbnail(url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/thumbnail.gif")
+            embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice").set_thumbnail(
+                url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/thumbnail.gif")
             await interaction.edit_original_response(embed=embed)
 
         else:
@@ -41,17 +43,17 @@ async def play(ctx, search, queued, SDL, skip):
     else:
 
         embed = discord.Embed(color=0xfee9b6,
-                            title="⏳  Downloading...",
-                            description=f"**Request:** \"{search}\""
-                            )
+                              title="⏳  Downloading...",
+                              description=f"**Request:** \"{search}\""
+                              )
 
         interaction = await ctx.respond(embed=embed)
 
         if not ctx.author.voice:
             embed = discord.Embed(color=0xdd2f45,
-                            title="❌  Error",
-                            description=f"<@{ctx.user.id}> is not connected to a voice channel!"
-                            ).set_thumbnail(url=ctx.user.display_avatar)
+                                  title="❌  Error",
+                                  description=f"<@{ctx.user.id}> is not connected to a voice channel!"
+                                  ).set_thumbnail(url=ctx.user.display_avatar)
 
             await interaction.edit_original_response(embed=embed)
             return
@@ -72,16 +74,16 @@ async def play(ctx, search, queued, SDL, skip):
         queued.append(path)
 
         embed = discord.Embed(color=0x5daced,
-                        title="🎵  Now Playing",
-                        description=f"{title}"
-                    ).set_thumbnail(url=cover).set_footer(text=f"by {artist}")
+                              title="🎵  Now Playing",
+                              description=f"{title}"
+                              ).set_thumbnail(url=cover).set_footer(text=f"by {artist}")
 
         if not voice.is_playing():
             await queuer(ctx, queued, interaction, embed)
         else:
             embed = discord.Embed(color=0x5daced,
-                                title="↩️  Added to Queue",
-                                description=f"{title}"
-                                ).set_thumbnail(url=cover).set_footer(text=f"by {artist}")
+                                  title="↩️  Added to Queue",
+                                  description=f"{title}"
+                                  ).set_thumbnail(url=cover).set_footer(text=f"by {artist}")
 
             await interaction.edit_original_response(embed=embed)
