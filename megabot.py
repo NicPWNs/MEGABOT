@@ -52,6 +52,10 @@ if __name__ == "__main__":
         os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
     # Event Listeners
+    @bot.listen('on_ready')
+    async def on_ready():
+        await bot.change_presence(status=discord.Status.idle, activity=discord.Activity(type=discord.ActivityType.watching, name="You..."))
+
     @bot.listen('on_message')
     async def on_message(message):
 
