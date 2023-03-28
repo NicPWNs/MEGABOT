@@ -25,8 +25,10 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/nasa [details:True]`: Retrieve the NASA photo of the day.
 - `/ping`: Responds with pong.
 - `/play`: Plays music.
+- `/queue`: Show the current music queue.
 - `/random-unicode-emoji`: Return a random Unicode emoji. No Discord emojis.
 - `/retirement`: Retirement calculator for your planning pleasure. (Developed by @NavyBoy37)
+- `/skip`: Skip the current song.
 - `/stock`: Searches a stock price.
 - `/stop`: Stops music.
 - `/streak [stats:True]`: Keep a daily streak going!
