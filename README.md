@@ -33,7 +33,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/streak [stats:True]`: Keep a daily streak going!
 - `/test`: Run a series of tests on the bot.
 
-> Some commands use my own Python package: [random-unicode-emoji](https://github.com/NicPWNs/random_unicode_emoji)
+> Some commands use my own Python package: [random-unicode-emoji-py](https://github.com/NicPWNs/random_unicode_emoji-py)
 
 ## 💡 To-Do
 
