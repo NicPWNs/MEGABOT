@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
-# inputs are as follows
-#
+
 
 async def retirement(ctx, age, startingcash, yearlysavings, desiredincome, growthrate):
 
