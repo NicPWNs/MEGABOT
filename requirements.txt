@@ -10,7 +10,7 @@ nest-asyncio
 openai
 requests
 spotdl
-ffmpeg
+ffmpeg-python
 boto3
 random-unicode-emoji
 colorthief
