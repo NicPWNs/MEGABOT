@@ -9,7 +9,7 @@ async def nasa(ctx, details):
 
     desc = ""
 
-    if details == "True":
+    if details:
         desc = r["explanation"]
 
     response = r["url"] + "\n" + desc

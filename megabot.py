@@ -139,13 +139,7 @@ if __name__ == "__main__":
         await bless(ctx)
 
     @bot.slash_command(name="chat", description="Chat with MEGABOT.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="prompt",
-        description="Prompt for MEGABOT to respond to.",
-        input_type=str,
-        required=True
-    )
-    async def call(ctx, prompt):
+    async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for MEGABOT to respond to.", required=True)):
         await chat(ctx, prompt)
 
     @bot.slash_command(name="nasa", description="Retrieve the NASA photo of the day.", guild_ids=[GUILD_ID])
