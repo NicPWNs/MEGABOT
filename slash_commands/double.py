@@ -22,12 +22,12 @@ async def double(ctx, confirm):
     win = random.choice([0, 1])
 
     if win:
-        description = "<:MEGACOINWIN:1090713259771953172>  You Win!"
-        url = "https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/win.gif"
+        description = "You Win!"
+        url = "https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/win.png"
         await megacoin.add(ctx.user, balance)
     else:
-        description = "<:MEGACOINLOSE:1090713256865316914>  You Lose!"
-        url = "https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/lose.gif"
+        description = "You Lose!"
+        url = "https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/lose.png"
         await megacoin.subtract(ctx.user, balance)
 
     time.sleep(random.randint(2, 10))
