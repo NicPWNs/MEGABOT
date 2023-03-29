@@ -14,7 +14,7 @@ async def double(ctx, confirm):
         return
 
     embed = discord.Embed(color=0xf6be3c, title="⚖️  Double or Nothing",
-                          description="<a:MEGACOINDOUBLE:1090716254203031632>").set_image(url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif")
+                          description="<a:MEGACOINDOUBLE:1090716254203031632>").set_thumbnail(url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/double.gif")
     interaction = await ctx.respond(embed=embed)
 
     balance = await megacoin.balance(ctx.user)
@@ -23,14 +23,16 @@ async def double(ctx, confirm):
 
     if win:
         description = "<:MEGACOINWIN:1090713259771953172>  You Win!"
+        url = "https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/win.gif"
         await megacoin.add(ctx.user, balance)
     else:
         description = "<:MEGACOINLOSE:1090713256865316914>  You Lose!"
+        url = "https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/lose.gif"
         await megacoin.subtract(ctx.user, balance)
 
     time.sleep(random.randint(2, 10))
 
     embed = discord.Embed(
-        color=0xf6be3c, title="⚖️  Double or Nothing", description=description)
+        color=0xf6be3c, title="⚖️  Double or Nothing", description=description).set_thumbnail(url=url)
 
     await interaction.edit_original_response(embed=embed)
