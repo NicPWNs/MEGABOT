@@ -26,5 +26,5 @@ async def bank(ctx):
         entry += 1
 
     embed = discord.Embed(
-        color=0xfee9b6, title="💰  MEGACOIN LEADERBOARD", description=description)
+        color=0x5965f3, title="💰  MEGACOIN LEADERBOARD", description=description)
     interaction = await ctx.respond(embed=embed)
