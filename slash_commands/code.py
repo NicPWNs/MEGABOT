@@ -17,14 +17,17 @@ async def code(ctx, prompt):
 
     stream = []
     try:
-        for r in openai.Completion.create(model="code-davinci-002", prompt=prompt, stream=True):
-            stream.append(r.choices[0].text)
-            result = "".join(stream).strip()
-            await ctx.edit(content=result)
-
-        result = "".join(stream).strip()
-        content = "\'\'\'\n" + result + "\n\'\'\'"
-        await ctx.edit(content=content)
+        for r in openai.ChatCompletion.create(model='gpt-3.5-turbo',
+                                              messages=[{"role": "system", "content": "You are a helpful coding bot named MEGABOT that generates code. Default to Python if another language is not specified. Limit additional context and dialogue, just focus on providing code."},
+                                                        {'role': 'user', 'content': prompt}],
+                                              user=str(ctx.user.id),
+                                              stream=True):
+            try:
+                stream.append(r.choices[0].delta.content)
+                result = "".join(stream).strip()
+                await ctx.edit(content=result)
+            except:
+                pass
 
     except:
         await ctx.edit(content=f'❌ **ERROR: GPT is currently overloaded. Please try again.**')

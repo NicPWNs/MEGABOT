@@ -110,17 +110,17 @@ if __name__ == "__main__":
         await channel.send(f"I'm watching you <@{member.id}>")
 
     # Slash Commands
-    @bot.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
-    async def call(ctx):
-        await ping(ctx)
-
     @bot.slash_command(name="age", description="Guesses the age of a specified name.", guild_ids=[GUILD_ID])
     async def call(ctx, name: discord.Option(discord.SlashCommandOptionType.string, description="Name to guess age of.", required=True)):
         await age(ctx, name)
 
-    @bot.slash_command(name="math", description="Evaluate provided math expression.", guild_ids=[GUILD_ID])
-    async def call(ctx, expression: discord.Option(discord.SlashCommandOptionType.string, description="Expression to evaluate.", required=True)):
-        await math(ctx, expression)
+    @bot.slash_command(name="album", description="Play an album artist guessing game.", guild_ids=[GUILD_ID])
+    async def call(ctx, genre: discord.Option(description="Pick a genre. Hip-Hop is default.", default="hip-hop", choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"])):
+        await album(ctx, genre)
+
+    @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
+    async def call(ctx, user: discord.Option(discord.SlashCommandOptionType.user, required=False, description="User to get the balance of.")):
+        await balance(ctx, user)
 
     @bot.slash_command(name="bless", description="Blesses the mess!", guild_ids=[GUILD_ID])
     async def call(ctx):
@@ -130,46 +130,25 @@ if __name__ == "__main__":
     async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for MEGABOT to respond to.", required=True)):
         await chat(ctx, prompt)
 
-    @bot.slash_command(name="nasa", description="Retrieve the NASA photo of the day.", guild_ids=[GUILD_ID])
-    async def call(ctx, details: discord.Option(discord.SlashCommandOptionType.boolean, description="Provide the explanation of the photo.", required=False)):
-        await nasa(ctx, details)
+    @bot.slash_command(name="code", description="Write code with AI.", guild_ids=[GUILD_ID])
+    async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for code to be written from.", required=True)):
+        await code(ctx, prompt)
 
-    @bot.slash_command(name="kanye", description="Retrieve a random Kanye West quote.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="coin", description="Flip a coin.", guild_ids=[GUILD_ID])
     async def call(ctx):
-        await kanye(ctx)
+        await coin(ctx)
 
     @bot.slash_command(name="csgo", description="Retrieve CS:GO stats.", guild_ids=[GUILD_ID])
     async def call(ctx, username: discord.Option(discord.SlashCommandOptionType.string, description="User on Steam, a Steam ID, Steam Community URI, or Steam Vanity Username.", required=True)):
         await csgo(ctx, username)
 
-    @bot.slash_command(name="streak", description="Keep a daily streak going!", guild_ids=[GUILD_ID])
-    async def call(ctx, stats: discord.Option(discord.SlashCommandOptionType.boolean, description="Get streak stats.", required=False)):
-        await streak(ctx, stats)
-
-    @bot.slash_command(name="test", description="Test MEGABOT.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="dice", description="Roll a dice.", guild_ids=[GUILD_ID])
     async def call(ctx):
-        await test(ctx, startTime)
+        await dice(ctx)
 
-    @bot.slash_command(name="kill", description="Stop MEGABOT. (Admin Only)", guild_ids=[GUILD_ID])
-    async def call(ctx):
-        await kill(ctx)
-
-    @bot.slash_command(name="play", description="Plays music.", guild_ids=[GUILD_ID])
-    async def call(ctx, search: discord.Option(discord.SlashCommandOptionType.string, description="Song to search for on YouTube.", required=True)):
-        await play(ctx, search, queued, SDL, skip=False)
-
-    @bot.slash_command(name="skip", description="Skip the current song.", guild_ids=[GUILD_ID])
-    async def call(ctx):
-        search = ""
-        await play(ctx, search, queued, SDL, skip=True)
-
-    @bot.slash_command(name="stop", description="Stops music.", guild_ids=[GUILD_ID])
-    async def call(ctx):
-        await stop(ctx, queued)
-
-    @bot.slash_command(name="queue", description="Show the current music queue.", guild_ids=[GUILD_ID])
-    async def call(ctx):
-        await queue(ctx, queued)
+    @bot.slash_command(name="double", description="Play MEGACOIN double or nothing.", guild_ids=[GUILD_ID])
+    async def call(ctx, confirm: discord.Option(discord.SlashCommandOptionType.boolean, required=True, description="Confirm you want to double or nothing your entire MEGACOIN balance.")):
+        await double(ctx, confirm)
 
     @bot.slash_command(name="emote", description="Search for a 7TV emote.", guild_ids=[GUILD_ID])
     async def call(ctx,
@@ -178,9 +157,41 @@ if __name__ == "__main__":
                    id: discord.Option(discord.SlashCommandOptionType.boolean, description="Search by 7TV emote ID.", required=False)):
         await emote(ctx, search, add, id)
 
-    @bot.slash_command(name="stock", description="Searches a stock price.", guild_ids=[GUILD_ID])
-    async def call(ctx, symbol: discord.Option(discord.SlashCommandOptionType.string, description="Stock symbol to search for (ie. PLTR).", required=True)):
-        await stock(ctx, symbol)
+    @bot.slash_command(name="image", description="Generate an image with AI.", guild_ids=[GUILD_ID])
+    async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for image to be generated from.", required=True)):
+        await image(ctx, prompt)
+
+    @bot.slash_command(name="kanye", description="Retrieve a random Kanye West quote.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await kanye(ctx)
+
+    @bot.slash_command(name="kill", description="Stop MEGABOT. (Admin Only)", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await kill(ctx)
+
+    @bot.slash_command(name="math", description="Evaluate provided math expression.", guild_ids=[GUILD_ID])
+    async def call(ctx, expression: discord.Option(discord.SlashCommandOptionType.string, description="Expression to evaluate.", required=True)):
+        await math(ctx, expression)
+
+    @bot.slash_command(name="nasa", description="Retrieve the NASA photo of the day.", guild_ids=[GUILD_ID])
+    async def call(ctx, details: discord.Option(discord.SlashCommandOptionType.boolean, description="Provide the explanation of the photo.", required=False)):
+        await nasa(ctx, details)
+
+    @bot.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await ping(ctx)
+
+    @bot.slash_command(name="play", description="Plays music.", guild_ids=[GUILD_ID])
+    async def call(ctx, search: discord.Option(discord.SlashCommandOptionType.string, description="Song to search for on YouTube.", required=True)):
+        await play(ctx, search, queued, SDL, skip=False)
+
+    @bot.slash_command(name="queue", description="Show the current music queue.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await queue(ctx, queued)
+
+    @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji. No Discord emojis.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await random_unicode_emoji(ctx)
 
     @bot.slash_command(name="retirement", description="Retirement calculator for your planning pleasure.", guild_ids=[GUILD_ID])
     async def call(ctx,
@@ -191,36 +202,25 @@ if __name__ == "__main__":
                    growthrate: discord.Option(discord.SlashCommandOptionType.integer, description="Optimistic => %, Expected => %, Conservative => %", required=True)):
         await retirement(ctx, age, startingcash, yearlysavings, desiredincome, growthrate)
 
-    @bot.slash_command(name="coin", description="Flip a coin.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="skip", description="Skip the current song.", guild_ids=[GUILD_ID])
     async def call(ctx):
-        await coin(ctx)
+        search = ""
+        await play(ctx, search, queued, SDL, skip=True)
 
-    @bot.slash_command(name="dice", description="Roll a dice.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="stock", description="Searches a stock price.", guild_ids=[GUILD_ID])
+    async def call(ctx, symbol: discord.Option(discord.SlashCommandOptionType.string, description="Stock symbol to search for (ie. PLTR).", required=True)):
+        await stock(ctx, symbol)
+
+    @bot.slash_command(name="stop", description="Stops music.", guild_ids=[GUILD_ID])
     async def call(ctx):
-        await dice(ctx)
+        await stop(ctx, queued)
 
-    @bot.slash_command(name="image", description="Generate an image with AI.", guild_ids=[GUILD_ID])
-    async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for image to be generated from.", required=True)):
-        await image(ctx, prompt)
+    @bot.slash_command(name="streak", description="Keep a daily streak going!", guild_ids=[GUILD_ID])
+    async def call(ctx, stats: discord.Option(discord.SlashCommandOptionType.boolean, description="Get streak stats.", required=False)):
+        await streak(ctx, stats)
 
-    @bot.slash_command(name="code", description="Write code with AI.", guild_ids=[GUILD_ID])
-    async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for code to be written from.", required=True)):
-        await code(ctx, prompt)
-
-    @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji. No Discord emojis.", guild_ids=[GUILD_ID])
+    @bot.slash_command(name="test", description="Test MEGABOT.", guild_ids=[GUILD_ID])
     async def call(ctx):
-        await random_unicode_emoji(ctx)
-
-    @bot.slash_command(name="album", description="Play an album artist guessing game.", guild_ids=[GUILD_ID])
-    async def call(ctx, genre: discord.Option(description="Pick a genre. Hip-Hop is default.", default="hip-hop", choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"])):
-        await album(ctx, genre)
-
-    @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
-    async def call(ctx, user: discord.Option(discord.SlashCommandOptionType.user, required=False, description="User to get the balance of.")):
-        await balance(ctx, user)
-
-    @bot.slash_command(name="double", description="MEGACOIN double or nothing.", guild_ids=[GUILD_ID])
-    async def call(ctx, confirm: discord.Option(discord.SlashCommandOptionType.boolean, required=True, description="Confirm you want to double or nothing your entire MEGACOIN balance.")):
-        await double(ctx, confirm)
+        await test(ctx, startTime)
 
     bot.run(TOKEN)

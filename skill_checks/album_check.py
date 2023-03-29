@@ -7,16 +7,15 @@ import random
 import discord
 import requests
 import asyncio
+import megacoin
 from difflib import SequenceMatcher
 from colorthief import ColorThief
-
-import megacoin
 
 
 async def album_check(bot, genre="hip-hop"):
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
-    channel = discord.utils.get(guild.channels, name="main")
+    channel = discord.utils.get(guild.channels, name="bot-testing")
 
     def check(msg):
         guess = re.sub("[^A-Z]", "", msg.content.lower(), 0, re.IGNORECASE)
@@ -76,10 +75,11 @@ async def album_check(bot, genre="hip-hop"):
         return
 
     await msg.add_reaction("✅")
-    text = f"✅ {msg.author.display_name} Wins! The artist is {artist}"
+    text = f"+ {coins} ✅ {msg.author.display_name} Wins! The artist is {artist}"
     await megacoin.add(msg.author, coins)
 
-    embed = embed.set_footer(text=text, icon_url=msg.author.display_avatar)
+    embed = embed.set_footer(
+        text=text, icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
     await message.edit(embed=embed)
 
     os.remove("./cover.jpg")
