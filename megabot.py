@@ -11,6 +11,7 @@ from discord.ext import tasks
 from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
 from skill_checks.album_check import album_check
+from skill_checks.boost_check import boost_check
 from slash_commands.age import age
 from slash_commands.album import album
 from slash_commands.balance import balance
@@ -59,11 +60,16 @@ if __name__ == "__main__":
     async def skill_check(bot):
         await album_check(bot)
 
+    @tasks.loop(hours=24)
+    async def booster_check(bot):
+        await boost_check(bot)
+
     # Event Listeners
     @bot.listen('on_ready')
     async def on_ready():
         await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="You..."))
         skill_check.start(bot)
+        booster_check.start(bot)
 
     @bot.listen('on_message')
     async def on_message(message):
