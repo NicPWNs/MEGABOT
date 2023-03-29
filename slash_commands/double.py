@@ -8,13 +8,12 @@ import megacoin
 async def double(ctx, confirm):
 
     if not confirm:
-        embed = discord.Embed(color=0xf6be3c, title="⚖️  Double or Nothing",
-                              description="Please confirm you want to play.")
+        embed = discord.Embed(color=0xf6be3c, title="⚖️  Double or Nothing")
         await ctx.respond(embed=embed)
         return
 
-    embed = discord.Embed(color=0xf6be3c, title="⚖️  Double or Nothing",
-                          description="<a:MEGACOINDOUBLE:1090716254203031632>").set_thumbnail(url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/double.gif")
+    embed = discord.Embed(color=0xf6be3c, title="⚖️  Double or Nothing").set_thumbnail(
+        url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/double.gif")
     interaction = await ctx.respond(embed=embed)
 
     balance = await megacoin.balance(ctx.user)
