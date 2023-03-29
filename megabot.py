@@ -316,19 +316,7 @@ if __name__ == "__main__":
         await random_unicode_emoji(ctx)
 
     @bot.slash_command(name="album", description="Play an album artist guessing game.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="genre",
-        description="Pick a genre. Hip-Hop is default.",
-        input_type=str,
-        required=False,
-        choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"]
-    )
-    async def call(ctx, genre="hip-hop"):
-        await album(ctx, genre)
-
-    async def call(ctx,  genre: discord.Option(description="Pick a genre. Hip-Hop is default.",
-                                               default="hip-hop",
-                                               choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"])):
+    async def call(ctx,  genre: discord.Option(description="Pick a genre. Hip-Hop is default.", default="hip-hop", choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"])):
         await album(ctx, genre)
 
     @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
