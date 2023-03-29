@@ -5,14 +5,12 @@ import spotdl
 import asyncio
 import nest_asyncio
 import discord
-
+import megacoin
 from random import random, randint
 from discord.ext import tasks
 from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
-
 from skill_checks.album_check import album_check
-
 from slash_commands.age import age
 from slash_commands.album import album
 from slash_commands.balance import balance
@@ -22,6 +20,7 @@ from slash_commands.code import code
 from slash_commands.coin import coin
 from slash_commands.csgo import csgo
 from slash_commands.dice import dice
+from slash_commands.double import double
 from slash_commands.emote import emote
 from slash_commands.image import image
 from slash_commands.kanye import kanye
@@ -322,13 +321,11 @@ if __name__ == "__main__":
         await album(ctx, genre)
 
     @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="user",
-        description="User to check balance of.",
-        input_type=str,
-        required=False,
-        choices=guild.members)
-    async def call(ctx):
-        await balance(ctx)
+    async def call(ctx,  user: discord.Option(discord.SlashCommandOptionType.user, required=False, description="User to get the balance of.")):
+        await balance(ctx, user)
+
+    @bot.slash_command(name="double", description="MEGACOIN double or nothing.", guild_ids=[GUILD_ID])
+    async def call(ctx,  confirm: discord.Option(discord.SlashCommandOptionType.boolean, required=True, description=f"Confirm you want to double or nothing your entire MEGACOIN balance.")):
+        await double(ctx, confirm)
 
     bot.run(TOKEN)

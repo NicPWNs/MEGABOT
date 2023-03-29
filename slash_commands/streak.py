@@ -230,6 +230,6 @@ async def streak(ctx, stats):
             coins = 100
         embed = discord.Embed(color=color, title=content,
                               description=f"+ {coins} <:MEGACOIN:1090620048621707324>\n{statMessage}")
-        megacoin.add(ctx.user, coins)
+        await megacoin.add(ctx.user, coins)
 
     await interaction.edit_original_response(embed=embed)

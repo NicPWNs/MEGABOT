@@ -2,10 +2,11 @@
 import discord
 from random import random
 
+
 async def coin(ctx):
 
     embed = discord.Embed(color=0xfee9b6,
-                        title="⏳  Loading...")
+                          title="⏳  Loading...")
 
     interaction = await ctx.respond(embed=embed)
 
