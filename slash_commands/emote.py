@@ -8,26 +8,26 @@ async def emote(ctx, search, add, id):
     await ctx.respond(content="⏳ Loading...")
 
     query = {
-  "operationName": "SearchEmotes",
-  "variables": {
-    "query": search,
-    "limit": 1,
-    "page": 1,
-    "sort": {
-      "value": "popularity",
-      "order": "DESCENDING"
-    },
-    "filter": {
-      "category": "TOP",
-      "exact_match": False,
-      "case_sensitive": False,
-      "ignore_tags": False,
-      "zero_width": False,
-      "animated": False,
-      "aspect_ratio": ""
-    }
-  },
-  "query": """query SearchEmotes(
+        "operationName": "SearchEmotes",
+        "variables": {
+            "query": search,
+            "limit": 1,
+            "page": 1,
+            "sort": {
+                "value": "popularity",
+                "order": "DESCENDING"
+            },
+            "filter": {
+                "category": "TOP",
+                "exact_match": False,
+                "case_sensitive": False,
+                "ignore_tags": False,
+                "zero_width": False,
+                "animated": False,
+                "aspect_ratio": ""
+            }
+        },
+        "query": """query SearchEmotes(
   $query: String!
   $page: Int
   $sort: Sort
@@ -77,7 +77,8 @@ async def emote(ctx, search, add, id):
 }
 """}
 
-    headers = {"authorization": str(os.getenv('7TV_TOKEN')), "content-type": "application/json"}
+    headers = {"authorization": str(
+        os.getenv('7TV_TOKEN')), "content-type": "application/json"}
 
     if id:
         r = requests.get(f"https://7tv.io/v3/emotes/{search}").json()
@@ -86,15 +87,16 @@ async def emote(ctx, search, add, id):
         uri = "/2x.png"
 
     else:
-      r = requests.post("https://7tv.io/v3/gql", headers=headers, json=query).json()
-      try:
-        url = "http:" + r["data"]["emotes"]["items"][0]["host"]["url"]
-        uri = "/2x.png"
-        name = r["data"]["emotes"]["items"][0]["name"]
+        r = requests.post("https://7tv.io/v3/gql",
+                          headers=headers, json=query).json()
+        try:
+            url = "http:" + r["data"]["emotes"]["items"][0]["host"]["url"]
+            uri = "/2x.png"
+            name = r["data"]["emotes"]["items"][0]["name"]
 
-      except:
-        content = "❌   **Emote Not Found! Try Again**"
-        pass
+        except:
+            content = "❌   **Emote Not Found! Try Again**"
+            pass
 
     imageReq = requests.get(url + uri)
     image = imageReq.content
@@ -105,7 +107,7 @@ async def emote(ctx, search, add, id):
 
     content = url + uri
 
-    if add == "True":
+    if add:
         emote = await ctx.guild.create_custom_emoji(name=name, image=image)
         content = f"✅   **Emote Added To Server**   {emote}"
 
