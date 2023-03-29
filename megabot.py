@@ -326,12 +326,17 @@ if __name__ == "__main__":
     async def call(ctx, genre="hip-hop"):
         await album(ctx, genre)
 
+    async def call(ctx,  genre: discord.Option(description="Pick a genre. Hip-Hop is default.",
+                                               default="hip-hop",
+                                               choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"])):
+        await album(ctx, genre)
+
     @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
     async def call(ctx,  user: discord.Option(discord.SlashCommandOptionType.user, required=False, description="User to get the balance of.")):
         await balance(ctx, user)
 
     @bot.slash_command(name="double", description="MEGACOIN double or nothing.", guild_ids=[GUILD_ID])
-    async def call(ctx,  confirm: discord.Option(discord.SlashCommandOptionType.boolean, required=True, description=f"Confirm you want to double or nothing your entire MEGACOIN balance.")):
+    async def call(ctx,  confirm: discord.Option(discord.SlashCommandOptionType.boolean, required=True, description="Confirm you want to double or nothing your entire MEGACOIN balance.")):
         await double(ctx, confirm)
 
     bot.run(TOKEN)
