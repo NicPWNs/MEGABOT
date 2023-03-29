@@ -32,6 +32,6 @@ async def double(ctx, confirm):
     time.sleep(random.randint(2, 10))
 
     embed = discord.Embed(
-        color=0xf6be3c, title="⚖️  Double or Nothing", description=description).set_thumbnail(url=url)
+        color=0xf6be3c, title="⚖️  Double or Nothing", description=description).set_thumbnail(url=url).set_footer(text=f"Your balance is now {await megacoin.balance(ctx.user)}")
 
     await interaction.edit_original_response(embed=embed)
