@@ -198,7 +198,7 @@ async def streak(ctx, stats):
 
     statMessage = ""
 
-    if stats == "True":
+    if stats:
         statMessage = "\n\n📊\n**All-Time Highest Streak:** " + \
             str(dataStats['Item']['stat']) + \
             " *by* <@" + \

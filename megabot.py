@@ -174,14 +174,7 @@ if __name__ == "__main__":
         await csgo(ctx, username)
 
     @bot.slash_command(name="streak", description="Keep a daily streak going!", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="stats",
-        description="Get streak stats.",
-        input_type=bool,
-        required=False,
-        choices=["True", "False"]
-    )
-    async def call(ctx, stats):
+    async def call(ctx, stats: discord.Option(discord.SlashCommandOptionType.boolean, description="Get streak stats.", required=False)):
         await streak(ctx, stats)
 
     @bot.slash_command(name="test", description="Test MEGABOT.", guild_ids=[GUILD_ID])
