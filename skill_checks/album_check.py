@@ -76,7 +76,7 @@ async def album_check(bot, genre="hip-hop"):
         return
 
     await msg.add_reaction("✅")
-    text = f"✅ {msg.author.name} Wins! The artist is {artist}"
+    text = f"✅ {msg.author.display_name} Wins! The artist is {artist}"
     await megacoin.add(msg.author, coins)
 
     embed = embed.set_footer(text=text, icon_url=msg.author.display_avatar)

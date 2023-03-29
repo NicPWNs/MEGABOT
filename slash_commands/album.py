@@ -71,7 +71,7 @@ async def album(ctx, genre="hip-hop"):
     answer = re.sub("[^A-Z]", "", artist.lower(), 0, re.IGNORECASE)
 
     if SequenceMatcher(a=guess, b=answer).ratio() >= 0.9:
-        text = f"✅ {ctx.user.name} is Correct! The artist is {artist}"
+        text = f"✅ {ctx.user.display_name} is Correct! The artist is {artist}"
 
     embed = discord.Embed(color=color,
                           title="💽  Guess the Artist of this Album Cover!"

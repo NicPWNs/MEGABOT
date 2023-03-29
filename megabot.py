@@ -56,7 +56,7 @@ if __name__ == "__main__":
         os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
     # Timed Events
-    @tasks.loop(minutes=randint(45, 120))
+    @tasks.loop(minutes=randint(60, 180))
     async def skill_check(bot):
         await album_check(bot)
 
