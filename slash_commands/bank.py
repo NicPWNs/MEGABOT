@@ -18,7 +18,7 @@ async def bank(ctx):
     entry = 1
     description = ""
 
-    data = sorted(data, key=lambda d: d['coins'], reverse=True)
+    data = sorted(data, key=lambda d: int(d['coins']), reverse=True)
 
     for item in data:
         if not int(item['coins']) == 0:
