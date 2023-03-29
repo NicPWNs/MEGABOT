@@ -13,11 +13,17 @@ async def double(ctx, confirm):
         await ctx.respond(embed=embed)
         return
 
+    balance = await megacoin.balance(ctx.user)
+
+    if balance == 0:
+        embed = discord.Embed(
+            color=0xffad32, title="⚖️  Double or Nothing", description="Your balance is zero.")
+        await ctx.respond(embed=embed)
+        return
+
     embed = discord.Embed(color=0xffad32, title="⚖️  Double or Nothing", description="Flipping...").set_thumbnail(
         url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/double.gif")
     interaction = await ctx.respond(embed=embed)
-
-    balance = await megacoin.balance(ctx.user)
 
     win = random.choice([0, 1])
 
