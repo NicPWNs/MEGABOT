@@ -59,15 +59,15 @@ async def album_check(bot, genre="hip-hop"):
 
     embed = discord.Embed(color=color,
                           title="💽  Guess the Artist of this Album Cover",
-                          description=f"Anyone can answer within 5 minutes for <:MEGACOIN:1090620048621707324> *x{coins}*"
+                          description=f"Anyone can answer within 10 minutes for <:MEGACOIN:1090620048621707324> *x{coins}*"
                           ).set_image(url=cover).set_author(name="🎯  Skill Check!")
 
     message = await channel.send(embed=embed)
 
     try:
-        msg = await bot.wait_for("message", timeout=300, check=check)
+        msg = await bot.wait_for("message", timeout=600, check=check)
     except asyncio.TimeoutError:
-        text = f"❌ No one guessed correctly within 5 minutes!"
+        text = f"❌ No one guessed correctly within 10 minutes!"
 
         embed = embed.set_footer(
             text=text, icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/thumbnail.gif")
