@@ -314,7 +314,7 @@ if __name__ == "__main__":
     @discord.option(
         name="genre",
         description="Pick a genre. Hip-Hop is default.",
-        input_type=bool,
+        input_type=str,
         required=False,
         choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"]
     )
@@ -322,6 +322,12 @@ if __name__ == "__main__":
         await album(ctx, genre)
 
     @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
+    @discord.option(
+        name="user",
+        description="User to check balance of.",
+        input_type=str,
+        required=False,
+        choices=guild.members)
     async def call(ctx):
         await balance(ctx)
 
