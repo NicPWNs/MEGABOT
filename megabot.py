@@ -149,14 +149,7 @@ if __name__ == "__main__":
         await chat(ctx, prompt)
 
     @bot.slash_command(name="nasa", description="Retrieve the NASA photo of the day.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="details",
-        description="Provide the explanation of the photo.",
-        input_type=bool,
-        required=False,
-        choices=["True", "False"]
-    )
-    async def call(ctx, details):
+    async def call(ctx, details: discord.Option(discord.SlashCommandOptionType.boolean, description="Provide the explanation of the photo.", required=False)):
         await nasa(ctx, details)
 
     @bot.slash_command(name="kanye", description="Retrieve a random Kanye West quote.", guild_ids=[GUILD_ID])
@@ -164,13 +157,7 @@ if __name__ == "__main__":
         await kanye(ctx)
 
     @bot.slash_command(name="csgo", description="Retrieve CS:GO stats.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="username",
-        description="User on Steam, a Steam ID, Steam Community URI, or Steam Vanity Username.",
-        input_type=str,
-        required=True
-    )
-    async def call(ctx, username):
+    async def call(ctx, username: discord.Option(discord.SlashCommandOptionType.string, description="User on Steam, a Steam ID, Steam Community URI, or Steam Vanity Username.", required=True)):
         await csgo(ctx, username)
 
     @bot.slash_command(name="streak", description="Keep a daily streak going!", guild_ids=[GUILD_ID])
