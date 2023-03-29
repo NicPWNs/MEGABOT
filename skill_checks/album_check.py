@@ -70,7 +70,7 @@ async def album_check(bot, genre="hip-hop"):
         text = f"❌ No one guessed correctly within 10 minutes!"
 
         embed = embed.set_footer(
-            text=text, icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/thumbnail.gif")
+            text=text, icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif")
 
         await message.edit(embed=embed)
         return

@@ -1,6 +1,6 @@
 # MEGABOT Discord Bot
 
-![MEGACORD LOGO](/thumbnail.gif)
+![MEGACORD LOGO](/images/thumbnail.gif)
 
 Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to practice CI/CD with [GitHub actions](https://github.com/NicPWNs/MEGABOT/actions) and EC2. Not serverless, unfortunately. 😞
 

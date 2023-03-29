@@ -14,7 +14,7 @@ async def double(ctx, confirm):
         return
 
     embed = discord.Embed(color=0xf6be3c, title="⚖️  Double or Nothing",
-                          description="<a:MEGACOINDOUBLE:1090716254203031632>")
+                          description="<a:MEGACOINDOUBLE:1090716254203031632>").set_image(url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif")
     interaction = await ctx.respond(embed=embed)
 
     balance = await megacoin.balance(ctx.user)

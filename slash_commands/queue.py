@@ -11,7 +11,8 @@ async def queue(ctx, queued):
     voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
 
     if not voice:
-        embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice").set_thumbnail(url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/thumbnail.gif")
+        embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice").set_thumbnail(
+            url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif")
         await interaction.edit_original_response(embed=embed)
 
     else:
@@ -26,5 +27,6 @@ async def queue(ctx, queued):
                 description += f"{num}. {os.path.splitext(song)[0]}\n"
                 num += 1
 
-        embed = discord.Embed(color=0x5daced, title="🔢  Current Queue", description=description)
+        embed = discord.Embed(
+            color=0x5daced, title="🔢  Current Queue", description=description)
         await interaction.edit_original_response(embed=embed)

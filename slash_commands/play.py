@@ -33,7 +33,7 @@ async def play(ctx, search, queued, SDL, skip):
 
         if not voice:
             embed = discord.Embed(color=0xdd2f45, title="❌  MEGABOT Is Not In Voice").set_thumbnail(
-                url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/thumbnail.gif")
+                url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif")
             await interaction.edit_original_response(embed=embed)
 
         else:
