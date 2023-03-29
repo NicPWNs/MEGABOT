@@ -193,13 +193,7 @@ if __name__ == "__main__":
         await kill(ctx)
 
     @bot.slash_command(name="play", description="Plays music.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="search",
-        description="Song to search for on YouTube.",
-        input_type=str,
-        required=True
-    )
-    async def call(ctx, search):
+    async def call(ctx, search: discord.Option(discord.SlashCommandOptionType.string, description="Song to search for on YouTube.", required=True)):
         await play(ctx, search, queued, SDL, skip=False)
 
     @bot.slash_command(name="skip", description="Skip the current song.", guild_ids=[GUILD_ID])
