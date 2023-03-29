@@ -15,6 +15,7 @@ from skill_checks.boost_check import boost_check
 from slash_commands.age import age
 from slash_commands.album import album
 from slash_commands.balance import balance
+from slash_commands.bank import bank
 from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.code import code
@@ -80,16 +81,12 @@ if __name__ == "__main__":
         if message.author == bot.user:
             return
 
-        try:
-            if random() < .25:
-                guild = discord.utils.get(bot.guilds, name="MEGACORD")
-                emojis = await guild.fetch_emojis()
-                for _ in range(0, 6):
-                    emojis = emojis + emojis
-                await message.add_reaction(random_emoji(custom=emojis)[0])
-
-        except:
-            pass
+        if random() < .25:
+            guild = discord.utils.get(bot.guilds, name="MEGACORD")
+            emojis = await guild.fetch_emojis()
+            for _ in range(0, 6):
+                emojis = emojis + emojis
+            await message.add_reaction(random_emoji(custom=emojis)[0])
 
         if 'birthday' in message.content.lower():
             await message.channel.send('Happy Birthday! 🎈🎉')
@@ -121,6 +118,10 @@ if __name__ == "__main__":
     @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
     async def call(ctx, user: discord.Option(discord.SlashCommandOptionType.user, required=False, description="User to get the balance of.")):
         await balance(ctx, user)
+
+    @bot.slash_command(name="bank", description="View the MEGACOIN balance leaderboard.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await bank(ctx)
 
     @bot.slash_command(name="bless", description="Blesses the mess!", guild_ids=[GUILD_ID])
     async def call(ctx):
