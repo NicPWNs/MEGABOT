@@ -9,6 +9,7 @@ import asyncio
 from difflib import SequenceMatcher
 from colorthief import ColorThief
 
+
 async def album(ctx, genre="hip-hop"):
 
     def check(msg):
@@ -23,7 +24,8 @@ async def album(ctx, genre="hip-hop"):
         'client_secret': str(os.getenv('SPOTIFY_SECRET'))
     }
 
-    token = requests.post('https://accounts.spotify.com/api/token', data=data).json()['access_token']
+    token = requests.post(
+        'https://accounts.spotify.com/api/token', data=data).json()['access_token']
 
     headers = {
         'Accept': 'application/json',
@@ -34,18 +36,19 @@ async def album(ctx, genre="hip-hop"):
     artist = "Various Artists"
 
     while artist == "Various Artists":
-        album = requests.get(f'https://api.spotify.com/v1/search?q=genre%3A{genre}&type=track&market=NA&limit=1&offset={str(random.randint(0, 350))}', headers=headers).json()['tracks']['items'][0]['album']
+        album = requests.get(
+            f'https://api.spotify.com/v1/search?q=genre%3A{genre}&type=track&market=NA&limit=1&offset={str(random.randint(0, 350))}', headers=headers).json()['tracks']['items'][0]['album']
         cover = album['images'][0]['url']
         artist = album['artists'][0]['name']
 
-    with open("cover.jpg",'wb') as f:
-        shutil.copyfileobj(requests.get(cover, stream = True).raw, f)
+    with open("cover.jpg", 'wb') as f:
+        shutil.copyfileobj(requests.get(cover, stream=True).raw, f)
     color = ColorThief("./cover.jpg")
     color = int('%02x%02x%02x' % color.get_color(quality=1), 16)
 
     embed = discord.Embed(color=color,
                           title="💽  Guess the Artist of this Album Cover!"
-                        ).set_image(url=cover)
+                          ).set_image(url=cover)
 
     await interaction.edit_original_response(embed=embed)
 
@@ -55,8 +58,8 @@ async def album(ctx, genre="hip-hop"):
         text = f"❌ {ctx.user.name} did not guess within 60 seconds!"
 
         embed = discord.Embed(color=color,
-                          title="💽  Guess the Artist of this Album Cover!"
-                        ).set_image(url=cover).set_footer(text=text, icon_url=ctx.user.display_avatar)
+                              title="💽  Guess the Artist of this Album Cover!"
+                              ).set_image(url=cover).set_footer(text=text, icon_url=ctx.user.display_avatar)
 
         await interaction.edit_original_response(embed=embed)
         return
@@ -72,7 +75,7 @@ async def album(ctx, genre="hip-hop"):
 
     embed = discord.Embed(color=color,
                           title="💽  Guess the Artist of this Album Cover!"
-                        ).set_image(url=cover).set_footer(text=text, icon_url=ctx.user.display_avatar)
+                          ).set_image(url=cover).set_footer(text=text, icon_url=ctx.user.display_avatar)
 
     await interaction.edit_original_response(embed=embed)
 

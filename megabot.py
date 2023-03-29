@@ -6,12 +6,16 @@ import asyncio
 import nest_asyncio
 import discord
 
-from random import random
+from random import random, randint
+from discord.ext import tasks
 from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
 
+from skill_checks.album_check import album_check
+
 from slash_commands.age import age
 from slash_commands.album import album
+from slash_commands.balance import balance
 from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.code import code
@@ -51,10 +55,16 @@ if __name__ == "__main__":
     SDL = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(
         os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
+    # Timed Events
+    @tasks.loop(minutes=randint(45, 120))
+    async def skill_check(bot):
+        await album_check(bot)
+
     # Event Listeners
     @bot.listen('on_ready')
     async def on_ready():
         await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="You..."))
+        skill_check.start(bot)
 
     @bot.listen('on_message')
     async def on_message(message):
@@ -310,5 +320,9 @@ if __name__ == "__main__":
     )
     async def call(ctx, genre="hip-hop"):
         await album(ctx, genre)
+
+    @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await balance(ctx)
 
     bot.run(TOKEN)

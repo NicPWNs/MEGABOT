@@ -4,11 +4,13 @@ import discord
 from datetime import datetime, timedelta
 from random_unicode_emoji import random_emoji
 
+import megacoin
+
 
 async def streak(ctx, stats):
 
     embed = discord.Embed(color=0xfee9b6,
-                        title="⏳  Loading...")
+                          title="⏳  Loading...")
 
     interaction = await ctx.respond(embed=embed)
 
@@ -46,6 +48,7 @@ async def streak(ctx, stats):
     prefix = ""
     streak = 0
     personalRecord = 0
+    hit = False
 
     currTime = datetime.now()
     lastMidnight = datetime.combine(currTime.date(), datetime.min.time())
@@ -54,8 +57,9 @@ async def streak(ctx, stats):
 
     if dataLength < 5:
         prefix = "You just started a new streak! "
+        hit = True
 
-        put = table.put_item(
+        table.put_item(
             Item={
                 'id': str(ctx.user.id),
                 'username': str(ctx.user.name),
@@ -72,8 +76,9 @@ async def streak(ctx, stats):
 
     elif currTime > storedSkipMid:
         prefix = "You missed your streak! "
+        hit = True
 
-        put = table.put_item(
+        table.put_item(
             Item={
                 'id': str(ctx.user.id),
                 'username': str(ctx.user.name),
@@ -89,7 +94,7 @@ async def streak(ctx, stats):
         streak = streak + 1
 
         if str(ctx.user.id) == str(dataCurrent['Item']['userId']):
-            put = table.put_item(
+            table.put_item(
                 Item={
                     'id': 'currentStreak',
                     'stat': '0',
@@ -105,7 +110,7 @@ async def streak(ctx, stats):
 
         streak = int(data['Item']['streak'])
 
-        put = table.put_item(
+        table.put_item(
             Item={
                 'id': str(ctx.user.id),
                 'username': str(ctx.user.name),
@@ -120,14 +125,14 @@ async def streak(ctx, stats):
 
     elif currTime > storedLastMid and currTime > storedNextMid:
         prefix = "You hit your streak! "
-
+        hit = True
         streak = int(data['Item']['streak']) + 1
         personalRecord = int(data['Item']['personalRecord'])
 
         if streak > personalRecord:
             personalRecord = streak
 
-        put = table.put_item(
+        table.put_item(
             Item={
                 'id': str(ctx.user.id),
                 'username': str(ctx.user.name),
@@ -141,7 +146,7 @@ async def streak(ctx, stats):
         )
 
         if streak > int(dataStats['Item']['stat']):
-            put = table.put_item(
+            table.put_item(
                 Item={
                     'id': 'allTimeStreak',
                     'stat': str(streak),
@@ -151,7 +156,7 @@ async def streak(ctx, stats):
             )
 
         if streak > int(dataCurrent['Item']['stat']):
-            put = table.put_item(
+            table.put_item(
                 Item={
                     'id': 'currentStreak',
                     'stat': str(streak),
@@ -187,7 +192,7 @@ async def streak(ctx, stats):
     else:
         guild = discord.utils.get(ctx.bot.guilds, name="MEGACORD")
         emojis = await guild.fetch_emojis()
-        for _ in range(0,5):
+        for _ in range(0, 5):
             emojis = emojis + emojis
         emote = str(random_emoji(custom=emojis)[0])
 
@@ -218,5 +223,13 @@ async def streak(ctx, stats):
         color = 0xdd2f45
 
     embed = discord.Embed(color=color, title=content, description=statMessage)
+
+    if hit:
+        coins = streak
+        if coins > 100:
+            coins = 100
+        embed = discord.Embed(color=color, title=content,
+                              description=f"+ {coins} <:MEGACOIN:1090620048621707324>\n{statMessage}")
+        megacoin.add(ctx.user, coins)
 
     await interaction.edit_original_response(embed=embed)
