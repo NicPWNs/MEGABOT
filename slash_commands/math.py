@@ -3,6 +3,10 @@
 
 async def math(ctx, expression):
 
-    response = str(eval(expression))
+    try:
+        response = str(eval(expression))
+    except:
+        await ctx.respond(content="Invalid Expression!")
+        return
 
     await ctx.respond(content=f"{response}")

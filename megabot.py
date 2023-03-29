@@ -183,37 +183,12 @@ if __name__ == "__main__":
         await stock(ctx, symbol)
 
     @bot.slash_command(name="retirement", description="Retirement calculator for your planning pleasure.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="age",
-        description="How old are you?",
-        input_type=int,
-        required=True
-    )
-    @discord.option(
-        name="startingcash",
-        description="Current investments",
-        input_type=int,
-        required=True
-    )
-    @discord.option(
-        name="yearlysavings",
-        description="Money saved each year",
-        input_type=int,
-        required=True
-    )
-    @discord.option(
-        name="desiredincome",
-        description="Desired yearly income at retirement",
-        input_type=int,
-        required=True
-    )
-    @discord.option(
-        name="growthrate",
-        description="Optimistic => %, Expected => %, Conservative => % ",
-        input_type=int,
-        required=True
-    )
-    async def call(ctx, age, startingcash, yearlysavings, desiredincome, growthrate):
+    async def call(ctx,
+                   age: discord.Option(discord.SlashCommandOptionType.integer, description="How old are you?", required=True),
+                   startingcash: discord.Option(discord.SlashCommandOptionType.integer, description="Current investments.", required=True),
+                   yearlysavings: discord.Option(discord.SlashCommandOptionType.integer, description="Money saved each year.", required=True),
+                   desiredincome: discord.Option(discord.SlashCommandOptionType.integer, description="Desired yearly income at retirement.", required=True),
+                   growthrate: discord.Option(discord.SlashCommandOptionType.integer, description="Optimistic => %, Expected => %, Conservative => %", required=True)):
         await retirement(ctx, age, startingcash, yearlysavings, desiredincome, growthrate)
 
     @bot.slash_command(name="coin", description="Flip a coin.", guild_ids=[GUILD_ID])
