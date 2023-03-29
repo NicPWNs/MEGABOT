@@ -216,37 +216,14 @@ if __name__ == "__main__":
         await queue(ctx, queued)
 
     @bot.slash_command(name="emote", description="Search for a 7TV emote.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="search",
-        description="Emote to search for.",
-        input_type=str,
-        required=True
-    )
-    @discord.option(
-        name="add",
-        description="Add emote to server?",
-        input_type=bool,
-        required=False,
-        choices=["True", "False"]
-    )
-    @discord.option(
-        name="id",
-        description="Search by 7TV emote ID.",
-        input_type=bool,
-        required=False,
-        choices=["True", "False"]
-    )
-    async def call(ctx, search, add, id):
+    async def call(ctx,
+                   search: discord.Option(discord.SlashCommandOptionType.string, description="Emote to search for.", required=True),
+                   add: discord.Option(discord.SlashCommandOptionType.boolean, description="Add emote to server?", required=False),
+                   id: discord.Option(discord.SlashCommandOptionType.boolean, description="Search by 7TV emote ID.", required=False)):
         await emote(ctx, search, add, id)
 
     @bot.slash_command(name="stock", description="Searches a stock price.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="symbol",
-        description="Stock symbol to search for (ie. PLTR).",
-        input_type=str,
-        required=True
-    )
-    async def call(ctx, symbol):
+    async def call(ctx, symbol: discord.Option(discord.SlashCommandOptionType.string, description="Stock symbol to search for (ie. PLTR).", required=True)):
         await stock(ctx, symbol)
 
     @bot.slash_command(name="retirement", description="Retirement calculator for your planning pleasure.", guild_ids=[GUILD_ID])
@@ -292,11 +269,11 @@ if __name__ == "__main__":
         await dice(ctx)
 
     @bot.slash_command(name="image", description="Generate an image with AI.", guild_ids=[GUILD_ID])
-    async def call(ctx,  prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for image to be generated from.", required=True)):
+    async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for image to be generated from.", required=True)):
         await image(ctx, prompt)
 
     @bot.slash_command(name="code", description="Write code with AI.", guild_ids=[GUILD_ID])
-    async def call(ctx,  prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for code to be written from.", required=True)):
+    async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for code to be written from.", required=True)):
         await code(ctx, prompt)
 
     @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji. No Discord emojis.", guild_ids=[GUILD_ID])
@@ -304,15 +281,15 @@ if __name__ == "__main__":
         await random_unicode_emoji(ctx)
 
     @bot.slash_command(name="album", description="Play an album artist guessing game.", guild_ids=[GUILD_ID])
-    async def call(ctx,  genre: discord.Option(description="Pick a genre. Hip-Hop is default.", default="hip-hop", choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"])):
+    async def call(ctx, genre: discord.Option(description="Pick a genre. Hip-Hop is default.", default="hip-hop", choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"])):
         await album(ctx, genre)
 
     @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
-    async def call(ctx,  user: discord.Option(discord.SlashCommandOptionType.user, required=False, description="User to get the balance of.")):
+    async def call(ctx, user: discord.Option(discord.SlashCommandOptionType.user, required=False, description="User to get the balance of.")):
         await balance(ctx, user)
 
     @bot.slash_command(name="double", description="MEGACOIN double or nothing.", guild_ids=[GUILD_ID])
-    async def call(ctx,  confirm: discord.Option(discord.SlashCommandOptionType.boolean, required=True, description="Confirm you want to double or nothing your entire MEGACOIN balance.")):
+    async def call(ctx, confirm: discord.Option(discord.SlashCommandOptionType.boolean, required=True, description="Confirm you want to double or nothing your entire MEGACOIN balance.")):
         await double(ctx, confirm)
 
     bot.run(TOKEN)
