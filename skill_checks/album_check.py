@@ -80,7 +80,6 @@ async def album_check(bot, genre="hip-hop"):
     await megacoin.add(msg.author, coins)
 
     embed = embed.set_footer(text=text, icon_url=msg.author.display_avatar)
-
     await message.edit(embed=embed)
 
     os.remove("./cover.jpg")
