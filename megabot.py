@@ -115,23 +115,11 @@ if __name__ == "__main__":
         await ping(ctx)
 
     @bot.slash_command(name="age", description="Guesses the age of a specified name.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="name",
-        description="Name to guess age of.",
-        input_type=str,
-        required=True
-    )
-    async def call(ctx, name):
+    async def call(ctx, name: discord.Option(discord.SlashCommandOptionType.string, description="Name to guess age of.", required=True)):
         await age(ctx, name)
 
     @bot.slash_command(name="math", description="Evaluate provided math expression.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="expression",
-        description="Expression to evaluate.",
-        input_type=str,
-        required=True
-    )
-    async def call(ctx, expression):
+    async def call(ctx, expression: discord.Option(discord.SlashCommandOptionType.string, description="Expression to evaluate.", required=True)):
         await math(ctx, expression)
 
     @bot.slash_command(name="bless", description="Blesses the mess!", guild_ids=[GUILD_ID])
