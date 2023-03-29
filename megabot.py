@@ -302,13 +302,7 @@ if __name__ == "__main__":
         await image(ctx, prompt)
 
     @bot.slash_command(name="code", description="Write code with AI.", guild_ids=[GUILD_ID])
-    @discord.option(
-        name="prompt",
-        description="Prompt for code to be written from.",
-        input_type=str,
-        required=True
-    )
-    async def call(ctx, prompt):
+    async def call(ctx,  prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for code to be written from.", required=True)):
         await code(ctx, prompt)
 
     @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji. No Discord emojis.", guild_ids=[GUILD_ID])
