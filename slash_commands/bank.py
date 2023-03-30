@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import megacoin
 import discord
 import boto3
 
@@ -27,4 +26,4 @@ async def bank(ctx):
 
     embed = discord.Embed(
         color=0x5965f3, title="💰  MEGACOIN LEADERBOARD", description=description)
-    interaction = await ctx.respond(embed=embed)
+    await interaction.edit_original_response(embed=embed)
