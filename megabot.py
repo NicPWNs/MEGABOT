@@ -2,11 +2,10 @@
 import os
 import time
 import spotdl
+import random
+import discord
 import asyncio
 import nest_asyncio
-import discord
-import megacoin
-from random import random, randint
 from discord.ext import tasks
 from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
@@ -57,7 +56,7 @@ if __name__ == "__main__":
         os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
     # Timed Events
-    @tasks.loop(minutes=randint(120, 240))
+    @tasks.loop(minutes=random.randint(120, 240))
     async def skill_check(bot):
         await album_check(bot)
 
@@ -81,7 +80,7 @@ if __name__ == "__main__":
         if message.author == bot.user:
             return
 
-        if random() < .25:
+        if random.random() < .25:
             guild = discord.utils.get(bot.guilds, name="MEGACORD")
             emojis = await guild.fetch_emojis()
             for _ in range(0, 6):
