@@ -96,7 +96,8 @@ async def emote(ctx, search, add, id):
 
         except:
             content = "❌   **Emote Not Found! Try Again**"
-            pass
+            await ctx.edit(content=content)
+            return
 
     imageReq = requests.get(url + uri)
     image = imageReq.content

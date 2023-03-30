@@ -9,34 +9,8 @@ import nest_asyncio
 from discord.ext import tasks
 from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
-from skill_checks.album_check import album_check
-from skill_checks.boost_check import boost_check
-from slash_commands.age import age
-from slash_commands.album import album
-from slash_commands.balance import balance
-from slash_commands.bank import bank
-from slash_commands.bless import bless
-from slash_commands.chat import chat
-from slash_commands.code import code
-from slash_commands.coin import coin
-from slash_commands.csgo import csgo
-from slash_commands.dice import dice
-from slash_commands.double import double
-from slash_commands.emote import emote
-from slash_commands.image import image
-from slash_commands.kanye import kanye
-from slash_commands.kill import kill
-from slash_commands.math import math
-from slash_commands.nasa import nasa
-from slash_commands.ping import ping
-from slash_commands.play import play
-from slash_commands.queue import queue
-from slash_commands.random_unicode_emoji import random_unicode_emoji
-from slash_commands.retirement import retirement
-from slash_commands.stock import stock
-from slash_commands.stop import stop
-from slash_commands.streak import streak
-from slash_commands.test import test
+from slash_commands import *
+from skill_checks import *
 
 
 if __name__ == "__main__":
