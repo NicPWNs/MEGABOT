@@ -11,7 +11,7 @@ async def boost_check(bot):
 
     if date == 1:
         guild = discord.utils.get(bot.guilds, name="MEGACORD")
-        channel = discord.utils.get(guild.channels, name="bot-testing")
+        channel = discord.utils.get(guild.channels, name="main")
         boosters = guild.premium_subscribers
 
         coins = 250

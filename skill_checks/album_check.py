@@ -15,7 +15,7 @@ from colorthief import ColorThief
 async def album_check(bot, genre="hip-hop"):
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
-    channel = discord.utils.get(guild.channels, name="main")
+    channel = discord.utils.get(guild.channels, name="casino")
 
     def check(msg):
         guess = re.sub("[^A-Z]", "", msg.content.lower(), 0, re.IGNORECASE)
