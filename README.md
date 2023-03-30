@@ -11,6 +11,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/age <name>`: Guesses the age of a specified name.
 - `/album [genre:...]`: Play an album artist guessing game.
 - `/balance`: View MEGACOIN balance.
+- `/bank`: View the MEGACOIN balance leaderboard.
 - `/bless`: Blesses the mess!
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3.5)
 - `/code <prompt>`: Write code with AI.
