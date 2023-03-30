@@ -57,7 +57,7 @@ if __name__ == "__main__":
         os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
     # Timed Events
-    @tasks.loop(minutes=randint(60, 180))
+    @tasks.loop(minutes=randint(120, 240))
     async def skill_check(bot):
         await album_check(bot)
 
@@ -117,6 +117,10 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="balance", description="View MEGACOIN balance.", guild_ids=[GUILD_ID])
     async def call(ctx, user: discord.Option(discord.SlashCommandOptionType.user, required=False, description="User to get the balance of.")):
+        if not ctx.channel.name == ("casino"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
+            return
         await balance(ctx, user)
 
     @bot.slash_command(name="bank", description="View the MEGACOIN balance leaderboard.", guild_ids=[GUILD_ID])
@@ -149,6 +153,10 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="double", description="Play MEGACOIN double or nothing.", guild_ids=[GUILD_ID])
     async def call(ctx, confirm: discord.Option(discord.SlashCommandOptionType.boolean, required=True, description="Confirm you want to double or nothing your entire MEGACOIN balance.")):
+        if not ctx.channel.name == ("casino"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
+            return
         await double(ctx, confirm)
 
     @bot.slash_command(name="emote", description="Search for a 7TV emote.", guild_ids=[GUILD_ID])
@@ -184,10 +192,18 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="play", description="Plays music.", guild_ids=[GUILD_ID])
     async def call(ctx, search: discord.Option(discord.SlashCommandOptionType.string, description="Song to search for on YouTube.", required=True)):
+        if not ctx.channel.name == ("music"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#956737389454311506>**", ephemeral=True)
+            return
         await play(ctx, search, queued, SDL, skip=False)
 
     @bot.slash_command(name="queue", description="Show the current music queue.", guild_ids=[GUILD_ID])
     async def call(ctx):
+        if not ctx.channel.name == ("music"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#956737389454311506>**", ephemeral=True)
+            return
         await queue(ctx, queued)
 
     @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji. No Discord emojis.", guild_ids=[GUILD_ID])
@@ -205,6 +221,10 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="skip", description="Skip the current song.", guild_ids=[GUILD_ID])
     async def call(ctx):
+        if not ctx.channel.name == ("music"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#956737389454311506>**", ephemeral=True)
+            return
         search = ""
         await play(ctx, search, queued, SDL, skip=True)
 
@@ -214,10 +234,18 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="stop", description="Stops music.", guild_ids=[GUILD_ID])
     async def call(ctx):
+        if not ctx.channel.name == ("music"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#956737389454311506>**", ephemeral=True)
+            return
         await stop(ctx, queued)
 
     @bot.slash_command(name="streak", description="Keep a daily streak going!", guild_ids=[GUILD_ID])
     async def call(ctx, stats: discord.Option(discord.SlashCommandOptionType.boolean, description="Get streak stats.", required=False)):
+        if not ctx.channel.name == ("streaks"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#1022570321930358895>**", ephemeral=True)
+            return
         await streak(ctx, stats)
 
     @bot.slash_command(name="test", description="Test MEGABOT.", guild_ids=[GUILD_ID])
