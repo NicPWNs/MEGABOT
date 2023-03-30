@@ -241,7 +241,7 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="streak", description="Keep a daily streak going!", guild_ids=[GUILD_ID])
     async def call(ctx, stats: discord.Option(discord.SlashCommandOptionType.boolean, description="Get streak stats.", required=False)):
-        if not (ctx.channel.name == "streak" or ctx.channel.name == "bot-testing"):
+        if not (ctx.channel.name == "streaks" or ctx.channel.name == "bot-testing"):
             await ctx.send_response(
                 content="❗**ERROR: You can only use this command in <#1022570321930358895>**", ephemeral=True)
             return
