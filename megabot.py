@@ -191,7 +191,7 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="play", description="Plays music.", guild_ids=[GUILD_ID])
     async def call(ctx, search: discord.Option(discord.SlashCommandOptionType.string, description="Song to search for on YouTube.", required=True)):
-        if not ctx.channel.name == ("music"):
+        if not ctx.channel.name == ("music") or ctx.channel.name == ("bot-testing"):
             await ctx.send_response(
                 content="❗**ERROR: You can only use this command in <#956737389454311506>**", ephemeral=True)
             return
