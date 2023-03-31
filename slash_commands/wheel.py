@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import time
 import discord
 import random
 import megacoin
@@ -19,15 +20,18 @@ async def wheel(ctx, wager):
         await ctx.respond(embed=embed)
         return
 
-    embed = discord.Embed(color=0x9366cd, title="☸️  Spin the Wheel", description="Spinning...").set_thumbnail(
-        url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/wheel.png")
-    interaction = await ctx.respond(embed=embed)
-
     spin = random.choice([0, 0.5, 0.5, 1, 1, 1.5, 1.5, 2])
+    diff = random.choice([1, 2])
     win = int(wager * spin)
 
+    embed = discord.Embed(color=0x9366cd, title="☸️  Spin the Wheel", description="Spinning...").set_thumbnail(
+        url=f"https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/{str(spin)}-{str(diff)}.gif")
+    interaction = await ctx.respond(embed=embed)
+
+    time.sleep(4.5)
+
     description = f"<@{ctx.user.id}> won {str(win)} <:MEGACOIN:1090620048621707324> with a wager of {str(wager)} <:MEGACOIN:1090620048621707324>!"
-    url = "https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/wheel.png"
+    url = f"https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/{str(spin)}-{str(diff)}.jpg"
 
     await megacoin.subtract(ctx.user, wager)
     await megacoin.add(ctx.user, win)
