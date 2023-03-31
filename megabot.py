@@ -37,6 +37,7 @@ from slash_commands.stock import stock
 from slash_commands.stop import stop
 from slash_commands.streak import streak
 from slash_commands.test import test
+from slash_commands.wheel import wheel
 
 
 if __name__ == "__main__":
@@ -250,5 +251,13 @@ if __name__ == "__main__":
     @bot.slash_command(name="test", description="Test MEGABOT.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await test(ctx, startTime)
+
+    @bot.slash_command(name="wheel", description="Spin the MEGACOIN wheel.", guild_ids=[GUILD_ID])
+    async def call(ctx, wager: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount you want to wager on the MEGACOIN wheel.")):
+        if not (ctx.channel.name == "casino" or ctx.channel.name == "bot-testing"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
+            return
+        await wheel(ctx, wager)
 
     bot.run(TOKEN)
