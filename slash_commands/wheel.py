@@ -1,5 +1,4 @@
 #!/usr/bin/env python3
-import time
 import discord
 import random
 import megacoin
@@ -24,8 +23,8 @@ async def wheel(ctx, wager):
         url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/wheel.png")
     interaction = await ctx.respond(embed=embed)
 
-    spin = random.choice([0, 0.5, 0.5, 1, 1, 3, 3, 5])
-    win = wager * spin
+    spin = random.choice([0, 0.5, 0.5, 1, 1, 1.5, 1.5, 2])
+    win = int(wager * spin)
 
     description = f"<@{ctx.user.id}> won {str(win)} <:MEGACOIN:1090620048621707324> with a wager of {str(wager)} <:MEGACOIN:1090620048621707324>!"
     url = "https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/wheel.png"

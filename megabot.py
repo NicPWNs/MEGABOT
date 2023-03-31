@@ -81,7 +81,7 @@ if __name__ == "__main__":
         if message.author == bot.user:
             return
 
-        if random.random() < .25:
+        if random.random() < .2:
             guild = discord.utils.get(bot.guilds, name="MEGACORD")
             emojis = await guild.fetch_emojis()
             for _ in range(0, 6):
@@ -254,7 +254,7 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="wheel", description="Spin the MEGACOIN wheel.", guild_ids=[GUILD_ID])
     async def call(ctx, wager: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount you want to wager on the MEGACOIN wheel.")):
-        if not (ctx.channel.name == "casino" or ctx.channel.name == "bot-testing"):
+        if not (ctx.channel.name == "casina" or ctx.channel.name == "bot-testing"):
             await ctx.send_response(
                 content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
             return
