@@ -15,6 +15,6 @@ async def age(ctx, name):
         response = f"I guess the age of \"{name}\" is **{age}**!"
 
     embed = discord.Embed(
-        color=0x3a88c2, title="🔢  Age Guesser", description=response)
+        color=0x3a88c2, title="🔢   Age Guesser", description=response)
 
     await ctx.respond(embed=embed)
