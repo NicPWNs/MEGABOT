@@ -28,7 +28,7 @@ async def wheel(ctx, wager):
         url=f"https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/{str(spin)}-{str(diff)}.gif")
     interaction = await ctx.respond(embed=embed)
 
-    time.sleep(4.5)
+    time.sleep(5)
 
     description = f"<@{ctx.user.id}> won {str(win)} <:MEGACOIN:1090620048621707324> with a wager of {str(wager)} <:MEGACOIN:1090620048621707324>!"
     url = f"https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/{str(spin)}-{str(diff)}.jpg"
