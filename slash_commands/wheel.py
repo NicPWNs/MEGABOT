@@ -33,7 +33,7 @@ async def wheel(ctx, wager):
     await megacoin.subtract(ctx.user, wager)
     await megacoin.add(ctx.user, win)
 
-    description = f"<@{ctx.user.id}> won {str(win)} <:MEGACOIN:1090620048621707324> with a wager of {str(wager)} <:MEGACOIN:1090620048621707324>!"
+    description = f"<@{ctx.user.id}> wagered {str(wager)} <:MEGACOIN:1090620048621707324> and **won {str(win)}** <:MEGACOIN:1090620048621707324>!"
     url = f"https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/{str(spin)}-{str(diff)}.jpg"
     embed = discord.Embed(
         color=0x9366cd, title="☸️  Spin the Wheel", description=description).set_thumbnail(url=url).set_footer(text=f"Their balance is now {await megacoin.balance(ctx.user)}")
