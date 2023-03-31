@@ -20,7 +20,8 @@ async def wheel(ctx, wager):
         await ctx.respond(embed=embed)
         return
 
-    spin = random.choice([0, 0.5, 0.5, 1, 1, 1.5, 1.5, 2])
+    spin = random.choice([0, 0.5, 0.5, 1, 1, 1.5, 1.5, 2]
+                         )  # Fix 0 and 2 images
     diff = random.choice([1, 2])
     win = int(wager * spin)
 
