@@ -9,7 +9,8 @@ import nest_asyncio
 import datetime
 from discord.ext import tasks
 from dotenv import load_dotenv
-from random_unicode_emoji import random_emoji
+from modules.greeting import greeting
+from modules.random_discord_emoji import random_discord_emoji
 from skill_checks.album_check import album_check
 from skill_checks.boost_check import boost_check
 from slash_commands.age import age
@@ -85,17 +86,16 @@ if __name__ == "__main__":
             return
 
         if random.random() < .2:
-            guild = discord.utils.get(bot.guilds, name="MEGACORD")
-            emojis = await guild.fetch_emojis()
-            for _ in range(0, 6):
-                emojis = emojis + emojis
-            await message.add_reaction(random_emoji(custom=emojis)[0])
+            emoji = await random_discord_emoji(guild, bot, "MEGACORD")
+            await message.add_reaction(emoji)
 
         if 'birthday' in message.content.lower():
             await message.channel.send('Happy Birthday! 🎈🎉')
 
+        # Random message from greeting.py followed by random emoji
         if 'megabot' in message.content.lower():
-            await message.channel.send('Hello there! 👋')
+            emoji = await random_discord_emoji(guild, bot, "MEGACORD")
+            await message.channel.send(greeting() + '! ' + str(emoji))
 
     @bot.listen('on_member_join')
     async def on_member_join(member):
