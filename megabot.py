@@ -16,6 +16,7 @@ from slash_commands.age import age
 from slash_commands.album import album
 from slash_commands.balance import balance
 from slash_commands.bank import bank
+from slash_commands.blackjack import blackjack
 from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.code import code
@@ -128,6 +129,14 @@ if __name__ == "__main__":
     @bot.slash_command(name="bank", description="View the MEGACOIN balance leaderboard.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await bank(ctx)
+
+    @bot.slash_command(name="bj", description="Play blackjack.", guild_ids=[GUILD_ID])
+    async def call(ctx, wager: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount you want to wager in blackjack.")):
+        if not (ctx.channel.name == "casino" or ctx.channel.name == "bot-testing"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
+            return
+        await blackjack(ctx, wager)
 
     @bot.slash_command(name="bless", description="Blesses the mess!", guild_ids=[GUILD_ID])
     async def call(ctx):
