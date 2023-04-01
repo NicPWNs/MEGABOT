@@ -6,6 +6,7 @@ import random
 import discord
 import asyncio
 import nest_asyncio
+from datetime import time
 from discord.ext import tasks
 from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
@@ -31,6 +32,7 @@ from slash_commands.nasa import nasa
 from slash_commands.ping import ping
 from slash_commands.play import play
 from slash_commands.queue import queue
+from slash_commands.randellium import randellium
 from slash_commands.random_unicode_emoji import random_unicode_emoji
 from slash_commands.retirement import retirement
 from slash_commands.stock import stock
@@ -61,7 +63,7 @@ if __name__ == "__main__":
     async def skill_check(bot):
         await album_check(bot)
 
-    @tasks.loop(hours=24)
+    @tasks.loop(time=time.fromisoformat('09:00:00'))
     async def booster_check(bot):
         await boost_check(bot)
 
@@ -205,6 +207,10 @@ if __name__ == "__main__":
                 content="❗**ERROR: You can only use this command in <#956737389454311506>**", ephemeral=True)
             return
         await queue(ctx, queued)
+
+    @bot.slash_command(name="randellium", description="Code Breaker", guild_ids=[GUILD_ID])
+    async def call(ctx):
+        await randellium(ctx)
 
     @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji. No Discord emojis.", guild_ids=[GUILD_ID])
     async def call(ctx):

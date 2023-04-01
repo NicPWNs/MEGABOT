@@ -2,12 +2,17 @@
 import boto3
 
 
-TABLE = "discord-megacoin"
-ddb = boto3.resource('dynamodb')
-table = ddb.Table(TABLE)
+async def loadMegacoinTable(): 
+    TABLE = "discord-megacoin"
+    ddb = boto3.resource('dynamodb')
+    table = ddb.Table(TABLE)
+
+    return table
 
 
 async def add(user, coins):
+    
+    table = await loadMegacoinTable()
 
     data = table.get_item(
         Key={
@@ -31,6 +36,8 @@ async def add(user, coins):
 
 
 async def subtract(user, coins):
+    
+    table = await loadMegacoinTable()
 
     data = table.get_item(
         Key={
@@ -54,6 +61,8 @@ async def subtract(user, coins):
 
 
 async def balance(user):
+    
+    table = await loadMegacoinTable()
 
     data = table.get_item(
         Key={
