@@ -6,7 +6,7 @@ import random
 import discord
 import asyncio
 import nest_asyncio
-from datetime import time
+import datetime
 from discord.ext import tasks
 from dotenv import load_dotenv
 from random_unicode_emoji import random_emoji
@@ -63,7 +63,7 @@ if __name__ == "__main__":
     async def skill_check(bot):
         await album_check(bot)
 
-    @tasks.loop(time=time.fromisoformat('09:00:00'))
+    @tasks.loop(time=datetime.time.fromisoformat('09:00:00'))
     async def booster_check(bot):
         await boost_check(bot)
 
