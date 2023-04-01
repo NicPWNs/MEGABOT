@@ -6,6 +6,7 @@ import random
 import discord
 import asyncio
 import nest_asyncio
+import datetime
 from discord.ext import tasks
 from dotenv import load_dotenv
 from modules.greeting import greeting
@@ -59,11 +60,11 @@ if __name__ == "__main__":
         os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
     # Timed Events
-    @tasks.loop(minutes=random.randint(120, 240))
+    @tasks.loop(minutes=random.randint(90, 180))
     async def skill_check(bot):
-        await album_check(bot)
+        await album_check(bot, startTime)
 
-    @tasks.loop(hours=24)
+    @tasks.loop(time=datetime.time.fromisoformat('09:00:00'))
     async def booster_check(bot):
         await boost_check(bot)
 

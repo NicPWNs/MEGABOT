@@ -2,6 +2,7 @@
 import os
 import re
 import math
+import time
 import shutil
 import random
 import discord
@@ -12,10 +13,16 @@ from difflib import SequenceMatcher
 from colorthief import ColorThief
 
 
-async def album_check(bot, genre="hip-hop"):
+async def album_check(bot, startTime):
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
     channel = discord.utils.get(guild.channels, name="casino")
+
+    genre = "hip-hop"
+    runTime = int(time.time() - startTime)
+
+    if runTime < 60:
+        return
 
     def check(msg):
         guess = re.sub("[^A-Z]", "", msg.content.lower(), 0, re.IGNORECASE)
@@ -61,7 +68,10 @@ async def album_check(bot, genre="hip-hop"):
                           description=f"Anyone can answer within 10 minutes for <:MEGACOIN:1090620048621707324> *x{coins}*"
                           ).set_image(url=cover).set_author(name="🎯  Skill Check!")
 
-    message = await channel.send(embed=embed)
+    try:
+        message = await channel.send(embed=embed)
+    except discord.errors.Forbidden:
+        return
 
     try:
         msg = await bot.wait_for("message", timeout=600, check=check)
