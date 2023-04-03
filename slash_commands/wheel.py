@@ -9,9 +9,14 @@ async def wheel(ctx, wager):
 
     balance = await megacoin.balance(ctx.user)
 
-    if balance == 0:
+    if wager < 0:
         embed = discord.Embed(
-            color=0x9366cd, title="☸️  Spin the Wheel", description=f"You have 0 <:MEGACOIN:1090620048621707324>")
+            color=0x9366cd, title="☸️  Spin the Wheel", description="🤡  Nice try.")
+        await ctx.respond(embed=embed)
+        return
+    elif balance == 0:
+        embed = discord.Embed(
+            color=0x9366cd, title="☸️  Spin the Wheel", description="You have 0 <:MEGACOIN:1090620048621707324>")
         await ctx.respond(embed=embed)
         return
     elif balance < wager:

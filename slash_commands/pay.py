@@ -13,9 +13,9 @@ async def pay(ctx, user, amount):
     interaction = await ctx.respond(embed=embed)
 
     if amount < 0:
-        description = f"🤡 Nice try."
+        description = "🤡  Nice try."
     elif balance == 0:
-        description = f"You have 0 <:MEGACOIN:1090620048621707324>"
+        description = "You have 0 <:MEGACOIN:1090620048621707324>"
     elif balance < amount:
         description = f"You don't have {str(amount)} <:MEGACOIN:1090620048621707324>"
     else:
