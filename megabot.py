@@ -164,12 +164,12 @@ if __name__ == "__main__":
         await dice(ctx)
 
     @bot.slash_command(name="double", description="Play MEGACOIN double or nothing.", guild_ids=[GUILD_ID])
-    async def call(ctx, confirm: discord.Option(discord.SlashCommandOptionType.boolean, required=True, description="Confirm you want to double or nothing your entire MEGACOIN balance.")):
+    async def call(ctx, wager: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount you want to wager.")):
         if not (ctx.channel.name == "casino" or ctx.channel.name == "bot-testing"):
             await ctx.send_response(
                 content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
             return
-        await double(ctx, confirm)
+        await double(ctx, wager)
 
     @bot.slash_command(name="emote", description="Search for a 7TV emote.", guild_ids=[GUILD_ID])
     async def call(ctx,
@@ -275,7 +275,7 @@ if __name__ == "__main__":
         await test(ctx, startTime)
 
     @bot.slash_command(name="wheel", description="Spin the MEGACOIN wheel.", guild_ids=[GUILD_ID])
-    async def call(ctx, wager: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount you want to wager on the MEGACOIN wheel.")):
+    async def call(ctx, wager: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount you want to wager.")):
         if not (ctx.channel.name == "casino" or ctx.channel.name == "bot-testing"):
             await ctx.send_response(
                 content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
