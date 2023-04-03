@@ -224,10 +224,6 @@ if __name__ == "__main__":
             return
         await queue(ctx, queued)
 
-    @bot.slash_command(name="randellium", description="Code Breaker", guild_ids=[GUILD_ID])
-    async def call(ctx):
-        await randellium(ctx)
-
     @bot.slash_command(name="random-unicode-emoji", description="Return a random Unicode emoji. No Discord emojis.", guild_ids=[GUILD_ID])
     async def call(ctx):
         await random_unicode_emoji(ctx)
