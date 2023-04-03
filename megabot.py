@@ -17,6 +17,7 @@ from slash_commands.age import age
 from slash_commands.album import album
 from slash_commands.balance import balance
 from slash_commands.bank import bank
+from slash_commands.blackjack import blackjack
 from slash_commands.bless import bless
 from slash_commands.chat import chat
 from slash_commands.code import code
@@ -30,6 +31,7 @@ from slash_commands.kanye import kanye
 from slash_commands.kill import kill
 from slash_commands.math import math
 from slash_commands.nasa import nasa
+from slash_commands.pay import pay
 from slash_commands.ping import ping
 from slash_commands.play import play
 from slash_commands.queue import queue
@@ -129,6 +131,14 @@ if __name__ == "__main__":
     async def call(ctx):
         await bank(ctx)
 
+    @bot.slash_command(name="bj", description="Play blackjack.", guild_ids=[GUILD_ID])
+    async def call(ctx, wager: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount you want to wager in blackjack.")):
+        if not (ctx.channel.name == "casinX" or ctx.channel.name == "bot-testing"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
+            return
+        await blackjack(ctx, wager)
+
     @bot.slash_command(name="bless", description="Blesses the mess!", guild_ids=[GUILD_ID])
     async def call(ctx):
         await bless(ctx)
@@ -187,6 +197,12 @@ if __name__ == "__main__":
     @bot.slash_command(name="nasa", description="Retrieve the NASA photo of the day.", guild_ids=[GUILD_ID])
     async def call(ctx, details: discord.Option(discord.SlashCommandOptionType.boolean, description="Provide the explanation of the photo.", required=False)):
         await nasa(ctx, details)
+
+    @bot.slash_command(name="pay", description="Pay another user some MEGACOIN.", guild_ids=[GUILD_ID])
+    async def call(ctx,
+                   user: discord.Option(discord.SlashCommandOptionType.user, required=True, description="User to pay."),
+                   amount: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount to pay.")):
+        await pay(ctx, user, amount)
 
     @bot.slash_command(name="ping", description="Responds with pong.", guild_ids=[GUILD_ID])
     async def call(ctx):
