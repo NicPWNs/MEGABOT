@@ -13,6 +13,7 @@ from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
 from skill_checks.album_check import album_check
 from skill_checks.boost_check import boost_check
+from skill_checks.trivia_check import trivia_check
 from slash_commands.age import age
 from slash_commands.album import album
 from slash_commands.balance import balance
@@ -64,6 +65,10 @@ if __name__ == "__main__":
     @tasks.loop(minutes=random.randint(90, 180))
     async def skill_check(bot):
         await album_check(bot, startTime)
+
+    @tasks.loop(minutes=random.randint(90, 180))
+    async def skill_check(bot):
+        await trivia_check(bot, startTime)
 
     @tasks.loop(time=datetime.time.fromisoformat('09:00:00'))
     async def booster_check(bot):
