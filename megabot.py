@@ -33,6 +33,7 @@ from slash_commands.kill import kill
 from slash_commands.math import math
 from slash_commands.nasa import nasa
 from slash_commands.pay import pay
+from slash_commands.payout import payout
 from slash_commands.ping import ping
 from slash_commands.play import play
 from slash_commands.queue import queue
@@ -205,6 +206,13 @@ if __name__ == "__main__":
                    user: discord.Option(discord.SlashCommandOptionType.user, required=True, description="User to pay."),
                    amount: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount to pay.")):
         await pay(ctx, user, amount)
+
+    @bot.slash_command(name="payout", description="Payout MEGACOIN (Admin only).")
+    async def call(ctx,
+                   user: discord.Option(discord.SlashCommandOptionType.user, required=True, description="User to pay."),
+                   amount: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount to pay."),
+                   message: discord.Option(discord.SlashCommandOptionType.string, required=True, description="Message to send.")):
+        await payout(ctx, user, amount, message)
 
     @bot.slash_command(name="ping", description="Responds with pong.")
     async def call(ctx):
