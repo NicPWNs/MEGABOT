@@ -14,6 +14,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/bank`: View the MEGACOIN balance leaderboard.
 - `/bless`: Blesses the mess!
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3.5)
+- `/clear`: Temporarily clear MEGATEST commands. (Admin Only)
 - `/code <prompt>`: Write code with AI.
 - `/coin`: Flip a coin.
 - `/csgo <username>`: Retrieve CS:GO stats.
@@ -22,9 +23,11 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/emote <search> [add:True] [id:True]`: Search for a 7TV emote. Optionally add it to the Discord guild.
 - `/image`: Generate an image with AI.
 - `/kanye`: Retrieve a random Kanye West quote.
-- `/kill`: Stop the bot's process.
+- `/kill`: Stop the bot's process. (Admin Only)
 - `/math <expression>`: Evaluate provided math expression.
 - `/nasa [details:True]`: Retrieve the NASA photo of the day.
+- `/pay <user> <amount>`: Pay another user some MEGACOIN.
+- `/payout <user> <amount> <message>`: Payout MEGACOIN. (Admin only)
 - `/ping`: Responds with pong.
 - `/play`: Plays music.
 - `/queue`: Show the current music queue.

@@ -212,7 +212,7 @@ if __name__ == "__main__":
                    amount: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount to pay.")):
         await pay(ctx, user, amount)
 
-    @bot.slash_command(name="payout", description="Payout MEGACOIN (Admin only).")
+    @bot.slash_command(name="payout", description="Payout MEGACOIN. (Admin only)")
     async def call(ctx,
                    user: discord.Option(discord.SlashCommandOptionType.user, required=True, description="User to pay."),
                    amount: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount to pay."),
