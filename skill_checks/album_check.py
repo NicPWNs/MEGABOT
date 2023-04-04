@@ -25,10 +25,11 @@ async def album_check(bot, startTime):
         return
 
     def check(msg):
-        guess = re.sub("[^A-Z]", "", msg.content.lower(), 0, re.IGNORECASE)
-        answer = re.sub("[^A-Z]", "", artist.lower(), 0, re.IGNORECASE)
-        if SequenceMatcher(a=guess, b=answer).ratio() >= 0.9:
-            return True
+        if msg.channel == channel:
+            guess = re.sub("[^A-Z]", "", msg.content.lower(), 0, re.IGNORECASE)
+            answer = re.sub("[^A-Z]", "", artist.lower(), 0, re.IGNORECASE)
+            if SequenceMatcher(a=guess, b=answer).ratio() >= 0.9:
+                return True
 
     data = {
         'grant_type': 'client_credentials',
