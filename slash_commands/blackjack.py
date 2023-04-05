@@ -128,7 +128,7 @@ async def blackjack(ctx, wager):
             "<:MEGACARD:1091828635138281482>", str(dealerDealt[1]))
         await dealer.edit(dealerHand)
         embed = discord.Embed(
-            color=0x9366cd, title="🃏  Blackjack", description=f"❌  Lose! <@{ctx.bot.user.id}> has Blackjack!").set_footer(
+            color=0x9366cd, title="🃏  Blackjack", description=f"❌  Loss! <@{ctx.bot.user.id}> has Blackjack!").set_footer(
             text=f"- {str(wager)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
         await interaction.edit_original_response(embed=embed)
         await dealerLabel.edit(dealerText + f"({dealerValue})")
@@ -174,6 +174,7 @@ async def blackjack(ctx, wager):
         await message.clear_reactions()
 
     else:
+        await message.remove_reaction('⏫', ctx.bot.user)
         while playerValue < 21 and choice == "🟢":
             while card in dealerDealt or card in playerDealt:
                 card = get_card(ctx)
@@ -190,7 +191,7 @@ async def blackjack(ctx, wager):
 
     if playerValue > 21:
         embed = discord.Embed(
-            color=0x9366cd, title="🃏  Blackjack", description=f"❌  Lose! <@{ctx.user.id}> busted with {str(playerValue)}!").set_footer(
+            color=0x9366cd, title="🃏  Blackjack", description=f"❌  Loss! <@{ctx.user.id}> busted with {str(playerValue)}!").set_footer(
             text=f"- {str(wager * double)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
         await interaction.edit_original_response(embed=embed)
         await message.clear_reactions()
@@ -240,7 +241,7 @@ async def blackjack(ctx, wager):
         return
     elif dealerValue > playerValue:
         embed = discord.Embed(
-            color=0x9366cd, title="🃏  Blackjack", description=f"❌  Lose! <@{ctx.bot.user.id}> beats <@{ctx.user.id}>!").set_footer(
+            color=0x9366cd, title="🃏  Blackjack", description=f"❌  Loss! <@{ctx.bot.user.id}> beats <@{ctx.user.id}>!").set_footer(
             text=f"- {str(wager * double)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
         await interaction.edit_original_response(embed=embed)
         await message.clear_reactions()
