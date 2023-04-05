@@ -34,12 +34,10 @@ def hand_value(dealt):
 
 async def blackjack(ctx, wager):
 
-    def check(msg):
-        guild = discord.utils.get(ctx.bot.guilds, name="MEGACORD")
-        channel = discord.utils.get(guild.channels, name="casino")
-        if msg.channel == channel:
-            if msg.author == ctx.user:
-                if msg.content.lower() in ["hit", "stand"]:
+    def check(reaction, user):
+        if reaction.message.channel == ctx.channel:
+            if user == ctx.user:
+                if reaction.emoji in ["🟢", "🛑", "⏫"]:
                     return True
 
     balance = await megacoin.balance(ctx.user)
@@ -70,6 +68,7 @@ async def blackjack(ctx, wager):
     dealerDealt = ['']
     playerDealt = ['']
     card = ''
+    double = 1
 
     while card in dealerDealt or card in playerDealt:
         card = get_card(ctx)
@@ -102,7 +101,7 @@ async def blackjack(ctx, wager):
     playerValue = hand_value(playerDealt)
     await playerLabel.edit(playerText + f"({playerValue})")
 
-    time.sleep(0)
+    time.sleep(1)
 
     if playerValue == 21 and dealerValue == 21:
         dealerHand = dealerHand.replace(
@@ -120,9 +119,9 @@ async def blackjack(ctx, wager):
         await dealer.edit(dealerHand)
         embed = discord.Embed(
             color=0x9366cd, title="🃏  Blackjack", description=f"✅  Win! <@{ctx.user.id}> has Blackjack!").set_footer(
-            text=f"+ {str(wager * 1.5)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
+            text=f"+ {str(wager * 2)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
         await interaction.edit_original_response(embed=embed)
-        await megacoin.add(ctx.user, wager * 1.5)
+        await megacoin.add(ctx.user, wager * 2)
         return
     elif dealerValue == 21:
         dealerHand = dealerHand.replace(
@@ -137,14 +136,34 @@ async def blackjack(ctx, wager):
         return
 
     embed = discord.Embed(
-        color=0x9366cd, title="🃏  Blackjack", description=f"Hit or Stand?")
+        color=0x9366cd, title="🃏  Blackjack", description=f"**Hit** 🟢 or **Stand** 🛑 or **Double** ⏫ ?")
     await interaction.edit_original_response(embed=embed)
+    message = await interaction.original_response()
+    await message.add_reaction('🟢')
+    await message.add_reaction('🛑')
+    await message.add_reaction('⏫')
 
-    choice = "hit"
-    msg = await ctx.bot.wait_for("message", timeout=600, check=check)
-    choice = msg.content.lower()
+    time.sleep(1)
 
-    while playerValue < 21 and choice == "hit":
+    reaction, user = await ctx.bot.wait_for("reaction_add", timeout=600, check=check)
+    await reaction.remove(user)
+    choice = reaction.emoji
+
+    if choice == "⏫":
+        if balance < (wager * 2):
+            embed = discord.Embed(
+                color=0x9366cd, title="🃏  Blackjack", description=f"**Hit** 🟢 or **Stand** 🛑 ?").set_footer(text="You don't have double your wager!")
+            await interaction.edit_original_response(embed=embed)
+            await message.clear_reactions()
+            await message.add_reaction('🟢')
+            await message.add_reaction('🛑')
+            time.sleep(1)
+            reaction, user = await ctx.bot.wait_for("reaction_add", timeout=600, check=check)
+            await reaction.remove(user)
+            choice = reaction.emoji
+
+    if choice == "⏫":
+        double = 2
         while card in dealerDealt or card in playerDealt:
             card = get_card(ctx)
         playerDealt.append(card)
@@ -152,26 +171,40 @@ async def blackjack(ctx, wager):
         await player.edit(playerHand)
         playerValue = hand_value(playerDealt)
         await playerLabel.edit(playerText + f"({playerValue})")
-        if playerValue > 21:
-            break
-        msg = await ctx.bot.wait_for("message", timeout=600, check=check)
-        choice = msg.content.lower()
+        await message.clear_reactions()
+
+    else:
+        while playerValue < 21 and choice == "🟢":
+            while card in dealerDealt or card in playerDealt:
+                card = get_card(ctx)
+            playerDealt.append(card)
+            playerHand += str(card)
+            await player.edit(playerHand)
+            playerValue = hand_value(playerDealt)
+            await playerLabel.edit(playerText + f"({playerValue})")
+            if playerValue > 21:
+                break
+            reaction, user = await ctx.bot.wait_for("reaction_add", timeout=600, check=check)
+            await reaction.remove(user)
+            choice = reaction.emoji
 
     if playerValue > 21:
         embed = discord.Embed(
             color=0x9366cd, title="🃏  Blackjack", description=f"❌  Lose! <@{ctx.user.id}> busted with {str(playerValue)}!").set_footer(
-            text=f"- {str(wager)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
+            text=f"- {str(wager * double)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
         await interaction.edit_original_response(embed=embed)
+        await message.clear_reactions()
         dealerHand = dealerHand.replace(
             "<:MEGACARD:1091828635138281482>", str(dealerDealt[1]))
         await dealer.edit(dealerHand)
         await dealerLabel.edit(dealerText + f"({dealerValue})")
-        await megacoin.subtract(ctx.user, wager)
+        await megacoin.subtract(ctx.user, wager * double)
         return
 
     embed = discord.Embed(
-        color=0x9366cd, title="🃏  Blackjack", description=f"Stand! Revealing...")
+        color=0x9366cd, title="🃏  Blackjack", description=f"Revealing...")
     await interaction.edit_original_response(embed=embed)
+    await message.clear_reactions()
     dealerHand = dealerHand.replace(
         "<:MEGACARD:1091828635138281482>", str(dealerDealt[1]))
     await dealer.edit(dealerHand)
@@ -192,27 +225,31 @@ async def blackjack(ctx, wager):
     if dealerValue > 21:
         embed = discord.Embed(
             color=0x9366cd, title="🃏  Blackjack", description=f"✅  Win! <@{ctx.bot.user.id}> busted!").set_footer(
-            text=f"+ {str(wager)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
+            text=f"+ {str(wager * double)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
         await interaction.edit_original_response(embed=embed)
-        await megacoin.add(ctx.user, wager)
+        await message.clear_reactions()
+        await megacoin.add(ctx.user, wager * double)
         return
     elif playerValue > dealerValue:
         embed = discord.Embed(
             color=0x9366cd, title="🃏  Blackjack", description=f"✅  Win! <@{ctx.user.id}> beats <@{ctx.bot.user.id}>!").set_footer(
-            text=f"+ {str(wager)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
+            text=f"+ {str(wager * double)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
         await interaction.edit_original_response(embed=embed)
-        await megacoin.add(ctx.user, wager)
+        await message.clear_reactions()
+        await megacoin.add(ctx.user, wager * double)
         return
     elif dealerValue > playerValue:
         embed = discord.Embed(
             color=0x9366cd, title="🃏  Blackjack", description=f"❌  Lose! <@{ctx.bot.user.id}> beats <@{ctx.user.id}>!").set_footer(
-            text=f"- {str(wager)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
+            text=f"- {str(wager * double)}", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
         await interaction.edit_original_response(embed=embed)
-        await megacoin.subtract(ctx.user, wager)
+        await message.clear_reactions()
+        await megacoin.subtract(ctx.user, wager * double)
         return
     elif dealerValue == playerValue:
         embed = discord.Embed(
-            color=0x9366cd, title="🃏  Blackjack", description=f"➡️  Push! <@{ctx.bot.user.id}> and <@{ctx.user.id}> are even.").set_footer(
+            color=0x9366cd, title="🃏  Blackjack", description=f"➡️  Push! <@{ctx.bot.user.id}> and <@{ctx.user.id}> are tied.").set_footer(
             text=f"+ 0", icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/MEGACOIN.png")
         await interaction.edit_original_response(embed=embed)
+        await message.clear_reactions()
         return
