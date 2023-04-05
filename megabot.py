@@ -101,7 +101,7 @@ if __name__ == "__main__":
             await message.channel.send('Happy Birthday! 🎈🎉')
 
         # Random message from greeting.py followed by random emoji
-        if 'megabot' in message.content.lower():
+        if bot.user.name.lower() in message.content.lower():
             emoji = await random_discord_emoji(guild, bot, "MEGACORD")
             await message.channel.send(greeting() + '! ' + str(emoji))
 
@@ -109,12 +109,10 @@ if __name__ == "__main__":
     async def on_member_join(member):
 
         guild = discord.utils.get(bot.guilds, name="MEGACORD")
-
         role = discord.utils.get(guild.roles, name="MEGAENJOYERS")
         await member.add_roles(role)
 
         channel = discord.utils.get(guild.channels, name="main")
-
         await channel.send(f"I'm watching you <@{member.id}>")
 
     # Slash Commands
