@@ -140,7 +140,7 @@ if __name__ == "__main__":
 
     @bot.slash_command(name="bj", description="Play blackjack.")
     async def call(ctx, wager: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount you want to wager in blackjack.")):
-        if not (ctx.channel.name == "casinX" or ctx.channel.name == "bot-testing"):
+        if not (ctx.channel.name == "casino" or ctx.channel.name == "bot-testing"):
             await ctx.send_response(
                 content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
             return
