@@ -92,7 +92,10 @@ if __name__ == "__main__":
 
         if random.random() < .2:
             emoji = await random_discord_emoji(guild, bot, "MEGACORD")
-            await message.add_reaction(emoji)
+            try:
+                await message.add_reaction(emoji)
+            except discord.errors.HTTPException:
+                pass
 
         if 'birthday' in message.content.lower():
             await message.channel.send('Happy Birthday! 🎈🎉')
