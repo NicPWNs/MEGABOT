@@ -100,7 +100,6 @@ async def blackjack(ctx, wager):
     playerDealt.remove('')
     playerValue = hand_value(playerDealt)
     await playerLabel.edit(playerText + f"({playerValue})")
-
     time.sleep(1)
 
     if playerValue == 21 and dealerValue == 21:
@@ -142,7 +141,6 @@ async def blackjack(ctx, wager):
     await message.add_reaction('🟢')
     await message.add_reaction('🛑')
     await message.add_reaction('⏫')
-
     time.sleep(1)
 
     reaction, user = await ctx.bot.wait_for("reaction_add", timeout=600, check=check)
