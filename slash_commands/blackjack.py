@@ -100,7 +100,6 @@ async def blackjack(ctx, wager):
     playerDealt.remove('')
     playerValue = hand_value(playerDealt)
     await playerLabel.edit(playerText + f"({playerValue})")
-
     time.sleep(1)
 
     if playerValue == 21 and dealerValue == 21:
@@ -142,7 +141,6 @@ async def blackjack(ctx, wager):
     await message.add_reaction('🟢')
     await message.add_reaction('🛑')
     await message.add_reaction('⏫')
-
     time.sleep(1)
 
     reaction, user = await ctx.bot.wait_for("reaction_add", timeout=600, check=check)
@@ -175,6 +173,9 @@ async def blackjack(ctx, wager):
 
     else:
         await message.remove_reaction('⏫', ctx.bot.user)
+        embed = discord.Embed(
+            color=0x9366cd, title="🃏  Blackjack", description=f"**Hit** 🟢 or **Stand** 🛑 ?")
+        await interaction.edit_original_response(embed=embed)
         while playerValue < 21 and choice == "🟢":
             while card in dealerDealt or card in playerDealt:
                 card = get_card(ctx)
