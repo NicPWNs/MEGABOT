@@ -62,12 +62,12 @@ if __name__ == "__main__":
         os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
 
     # Timed Events
-    @tasks.loop(minutes=random.randint(90, 180))
-    async def skill_check(bot):
+    @tasks.loop(minutes=random.randint(60, 180))
+    async def skill_check_album(bot):
         await album_check(bot, startTime)
 
-    @tasks.loop(minutes=random.randint(90, 180))
-    async def skill_check(bot):
+    @tasks.loop(minutes=random.randint(60, 180))
+    async def skill_check_trivia(bot):
         await trivia_check(bot, startTime)
 
     @tasks.loop(time=datetime.time.fromisoformat('09:00:00'))
@@ -78,7 +78,8 @@ if __name__ == "__main__":
     @bot.listen('on_ready')
     async def on_ready():
         await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="You..."))
-        skill_check.start(bot)
+        skill_check_album.start(bot)
+        skill_check_trivia.start(bot)
         booster_check.start(bot)
 
     @bot.listen('on_message')
