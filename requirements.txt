@@ -14,4 +14,4 @@ ffmpeg-python
 boto3
 random-unicode-emoji
 colorthief
-github
+PyGithub
