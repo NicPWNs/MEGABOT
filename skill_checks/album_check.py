@@ -15,14 +15,14 @@ from colorthief import ColorThief
 
 async def album_check(bot, startTime):
 
+    runTime = int(time.time() - startTime)
+    if runTime < 60:
+        return
+
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
     channel = discord.utils.get(guild.channels, name="casino")
 
     genre = "hip-hop"
-    runTime = int(time.time() - startTime)
-
-    if runTime < 60:
-        return
 
     def check(msg):
         if msg.channel == channel:

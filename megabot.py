@@ -11,8 +11,9 @@ from discord.ext import tasks
 from dotenv import load_dotenv
 from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
+from jobs.boost_reward import boost_reward
+from jobs.random_photo import random_photo
 from skill_checks.album_check import album_check
-from skill_checks.boost_check import boost_check
 from skill_checks.trivia_check import trivia_check
 from slash_commands.age import age
 from slash_commands.album import album
@@ -44,6 +45,7 @@ from slash_commands.stock import stock
 from slash_commands.stop import stop
 from slash_commands.streak import streak
 from slash_commands.test import test
+from slash_commands.upload import upload
 from slash_commands.version import version
 from slash_commands.wheel import wheel
 
@@ -72,8 +74,12 @@ if __name__ == "__main__":
         await trivia_check(bot, startTime)
 
     @tasks.loop(time=datetime.time.fromisoformat('09:00:00'))
-    async def booster_check(bot):
-        await boost_check(bot)
+    async def booster_reward(bot):
+        await boost_reward(bot, startTime)
+
+    @tasks.loop(time=datetime.time.fromisoformat('09:00:00'))
+    async def post_random_photo(bot):
+        await random_photo(bot, startTime)
 
     # Event Listeners
     @bot.listen('on_ready')
@@ -81,7 +87,8 @@ if __name__ == "__main__":
         await bot.change_presence(status=discord.Status.online, activity=discord.Activity(type=discord.ActivityType.watching, name="You..."))
         skill_check_album.start(bot)
         skill_check_trivia.start(bot)
-        booster_check.start(bot)
+        booster_reward.start(bot)
+        post_random_photo.start(bot)
 
     @bot.listen('on_message')
     async def on_message(message):
@@ -287,6 +294,10 @@ if __name__ == "__main__":
     @bot.slash_command(name="test", description="Test MEGABOT.")
     async def call(ctx):
         await test(ctx, startTime)
+
+    @bot.slash_command(name="upload", description="Upload a photo to the MEGABOT database.")
+    async def call(ctx, photo: discord.Option(discord.SlashCommandOptionType.attachment, required=True, description="Photo to upload.")):
+        await upload(ctx, photo)
 
     @bot.slash_command(name="version", description="Return the latest MEGABOT version number.")
     async def call(ctx):

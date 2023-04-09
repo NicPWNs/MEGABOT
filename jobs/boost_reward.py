@@ -1,10 +1,15 @@
 #!/usr/bin/env python3
 import discord
+import time
 import datetime
 import megacoin
 
 
-async def boost_check(bot):
+async def boost_reward(bot, startTime):
+
+    runTime = int(time.time() - startTime)
+    if runTime < 60:
+        return
 
     d = datetime.datetime.now()
     date = int(d.strftime("%d"))
