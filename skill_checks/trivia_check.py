@@ -17,12 +17,12 @@ async def trivia_check(bot, startTime):
                     if reaction.emoji == choices[index]:
                         return True
 
-    guild = discord.utils.get(bot.guilds, name="MEGACORD")
-    channel = discord.utils.get(guild.channels, name="casino")
     runTime = int(time.time() - startTime)
-
     if runTime < 60:
         return
+
+    guild = discord.utils.get(bot.guilds, name="MEGACORD")
+    channel = discord.utils.get(guild.channels, name="casino")
 
     r = requests.get(
         "https://the-trivia-api.com/api/questions?limit=1&region=US").json()
