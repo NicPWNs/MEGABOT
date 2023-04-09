@@ -22,6 +22,9 @@ async def pay(ctx, user, amount):
         description = f"<@{ctx.user.id}> sent {str(amount)} <:MEGACOIN:1090620048621707324> to <@{str(user.id)}>"
         await megacoin.subtract(ctx.user, amount)
         await megacoin.add(user, amount)
+        channel = await user.create_dm()
+        await channel.send(
+            content=f"💸  You received {str(amount)} <:MEGACOIN:1090620048621707324> from <@{ctx.user.id}>")
 
     embed = discord.Embed(
         color=0xa7d38a, title="💸  Payment", description=description)
