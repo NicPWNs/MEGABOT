@@ -29,6 +29,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/pay <user> <amount>`: Pay another user some MEGACOIN.
 - `/payout <user> <amount> <message>`: Payout MEGACOIN. (Admin only)
 - `/ping`: Responds with pong.
+- `/photo`: Return a random photo from the MEGABOT database.
 - `/play`: Plays music.
 - `/queue`: Show the current music queue.
 - `/random-unicode-emoji`: Return a random Unicode emoji. No Discord emojis.
@@ -38,6 +39,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/stop`: Stops music.
 - `/streak [stats:True]`: Keep a daily streak going!
 - `/test`: Run a series of tests on the bot.
+- `/upload <photo>`: Upload a photo to the MEGABOT database.
 - `/version`: Return the latest MEGABOT version number.
 - `/wheel`: Spin the MEGACOIN wheel.
 
