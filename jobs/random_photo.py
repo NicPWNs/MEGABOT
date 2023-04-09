@@ -12,7 +12,7 @@ async def random_photo(bot, startTime):
         return
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
-    channel = discord.utils.get(guild.channels, name="bot-testing")
+    channel = discord.utils.get(guild.channels, name="main")
 
     embed = discord.Embed(
         color=0xfee9b6, title="⏳  Posting Random Photo of the Day...")
