@@ -98,6 +98,7 @@ async def play(ctx, search, queued, SDL, skip):
             artist = song.artist
             song, path = SDL.download(song)
             queued.append(path)
+
         except spotdl.types.song.SongError:
             embed = discord.Embed(color=0xdd2f45,
                                   title="❌  Error",
