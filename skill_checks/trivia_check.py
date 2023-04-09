@@ -18,7 +18,7 @@ async def trivia_check(bot, startTime):
                         return True
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
-    channel = discord.utils.get(guild.channels, name="bot-testing")
+    channel = discord.utils.get(guild.channels, name="casino")
     runTime = int(time.time() - startTime)
 
     if runTime < 60:
