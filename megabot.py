@@ -60,7 +60,7 @@ if __name__ == "__main__":
     queued = []
     nest_asyncio.apply()
     SDL = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(
-        os.getenv('SPOTIFY_SECRET')), headless=True, loop=asyncio.get_event_loop())
+        os.getenv('SPOTIFY_SECRET')), headless=True, downloader_settings={"output": "./music/{artists} - {title}.{output-ext}"}, loop=asyncio.get_event_loop())
 
     # Timed Events
     @tasks.loop(minutes=random.randint(60, 180))
