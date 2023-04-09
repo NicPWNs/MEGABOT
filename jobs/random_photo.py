@@ -26,5 +26,5 @@ async def random_photo(bot, startTime):
     photo = random.choice(data)['photo']
 
     embed = discord.Embed(
-        color=0xfee9b6, title="🌞 Random Photo of the Day").set_image(url=photo)
+        color=0xffcc4d, title="🌞 Random Photo of the Day").set_image(url=photo)
     await message.edit(embed=embed)
