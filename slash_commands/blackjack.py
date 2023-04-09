@@ -56,16 +56,28 @@ async def blackjack(ctx, wager):
         embed = discord.Embed(
             color=0x9366cd, title="🃏  Blackjack", description="🤡  Nice try.")
         await ctx.respond(embed=embed)
+        try:
+            os.remove("blackjack.lock")
+        except FileNotFoundError:
+            pass
         return
     elif balance == 0:
         embed = discord.Embed(
             color=0x9366cd, title="🃏  Blackjack", description="You have 0 <:MEGACOIN:1090620048621707324>")
         await ctx.respond(embed=embed)
+        try:
+            os.remove("blackjack.lock")
+        except FileNotFoundError:
+            pass
         return
     elif balance < wager:
         embed = discord.Embed(
             color=0x9366cd, title="🃏  Blackjack", description=f"You don't have {str(wager)} <:MEGACOIN:1090620048621707324>")
         await ctx.respond(embed=embed)
+        try:
+            os.remove("blackjack.lock")
+        except FileNotFoundError:
+            pass
         return
 
     embed = discord.Embed(
