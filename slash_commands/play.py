@@ -1,7 +1,9 @@
 #!/usr/bin/env python3
 import discord
-import ffmpeg
 import asyncio
+import ffmpeg
+import spotdl
+from yt_dlp import YoutubeDL
 
 
 async def queuer(ctx, queued, interaction, embed):
@@ -13,6 +15,7 @@ async def queuer(ctx, queued, interaction, embed):
     if len(queued) == 0:
         embed = discord.Embed(color=0x5daced, title="☑️  Queue Complete")
         await ctx.channel.send(embed=embed)
+        await voice.disconnect()
 
     while len(queued) > 0:
         voice.play(discord.FFmpegPCMAudio(source=queued[0]))
@@ -41,7 +44,6 @@ async def play(ctx, search, queued, SDL, skip):
             await queuer(ctx, queued, interaction, embed)
 
     else:
-
         embed = discord.Embed(color=0xfee9b6,
                               title="⏳  Downloading...",
                               description=f"**Request:** \"{search}\""
@@ -66,12 +68,43 @@ async def play(ctx, search, queued, SDL, skip):
             voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
             await voice.move_to(channel)
 
-        song = SDL.search([search])[0]
-        title = song.name
-        cover = song.cover_url
-        artist = song.artist
-        song, path = SDL.download(song)
-        queued.append(path)
+        if "http" in search:
+            if "youtube.com" in search:
+                ydl_opts = {
+                    'skip_download': True,
+                    'noplaylist': True,
+                    'quiet': True,
+                    'no_warnings': True,
+                    'get_title': True
+                }
+
+                with YoutubeDL(ydl_opts) as ydl:
+                    search = ydl.extract_info(
+                        search, download=False, process=False)['title']
+            elif "spotify.com" in search:
+                pass
+            else:
+                embed = discord.Embed(color=0xdd2f45,
+                                      title="❌  Error",
+                                      description=f"Only **YouTube** and **Spotify** URLs are Currenty Supported!"
+                                      ).set_thumbnail(url=ctx.user.display_avatar)
+                await interaction.edit_original_response(embed=embed)
+                return
+
+        try:
+            song = SDL.search([search])[0]
+            title = song.name
+            cover = song.cover_url
+            artist = song.artist
+            song, path = SDL.download(song)
+            queued.append(path)
+        except spotdl.types.song.SongError:
+            embed = discord.Embed(color=0xdd2f45,
+                                  title="❌  Error",
+                                  description=f"**No results found for:** {search}"
+                                  ).set_thumbnail(url=ctx.user.display_avatar)
+            await interaction.edit_original_response(embed=embed)
+            return
 
         embed = discord.Embed(color=0x5daced,
                               title="🎵  Now Playing",
