@@ -3,7 +3,6 @@ import time
 import random
 import discord
 import requests
-import asyncio
 import megacoin
 
 
@@ -35,7 +34,7 @@ async def trivia_check(bot, startTime):
         answers.append(answer)
     random.shuffle(answers)
     index = answers.index(correct)
-    answered = []
+    answered = [bot.user]
 
     description = f"Anyone can answer within 10 minutes for <:MEGACOIN:1090620048621707324> *x10*. One guess only!\n\n"
 
@@ -62,7 +61,7 @@ async def trivia_check(bot, startTime):
         reaction, user = await bot.wait_for("reaction_add", timeout=600, check=check)
         await reaction.remove(user)
         await message.clear_reactions()
-    except asyncio.TimeoutError:
+    except:
         text = f"❌ No one guessed correctly within 10 minutes!"
         embed = embed.set_footer(
             text=text, icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif")
