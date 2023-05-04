@@ -3,6 +3,7 @@ import boto3
 import discord
 from datetime import datetime, timedelta
 from random_unicode_emoji import random_emoji
+from modules.random_discord_emoji import random_discord_emoji
 
 import megacoin
 
@@ -194,7 +195,7 @@ async def streak(ctx, stats):
         emojis = await guild.fetch_emojis()
         for _ in range(0, 5):
             emojis = emojis + emojis
-        emote = str(random_emoji(custom=emojis)[0])
+        emote = str(await random_discord_emoji(guild, ctx.bot, "MEGACORD"))
 
     statMessage = ""
 
