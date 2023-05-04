@@ -8,12 +8,6 @@ async def upload(ctx, photo):
     embed = discord.Embed(color=0xfee9b6, title="⏳  Uploading...")
     interaction = await ctx.respond(embed=embed)
 
-    if photo.content_type not in ["image/jpeg", "image/png"]:
-        embed = discord.Embed(color=0xdd2f45, title="❌ Error", description="Only JPEG/JPG and PNG Images are Supported!"
-                              ).set_image(url=photo.url)
-        await interaction.edit_original_response(embed=embed)
-        return
-
     TABLE = "discord-photos"
     ddb = boto3.resource('dynamodb')
     table = ddb.Table(TABLE)
