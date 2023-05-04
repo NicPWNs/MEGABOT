@@ -223,13 +223,20 @@ async def streak(ctx, stats):
         color = 0xdd2f45
 
     embed = discord.Embed(color=color, title=content, description=statMessage)
+    bonusText = ""
+    bonus = 0
 
     if hit:
         coins = streak
         if coins > 100:
             coins = 100
+        if (streak % 100) == 0:
+            bonus = streak
+            bonusText = f"  + {bonus} bonus <:MEGACOIN:1090620048621707324>"
         embed = discord.Embed(color=color, title=content,
-                              description=f"+ {coins} <:MEGACOIN:1090620048621707324>\n{statMessage}")
+                              description=f"+ {coins} <:MEGACOIN:1090620048621707324>{bonusText}\n{statMessage}")
+
+        coins += bonus
         await megacoin.add(ctx.user, coins)
 
     await interaction.edit_original_response(embed=embed)
