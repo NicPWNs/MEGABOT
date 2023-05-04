@@ -66,11 +66,11 @@ if __name__ == "__main__":
         os.getenv('SPOTIFY_SECRET')), headless=True, downloader_settings={"output": "./music/{artists} - {title}.{output-ext}"}, loop=asyncio.get_event_loop())
 
     # Timed Events
-    @tasks.loop(minutes=random.randint(60, 180))
+    @tasks.loop(minutes=random.randint(120, 240))
     async def skill_check_album(bot):
         await album_check(bot, startTime)
 
-    @tasks.loop(minutes=random.randint(60, 180))
+    @tasks.loop(minutes=random.randint(120, 240))
     async def skill_check_trivia(bot):
         await trivia_check(bot, startTime)
 
