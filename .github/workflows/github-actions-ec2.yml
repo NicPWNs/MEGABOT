@@ -42,4 +42,5 @@ jobs:
             aws configure set default.region us-east-1
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
             killall python3
+            rm -f blackjack.lock
             python3 /home/ec2-user/megabot.py >/dev/null &
