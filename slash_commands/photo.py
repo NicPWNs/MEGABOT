@@ -21,7 +21,7 @@ async def photo(ctx):
     url = boto3.client('s3').generate_presigned_url(
         ClientMethod='get_object',
         Params={'Bucket': str(os.getenv('PHOTO_BUCKET')), 'Key': name},
-        ExpiresIn=60)
+        ExpiresIn=604800)
 
     embed = discord.Embed(
         color=0xffcc4d, title="📸  Random Photo").set_image(url=url)
