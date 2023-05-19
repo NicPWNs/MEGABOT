@@ -43,7 +43,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/version`: Return the latest MEGABOT version number.
 - `/wheel`: Spin the MEGACOIN wheel.
 
-> Some commands use my own Python package: [random-unicode-emoji-py](https://github.com/NicPWNs/random_unicode_emoji-py)
+> Some commands use my own Python package: [random-unicode-emoji-py](https://github.com/NicPWNs/random-unicode-emoji-py)
 
 ## 💡 To-Do
 
