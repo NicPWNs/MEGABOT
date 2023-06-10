@@ -31,6 +31,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/ping`: Responds with pong.
 - `/photo`: Return a random photo from the MEGABOT database.
 - `/play`: Plays music.
+- `/poll`: Create a poll with up to nine options.
 - `/queue`: Show the current music queue.
 - `/random-unicode-emoji`: Return a random Unicode emoji. No Discord emojis.
 - `/retirement`: Retirement calculator for your planning pleasure. (Developed by @NavyBoy37)

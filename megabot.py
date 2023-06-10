@@ -39,6 +39,7 @@ from slash_commands.payout import payout
 from slash_commands.photo import photo
 from slash_commands.ping import ping
 from slash_commands.play import play
+from slash_commands.poll import poll
 from slash_commands.queue import queue
 from slash_commands.random_unicode_emoji import random_unicode_emoji
 from slash_commands.retirement import retirement
@@ -123,7 +124,7 @@ if __name__ == "__main__":
         await member.add_roles(role)
 
         channel = discord.utils.get(guild.channels, name="main")
-        await channel.send(f"I'm watching you <@{member.id}>")
+        await channel.send(f"I'm watching you <@{member.id}> 👀...")
 
     # Slash Commands
     @bot.slash_command(name="age", description="Guesses the age of a specified name.")
@@ -245,6 +246,20 @@ if __name__ == "__main__":
                 content="❗**ERROR: You can only use this command in <#956737389454311506>**", ephemeral=True)
             return
         await play(ctx, search, queued, SDL, skip=False)
+
+    @bot.slash_command(name="poll", description="Create a poll with up to nine options.")
+    async def call(ctx,
+                question: discord.Option(discord.SlashCommandOptionType.string, required=True, description="Question to poll for."),
+                option1: discord.Option(discord.SlashCommandOptionType.string, required=True, description="First option."),
+                option2: discord.Option(discord.SlashCommandOptionType.string, required=True, description="Second option."),
+                option3: discord.Option(discord.SlashCommandOptionType.string, required=False, description="Third option."),
+                option4: discord.Option(discord.SlashCommandOptionType.string, required=False, description="Fourth option."),
+                option5: discord.Option(discord.SlashCommandOptionType.string, required=False, description="Fifth option."),
+                option6: discord.Option(discord.SlashCommandOptionType.string, required=False, description="Sixth option."),
+                option7: discord.Option(discord.SlashCommandOptionType.string, required=False, description="Seventh option."),
+                option8: discord.Option(discord.SlashCommandOptionType.string, required=False, description="Eigth option."),
+                option9: discord.Option(discord.SlashCommandOptionType.string, required=False, description="Ninth option."),):
+        await poll(ctx, question, option1, option2, option3, option4, option5, option6, option7, option8, option9)
 
     @bot.slash_command(name="queue", description="Show the current music queue.")
     async def call(ctx):
