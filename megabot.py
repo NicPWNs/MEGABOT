@@ -75,11 +75,11 @@ if __name__ == "__main__":
     async def skill_check_trivia(bot):
         await trivia_check(bot, startTime)
 
-    @tasks.loop(time=datetime.time.fromisoformat('09:00:00'))
+    @tasks.loop(time=datetime.time.fromisoformat('13:00:00'))
     async def booster_reward(bot):
         await boost_reward(bot, startTime)
 
-    @tasks.loop(time=datetime.time.fromisoformat('09:00:00'))
+    @tasks.loop(time=datetime.time.fromisoformat('13:00:00'))
     async def post_random_photo(bot):
         await random_photo(bot, startTime)
 
