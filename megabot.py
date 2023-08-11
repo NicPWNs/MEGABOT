@@ -56,7 +56,7 @@ from slash_commands.wheel import wheel
 
 if __name__ == "__main__":
 
-    # Logging Configuration
+    # Logging Configuration: 
     logging.basicConfig(format='%(asctime)s-[ %(levelname)s ]:    %(message)s', level=logging.INFO, datefmt='%H:%M:%S')
     handle = "LOGGER"
     logger = logging.getLogger(handle)
@@ -136,6 +136,7 @@ if __name__ == "__main__":
         channel = discord.utils.get(guild.channels, name="main")
         await channel.send(f"I'm watching you <@{member.id}> 👀...")
 
+    # voice channel state listener
     # IDK how consistently this will work with multiple people in the VC
     @bot.listen('on_voice_state_update')
     async def on_voice_state_update(member, before, after):

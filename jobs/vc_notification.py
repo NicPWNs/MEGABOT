@@ -6,6 +6,7 @@ import discord
 logger = logging.getLogger('LOGGER')
 
 # Track & Notify when users enter/leave voice channels
+
 async def vc_notification(bot, member, before, after, cooldownUsersSet):
     
    guild = discord.utils.get(bot.guilds, name="MEGACORD")
@@ -15,7 +16,7 @@ async def vc_notification(bot, member, before, after, cooldownUsersSet):
    if member.id in cooldownUsersSet:
       return
 
-   # notify discord channel & member added to activeUsersSet
+   # notify text-channel & give user spam cooldown
    if before.channel is None:
       logger.info(f" Voice-Channel-Notifcation: {member.id} added to activeUsersSet for 10 minutes.")
             
@@ -37,7 +38,7 @@ async def vc_notification(bot, member, before, after, cooldownUsersSet):
 
    return
 
-# Remove users from cooldownUsersSet after 10 minute period
+# Remove users from cooldownUsersSet
 def vc_notif_set_remove(set, user, ttl):
    time.sleep(ttl)
    logger.info(f"Voice-Channel-Notifcation: User {user} cooldown removed")
