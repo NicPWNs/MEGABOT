@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import logging
 import os
 import time
 import spotdl
@@ -9,6 +10,7 @@ import nest_asyncio
 import datetime
 from discord.ext import tasks
 from dotenv import load_dotenv
+from jobs.vc_notification import vc_notification
 from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
 from jobs.boost_reward import boost_reward
@@ -54,6 +56,11 @@ from slash_commands.wheel import wheel
 
 if __name__ == "__main__":
 
+    # Logging Configuration: 
+    logging.basicConfig(format='%(asctime)s-[ %(levelname)s ]:    %(message)s', level=logging.INFO, datefmt='%H:%M:%S')
+    handle = "LOGGER"
+    logger = logging.getLogger(handle)
+
     startTime = time.time()
 
     load_dotenv()
@@ -65,6 +72,9 @@ if __name__ == "__main__":
     nest_asyncio.apply()
     SDL = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(
         os.getenv('SPOTIFY_SECRET')), headless=True, downloader_settings={"output": "./music/{artists} - {title}.{output-ext}"}, loop=asyncio.get_event_loop())
+    
+    # Hold users who are on cooldown from vc_notification
+    cooldownUsersSet = set()
 
     # Timed Events
     @tasks.loop(minutes=random.randint(120, 240))
@@ -125,6 +135,12 @@ if __name__ == "__main__":
 
         channel = discord.utils.get(guild.channels, name="main")
         await channel.send(f"I'm watching you <@{member.id}> 👀...")
+
+    # voice channel state listener
+    # IDK how consistently this will work with multiple people in the VC
+    @bot.listen('on_voice_state_update')
+    async def on_voice_state_update(member, before, after):
+        await vc_notification(bot, member, before, after, cooldownUsersSet)
 
     # Slash Commands
     @bot.slash_command(name="age", description="Guesses the age of a specified name.")
