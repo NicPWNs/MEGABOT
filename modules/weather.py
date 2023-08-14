@@ -1,29 +1,29 @@
 import requests
 
-# Module to handle obtaining weather information
+# Module for obtaining weather information
 
-# get todays weather for location
+# Get todays weather for location
 async def todays_weather(lat, long):
    dailyWeatherList = []
 
    return dailyWeatherList
 
-# return list of both high and low lists
+# Get 7 day daily high/lows for location
 async def get_daily_temps(lat, long):
    dailyTemps = []
 
-      # get weather data
+   # Get weather data
    request = requests.get(
       'https://api.open-meteo.com/v1/forecast?latitude=' + str(lat) + '&longitude=' + str(long) + '&hourly=temperature_2m&temperature_unit=fahrenheit').json()
 
-   # hold high/low temps
+   # Hold high/low temps
    highTempList = []
    lowTempList = []
 
-   # Get the temperature by hour for next 7 days (168 hours/index)
+   # Get the temperature by hour for next 7 days (168 hours index)
    hourlyList = list(map(float, request["hourly"]["temperature_2m"]))
 
-   # iterate over hourlyList
+   # Get daily highs/lows
    hourCount = 0
    dailyTempHigh = float(hourlyList[0])
    dailyTempLow = float(hourlyList[0])
@@ -32,9 +32,9 @@ async def get_daily_temps(lat, long):
          dailyTempHigh = i
       elif dailyTempLow > i:
          dailyTempLow = i
-   
+
       hourCount += 1
-      # reset everything for next day
+      # Reset everything for next day
       if hourCount == 24:
          highTempList.append(dailyTempHigh)
          lowTempList.append(dailyTempLow)
@@ -47,7 +47,7 @@ async def get_daily_temps(lat, long):
 
    return dailyTemps
 
-# get 7 day forecast for preciptation
+# Get 7 day forecast for preciptation
 async def get_precip(lat, long):
    precipChance = []
 
