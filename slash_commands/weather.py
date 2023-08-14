@@ -5,11 +5,7 @@ import requests
 
 from modules.weather import get_daily_temps
 
-# Display weather forecast for zip code
-# User entered zip code - determine long/lat
-# Get forecast
-# Display forecast
-
+# Display 7 day weather forecast for zip code
 async def weather_forecast(ctx, zipCode):
 
    # Zipcode Validation
@@ -26,16 +22,16 @@ async def weather_forecast(ctx, zipCode):
    longitude = round(float(request[0]["lon"]), 2)
    location = request[0]["display_name"]
 
-   # get daily high/lows
+   # Get daily high/lows
    dailyTemps = await get_daily_temps(latitude, longitude)
 
    # Output weekly temperature forecast message
 
-   # hold days of the week
+   # Hold days of the week
    days_of_week = ["Monday", "Tuesday", "Wednesday", "Thursday", "Friday", "Saturday", "Sunday"]
    displayDays = []
 
-   # Get the appropriate days of week
+   # Get next 7 days of week
    dayCount = datetime.now().weekday()
    for i in range(7):
 
@@ -45,7 +41,7 @@ async def weather_forecast(ctx, zipCode):
       if dayCount == 7:
          dayCount = 0
 
-   # Weather display
+   # Weather info display
    weatherDisplay = "Location: " + location + "\nWeekly Forecast:"
    for i in range(7):
       weatherDisplay += "\n" + displayDays[i] + ": High " + str(dailyTemps[0][i]) + ", Low " + str(dailyTemps[1][i])

@@ -8,18 +8,6 @@ async def todays_weather(lat, long):
 
    return dailyWeatherList
 
-# NOT IMPLEMENTED - return list for 7 day forecast of high temps
-async def get_high_temps(lat, long):
-   highTempList = []
-    
-   return highTempList
-    
-# NOT IMPLEMENTED - return list for 7 day forecast of low temps
-async def get_low_temps(lat, long):
-   lowTempList = []
-
-   return lowTempList
-
 # return list of both high and low lists
 async def get_daily_temps(lat, long):
    dailyTemps = []
