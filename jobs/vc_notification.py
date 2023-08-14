@@ -21,6 +21,8 @@ async def vc_notification(bot, member, before, after, cooldownUsersSet):
       logger.info(f" Voice-Channel-Notifcation: {member.id} added to activeUsersSet for 10 minutes.")
             
       cooldownUsersSet.add(member.id)
+
+      # remove user from cooldown in 600 seconds
       timer = threading.Thread(target = vc_notif_set_remove, args=(cooldownUsersSet, member.id, 600))
       timer.start()
 
