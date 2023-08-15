@@ -3,7 +3,7 @@ import re
 import discord
 import requests
 
-from modules.weather import get_daily_temps
+from modules.weather_info import get_daily_temps
 
 # Display 7 day weather forecast for zip code
 async def weather_forecast(ctx, zipCode):
@@ -49,6 +49,6 @@ async def weather_forecast(ctx, zipCode):
    embed = discord.Embed(
       color=0x9366cd, title="Weather Forecast", description=weatherDisplay)
 
-   await ctx.respond(embed=embed)
+   # await ctx.respond(embed=embed)
 
-   return
+   return embed
