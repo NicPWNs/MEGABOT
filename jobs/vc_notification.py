@@ -10,7 +10,7 @@ logger = logging.getLogger('LOGGER')
 async def vc_notification(bot, member, before, after, cooldownUsersSet):
 
    guild = discord.utils.get(bot.guilds, name="MEGACORD")
-   channel = discord.utils.get(guild.channels, name="bot-testing")
+   channel = discord.utils.get(guild.channels, name="main")
 
    # Anti-Spam Cooldown Check
    if member.id in cooldownUsersSet:
