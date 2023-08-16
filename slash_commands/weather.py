@@ -42,13 +42,8 @@ async def weather_forecast(ctx, zipCode):
          dayCount = 0
 
    # Weather info display
-   weatherDisplay = "Location: " + location + "\nWeekly Forecast:"
+   forecastInfo = "Location: " + location + "\nWeekly Forecast:"
    for i in range(7):
-      weatherDisplay += "\n" + displayDays[i] + ": High " + str(dailyTemps[0][i]) + ", Low " + str(dailyTemps[1][i])
+      forecastInfo += "\n" + displayDays[i] + ": High " + str(dailyTemps[0][i]) + ", Low " + str(dailyTemps[1][i])
 
-   embed = discord.Embed(
-      color=0x9366cd, title="Weather Forecast", description=weatherDisplay)
-
-   # await ctx.respond(embed=embed)
-
-   return embed
+   return forecastInfo

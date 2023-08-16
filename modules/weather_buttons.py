@@ -25,5 +25,7 @@ class WeatherUI(discord.ui.View):
    # Weekly forecast button
    @discord.ui.button(label="Weekly Forecast", style=discord.ButtonStyle.primary)
    async def weekly_weather(self, button: discord.ui.Button, interaction: discord.Interaction):
-      embed = await weather_forecast(self.ctx, self.zipcode)
+      weeklyForecastInfo = await weather_forecast(self.ctx, self.zipcode)
+      embed = discord.Embed(
+         color=0x9366cd, title="Weather Forecast", description=weeklyForecastInfo)
       await interaction.response.edit_message(embed=embed)
