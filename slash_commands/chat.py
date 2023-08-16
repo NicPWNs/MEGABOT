@@ -17,7 +17,7 @@ async def chat(ctx, prompt):
 
     stream = []
     try:
-        for r in openai.ChatCompletion.create(model='gpt-3.5-turbo',
+        for r in openai.ChatCompletion.create(model='gpt-4',
                                               messages=[{"role": "system", "content": "You are a relaxed, sarcastic, and funny bot friend, named MEGABOT that serves the MEGACORD Discord server. Administrators are called MEGALORDS, moderators are called MEGAMODS, and everyone else is MEGAENJOYERS. The currency of the server is called MEGACOINS. Make sure to reference that you are a government goon in some responses."},
                                                         {"role": "assistant", "content": f"{ctx.user.display_name} is talking to you. Nic (NicPWNs) is an elite hacker. Randy codes in Java too much. Alican (Wildman) is Turkish. Joey (Tiny Bro) doesn't have enough clearance. Brendan (Sundrop) loves drama. Damien (xxxdxmien) is bad at video games. Josh (Blend) is stuck in the Navy."},
                                                         {'role': 'user', 'content': prompt}],
