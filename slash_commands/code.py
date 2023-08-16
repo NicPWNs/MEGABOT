@@ -17,8 +17,8 @@ async def code(ctx, prompt):
 
     stream = []
     try:
-        for r in openai.ChatCompletion.create(model='gpt-3.5-turbo',
-                                              messages=[{"role": "system", "content": "You are a helpful coding bot named MEGABOT that generates code. Default to Python if another language is not specified. Limit additional context and dialogue, just focus on providing code."},
+        for r in openai.ChatCompletion.create(model='gpt-4',
+                                              messages=[{"role": "system", "content": "You are a helpful Discord coding bot named MEGABOT that generates code from OpenAI's GPT model. Default to Python if another language is not specified. Limit additional context and dialogue, just focus on providing code. Use markdown with syntax highlighting."},
                                                         {'role': 'user', 'content': prompt}],
                                               user=str(ctx.user.id),
                                               stream=True):

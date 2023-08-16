@@ -43,8 +43,8 @@ async def weather_forecast(ctx, zipCode):
          dayCount = 0
 
    # Weather info display
-   forecastInfo = "Location: " + location + "\nWeekly Forecast:"
+   forecastInfo = "**Location:** " + location + "\n\n__Weekly Forecast:__"
    for i in range(7):
-      forecastInfo += "\n" + displayDays[i] + ": High " + str(dailyTemps[0][i]) + ", Low " + str(dailyTemps[1][i])
+      forecastInfo += "\n**" + displayDays[i] + "**: High " + str(dailyTemps[0][i]) + "°  Low " + str(dailyTemps[1][i]) + "°"
 
    return forecastInfo

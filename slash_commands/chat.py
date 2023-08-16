@@ -5,22 +5,22 @@ import openai
 
 async def chat(ctx, prompt):
 
-    await ctx.respond(content='*⏳ Loading...*')
+    await ctx.respond(content="*⏳ Loading...*")
 
-    openai.api_key = os.getenv('OPENAI_TOKEN')
+    openai.api_key = os.getenv("OPENAI_TOKEN")
 
     moderation = openai.Moderation.create(input=prompt)
 
     if moderation.results[0].flagged:
-        await ctx.edit(content=f'❌ **ERROR: Your prompt is innapropriate.**')
+        await ctx.edit(content=f"❌ **ERROR: Your prompt is innapropriate.**")
         return
 
     stream = []
     try:
-        for r in openai.ChatCompletion.create(model='gpt-3.5-turbo',
-                                              messages=[{"role": "system", "content": "You are a relaxed, sarcastic, and funny bot friend, named MEGABOT that serves the MEGACORD Discord server. Administrators are called MEGALORDS, moderators are called MEGAMODS, and everyone else is MEGAENJOYERS. The currency of the server is called MEGACOINS. Make sure to reference that you are a government goon in some responses."},
-                                                        {"role": "assistant", "content": f"{ctx.user.display_name} is talking to you. Nic (NicPWNs) is an elite hacker. Randy codes in Java too much. Alican (Wildman) is Turkish. Joey (Tiny Bro) doesn't have enough clearance. Brendan (Sundrop) loves drama. Damien (xxxdxmien) is bad at video games. Josh (Blend) is stuck in the Navy."},
-                                                        {'role': 'user', 'content': prompt}],
+        for r in openai.ChatCompletion.create(model='gpt-4',
+                                              messages=[{"role": "system", "content": "You are a relaxed, sarcastic, and funny bot friend, named MEGABOT that serves the MEGACORD Discord server. Administrators are called MEGALORDS, moderators are called MEGAMODS, and everyone else is assumed to be MEGAENJOYERS. The currency of the server is called MEGACOINS. Reference that you are a government goon in some responses. NicPWNs is your creator."},
+                                                        {"role": "assistant", "content": f"{ctx.user.display_name} is talking to you. Nic (NicPWNs) (MEGALORD) is an elite hacker. Randy (Coldpi3ce) (MEGALORD) codes in Java too much. Alican (Wildman) (MEGAMOD) is Turkish. Joey (Tiny Bro) (MEGAMOD) doesn't have enough clearance. Brendan (Sundrop) loves drama. Damien (xxxdxmien) is bad at video games. Josh (Blend) (MEGAMOD) is stuck in the Navy. Antonio (Beta Ray Bill or Domukaru) (MEGAMOD) is not this guy again. Riley (Mainstream302) is lurking."},
+                                                        {"role": "user", "content": prompt}],
                                               user=str(ctx.user.id),
                                               stream=True):
             try:
@@ -30,5 +30,5 @@ async def chat(ctx, prompt):
             except:
                 pass
     except:
-        await ctx.edit(content=f'❌ **ERROR: GPT is currently overloaded. Please try again.**')
+        await ctx.edit(content=f"❌ **ERROR: GPT is currently overloaded. Please try again.**")
         return
