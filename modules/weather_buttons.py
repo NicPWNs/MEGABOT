@@ -6,7 +6,7 @@ from slash_commands.weather import weather_forecast
 # Weather UI Components
 
 class WeatherUI(discord.ui.View):
-   def __init__(self, ctx, zipcode, *items: Item, timeout: float | None = 180, disable_on_timeout: bool = False):
+   def __init__(self, ctx, zipcode, *items: Item, timeout: float, disable_on_timeout: bool = False):
       super().__init__(*items, timeout=timeout, disable_on_timeout=disable_on_timeout)
 
       self.ctx = ctx
@@ -25,5 +25,7 @@ class WeatherUI(discord.ui.View):
    # Weekly forecast button
    @discord.ui.button(label="Weekly Forecast", style=discord.ButtonStyle.primary)
    async def weekly_weather(self, button: discord.ui.Button, interaction: discord.Interaction):
-      embed = await weather_forecast(self.ctx, self.zipcode)
+      weeklyForecastInfo = await weather_forecast(self.ctx, self.zipcode)
+      embed = discord.Embed(
+         color=0x9366cd, title="Weather Forecast", description=weeklyForecastInfo)
       await interaction.response.edit_message(embed=embed)

@@ -138,11 +138,10 @@ if __name__ == "__main__":
         channel = discord.utils.get(guild.channels, name="main")
         await channel.send(f"I'm watching you <@{member.id}> 👀...")
 
-    # voice channel state listener
-    # IDK how consistently this will work with multiple people in the VC
-    @bot.listen('on_voice_state_update')
-    async def on_voice_state_update(member, before, after):
-        await vc_notification(bot, member, before, after, cooldownUsersSet)
+    # voice channel state listener - MURDERED UNTIL FURTHER NOTICE AND IMPROVEMENT
+    # @bot.listen('on_voice_state_update')
+    # async def on_voice_state_update(member, before, after):
+    #     await vc_notification(bot, member, before, after, cooldownUsersSet)
 
     # Slash Commands
     @bot.slash_command(name="age", description="Guesses the age of a specified name.")
