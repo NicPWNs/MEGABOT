@@ -4,7 +4,6 @@ from discord.ui.item import Item
 from slash_commands.weather import weather_forecast
 
 # Weather UI Components
-
 class WeatherUI(discord.ui.View):
    def __init__(self, ctx, zipcode, *items: Item, timeout: float, disable_on_timeout: bool = False):
       super().__init__(*items, timeout=timeout, disable_on_timeout=disable_on_timeout)
