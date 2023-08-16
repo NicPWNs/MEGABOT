@@ -42,6 +42,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/test`: Run a series of tests on the bot.
 - `/upload <photo>`: Upload a photo to the MEGABOT database.
 - `/version`: Return the latest MEGABOT version number.
+- `/weather`: Get the weather forecast based on ZIP code.
 - `/wheel`: Spin the MEGACOIN wheel.
 
 > Some commands use my own Python package: [random-unicode-emoji-py](https://github.com/NicPWNs/random-unicode-emoji-py)
