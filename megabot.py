@@ -15,7 +15,6 @@ from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
 from jobs.boost_reward import boost_reward
 from jobs.random_photo import random_photo
-from modules.weather_buttons import WeatherUI
 from skill_checks.album_check import album_check
 from skill_checks.trivia_check import trivia_check
 from slash_commands.age import age
@@ -52,6 +51,7 @@ from slash_commands.streak import streak
 from slash_commands.test import test
 from slash_commands.upload import upload
 from slash_commands.version import version
+from slash_commands.weather import weather
 from slash_commands.wheel import wheel
 
 
@@ -340,9 +340,9 @@ if __name__ == "__main__":
         await version(ctx)
 
     @bot.slash_command(name="weather", description="Seven day weather forecast.")
-    async def button(ctx, zipcode: discord.Option(discord.SlashCommandOptionType.string, required=True, descripton="ZIP code for weather.")):
-        weatherView = WeatherUI(ctx, zipcode, timeout=30)
-        await ctx.respond(view=weatherView)
+    async def call(ctx, zipcode: discord.Option(discord.SlashCommandOptionType.string, required=True, descripton="ZIP code for weather.")):
+        view = await weather(ctx, zipcode)
+        await ctx.respond(view=view)
 
     @bot.slash_command(name="wheel", description="Spin the MEGACOIN wheel.")
     async def call(ctx, wager: discord.Option(discord.SlashCommandOptionType.integer, required=True, description="Amount you want to wager.")):
