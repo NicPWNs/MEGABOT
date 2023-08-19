@@ -27,9 +27,9 @@ async def vote(ctx):
 
 
     if dataLength > 5:
-        if datetime.now().date() == data['Item']['date']:
+        if str(datetime.now().date()) == data['Item']['date']:
             embed = discord.Embed(
-            color=0x5965f3, title="🗳️  MEGABOT Voting", description="You've already voted today!")
+                color=0x5965f3, title="🗳️  MEGABOT Voting", description="You've already voted today!")
             await interaction.edit_original_response(embed=embed)
             return
 
