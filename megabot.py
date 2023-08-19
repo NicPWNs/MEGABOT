@@ -15,8 +15,8 @@ from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
 from jobs.boost_reward import boost_reward
 from jobs.random_photo import random_photo
-from skill_checks.album_check import album_check
-from skill_checks.trivia_check import trivia_check
+from jobs.album_check import album_check
+from jobs.trivia_check import trivia_check
 from slash_commands.age import age
 from slash_commands.album import album
 from slash_commands.balance import balance

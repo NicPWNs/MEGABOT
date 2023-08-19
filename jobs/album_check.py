@@ -8,7 +8,7 @@ import random
 import discord
 import requests
 import asyncio
-import megacoin
+import modules.megacoin as megacoin
 from difflib import SequenceMatcher
 from colorthief import ColorThief
 

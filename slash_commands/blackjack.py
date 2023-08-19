@@ -3,7 +3,7 @@ import os
 import time
 import discord
 import random
-import megacoin
+import modules.megacoin as megacoin
 
 
 def get_card(ctx):

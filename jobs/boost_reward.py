@@ -2,7 +2,7 @@
 import discord
 import time
 import datetime
-import megacoin
+import modules.megacoin as megacoin
 
 
 async def boost_reward(bot, startTime):

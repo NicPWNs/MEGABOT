@@ -3,7 +3,7 @@ import time
 import random
 import discord
 import requests
-import megacoin
+import modules.megacoin as megacoin
 
 
 async def trivia_check(bot, startTime):

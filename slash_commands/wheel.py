@@ -2,7 +2,7 @@
 import time
 import discord
 import random
-import megacoin
+import modules.megacoin as megacoin
 
 
 async def wheel(ctx, wager):

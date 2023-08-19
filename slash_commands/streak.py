@@ -5,7 +5,7 @@ from datetime import datetime, timedelta
 from random_unicode_emoji import random_emoji
 from modules.random_discord_emoji import random_discord_emoji
 
-import megacoin
+import modules.megacoin as megacoin
 
 
 async def streak(ctx, stats):
