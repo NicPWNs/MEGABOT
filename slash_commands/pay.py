@@ -1,5 +1,5 @@
 #!/usr/bin/env python3
-import megacoin
+import modules.megacoin as megacoin
 import discord
 
 
