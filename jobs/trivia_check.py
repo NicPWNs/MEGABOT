@@ -62,7 +62,7 @@ async def trivia_check(bot, startTime):
         await reaction.remove(user)
         await message.clear_reactions()
     except:
-        text = f"❌ No one guessed correctly within 10 minutes!"
+        text = f"❌ No one guessed correctly within 10 minutes! The answer was {choices[index]}"
         embed = embed.set_footer(
             text=text, icon_url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif")
         await message.edit(embed=embed)
