@@ -36,7 +36,7 @@ async def vote(ctx):
     # OBFUSCATE THE LINK EVENTUALLY
 
     embed = discord.Embed(
-        color=0x5965f3, title="🗳️  MEGABOT Voting", description="[Click here](http://adfoc.us/8239381) to vote.")
+        color=0x5965f3, title="🗳️  MEGABOT Voting", description="[Click here](http://adfoc.us/8239381) to vote.").set_footer(text="Click 'skip' top-right!")
     await interaction.edit_original_response(embed=embed)
 
     table.put_item(
@@ -46,10 +46,10 @@ async def vote(ctx):
         }
     )
 
-    time.sleep(random.randint(180, 300))
+    time.sleep(random.randint(120, 180))
 
-    await megacoin.add(ctx.user, 100)
+    await megacoin.add(ctx.user, 50)
 
     embed = discord.Embed(
-        color=0x5965f3, title="🗳️  MEGABOT Voting", description="Vote registered! +100 <:MEGACOIN:1090620048621707324>")
+        color=0x5965f3, title="🗳️  MEGABOT Voting", description="Vote registered! +50 <:MEGACOIN:1090620048621707324>")
     await interaction.edit_original_response(embed=embed)
