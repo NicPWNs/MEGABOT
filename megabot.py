@@ -51,6 +51,7 @@ from slash_commands.streak import streak
 from slash_commands.test import test
 from slash_commands.upload import upload
 from slash_commands.version import version
+from slash_commands.vote import vote
 from slash_commands.weather import weather
 from slash_commands.wheel import wheel
 
@@ -338,6 +339,14 @@ if __name__ == "__main__":
     @bot.slash_command(name="version", description="Return the latest MEGABOT version number.")
     async def call(ctx):
         await version(ctx)
+
+    @bot.slash_command(name="vote", description="Vote daily for MEGACOINS!")
+    async def call(ctx):
+        if not (ctx.channel.name == "casino" or ctx.channel.name == "bot-testing"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#1091083497868886108>**", ephemeral=True)
+            return
+        await vote(ctx)
 
     @bot.slash_command(name="weather", description="Seven day weather forecast.")
     async def call(ctx, zipcode: discord.Option(discord.SlashCommandOptionType.string, required=True, descripton="ZIP code for weather.")):
