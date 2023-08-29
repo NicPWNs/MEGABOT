@@ -42,7 +42,8 @@ async def vote(ctx):
     table.put_item(
         Item={
             'id': str(ctx.user.id),
-            'date': str(datetime.now().date())
+            'date': str(datetime.now().date()),
+            'username': str(ctx.user.name)
         }
     )
 
