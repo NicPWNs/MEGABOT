@@ -41,6 +41,7 @@ async def vote(ctx):
         Item={
             'id': str(ctx.user.id),
             'username': str(ctx.user.name),
+            'voted': str("false")
         }
     )
 
