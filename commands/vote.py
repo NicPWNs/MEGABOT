@@ -37,17 +37,31 @@ async def vote(ctx):
         color=0x5965f3, title="🗳️  MEGABOT Voting", description="[Click here](http://adfoc.us/82393897415395) to vote.").set_footer(text="Click 'skip' top-right!")
     await interaction.edit_original_response(embed=embed)
 
+    table.put_item(
+        Item={
+            'id': str(ctx.user.id),
+            'username': str(ctx.user.name),
+        }
+    )
+
     voted = False
+    timePassed = 0
 
     # Check every ten seconds if user voted
     while voted is False:
         time.sleep(10)
+        timePassed += 10
         data = table.get_item(
             Key={
                 'id': str(ctx.user.id)
             }
         )
         voted = data['Item']['voted']
+        if timePassed >= 120:
+            embed = discord.Embed(
+                color=0x5965f3, title="🗳️  MEGABOT Voting", description="You took too long to vote! Try again.")
+            await interaction.edit_original_response(embed=embed)
+            return
 
     table.put_item(
         Item={
