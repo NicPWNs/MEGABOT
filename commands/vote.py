@@ -57,7 +57,7 @@ async def vote(ctx):
                 'id': str(ctx.user.id)
             }
         )
-        voted = data['Item']['voted']
+        voted = bool(data['Item']['voted'])
         if timePassed >= 120:
             embed = discord.Embed(
                 color=0x5965f3, title="🗳️  MEGABOT Voting", description="You took too long to vote! Try again.")
