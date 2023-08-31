@@ -1,6 +1,5 @@
 #!/usr/bin/env python3
 import time
-import random
 import boto3
 import discord
 from datetime import datetime
@@ -25,7 +24,6 @@ async def vote(ctx):
     dataLength = int(data['ResponseMetadata']
                      ['HTTPHeaders']['content-length'])
 
-
     if dataLength > 5:
         if str(datetime.now().date()) == data['Item']['date']:
             embed = discord.Embed(
@@ -49,14 +47,14 @@ async def vote(ctx):
                 'id': str(ctx.user.id)
             }
         )
-        if data['Item']['voted'] == "true":
-            voted = True
+        voted = data['Item']['voted']
 
     table.put_item(
         Item={
             'id': str(ctx.user.id),
             'date': str(datetime.now().date()),
-            'username': str(ctx.user.name)
+            'username': str(ctx.user.name),
+            'voted': str("false")
         }
     )
 
