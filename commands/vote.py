@@ -39,6 +39,19 @@ async def vote(ctx):
         color=0x5965f3, title="🗳️  MEGABOT Voting", description="[Click here](http://adfoc.us/82393897415395) to vote.").set_footer(text="Click 'skip' top-right!")
     await interaction.edit_original_response(embed=embed)
 
+    voted = False
+
+    # Check every ten seconds if user voted
+    while voted is False:
+        time.sleep(10)
+        data = table.get_item(
+            Key={
+                'id': str(ctx.user.id)
+            }
+        )
+        if data['Item']['voted'] == "true":
+            voted = True
+
     table.put_item(
         Item={
             'id': str(ctx.user.id),
@@ -46,8 +59,6 @@ async def vote(ctx):
             'username': str(ctx.user.name)
         }
     )
-
-    time.sleep(random.randint(120, 180))
 
     await megacoin.add(ctx.user, 50)
 
