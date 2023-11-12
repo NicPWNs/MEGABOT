@@ -17,7 +17,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/clear`: Temporarily clear MEGATEST commands. (Admin Only)
 - `/code <prompt>`: Write code with AI.
 - `/coin`: Flip a coin.
-- `/csgo <username>`: Retrieve CS:GO stats.
+- `/cs <username>`: Retrieve Counter-Strike stats.
 - `/dice`: Roll a dice.
 - `/double`: Play MEGACOIN double or nothing.
 - `/emote <search> [add:True] [id:True]`: Search for a 7TV emote. Optionally add it to the Discord guild.
