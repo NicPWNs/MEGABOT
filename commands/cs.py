@@ -3,7 +3,7 @@ import os
 import requests
 
 
-async def csgo(ctx, username):
+async def cs(ctx, username):
 
     await ctx.respond(content="*⏳ Loading...*")
 
@@ -43,7 +43,7 @@ async def csgo(ctx, username):
         "headshotPct",
     ]
 
-    stat = f"__**{handle} Stats:**__\n"
+    stat = f"__**{handle} CS2 Stats:**__\n"
 
     for i in range(0, len(types)):
         stat += "**" + \

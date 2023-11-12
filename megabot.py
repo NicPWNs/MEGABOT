@@ -10,7 +10,6 @@ import nest_asyncio
 import datetime
 from discord.ext import tasks
 from dotenv import load_dotenv
-from jobs.vc_notification import vc_notification
 from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
 from jobs.boost_reward import boost_reward
@@ -27,7 +26,7 @@ from commands.chat import chat
 from commands.clear import clear
 from commands.code import code
 from commands.coin import coin
-from commands.csgo import csgo
+from commands.csgo import cs
 from commands.dice import dice
 from commands.double import double
 from commands.emote import emote
@@ -138,11 +137,6 @@ if __name__ == "__main__":
         channel = discord.utils.get(guild.channels, name="main")
         await channel.send(f"I'm watching you <@{member.id}> 👀...")
 
-    # voice channel state listener - MURDERED UNTIL FURTHER NOTICE AND IMPROVEMENT
-    # @bot.listen('on_voice_state_update')
-    # async def on_voice_state_update(member, before, after):
-    #     await vc_notification(bot, member, before, after, cooldownUsersSet)
-
     # Slash Commands
     @bot.slash_command(name="age", description="Guesses the age of a specified name.")
     async def call(ctx, name: discord.Option(discord.SlashCommandOptionType.string, description="Name to guess age of.", required=True)):
@@ -192,9 +186,9 @@ if __name__ == "__main__":
     async def call(ctx):
         await coin(ctx)
 
-    @bot.slash_command(name="csgo", description="Retrieve CS:GO stats.")
+    @bot.slash_command(name="cs", description="Retrieve Counter-Strike stats.")
     async def call(ctx, username: discord.Option(discord.SlashCommandOptionType.string, description="User on Steam, a Steam ID, Steam Community URI, or Steam Vanity Username.", required=True)):
-        await csgo(ctx, username)
+        await cs(ctx, username)
 
     @bot.slash_command(name="dice", description="Roll a dice.")
     async def call(ctx):
