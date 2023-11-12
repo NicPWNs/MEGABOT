@@ -26,7 +26,7 @@ from commands.chat import chat
 from commands.clear import clear
 from commands.code import code
 from commands.coin import coin
-from commands.csgo import cs
+from commands.cs import cs
 from commands.dice import dice
 from commands.double import double
 from commands.emote import emote
