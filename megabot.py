@@ -186,7 +186,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await coin(ctx)
 
-    @bot.slash_command(name="cs", description="Retrieve Counter-Strike stats.")
+    @bot.slash_command(name="cs", description="Retrieve a player's Counter-Strike stats.")
     async def call(ctx, username: discord.Option(discord.SlashCommandOptionType.string, description="User on Steam, a Steam ID, Steam Community URI, or Steam Vanity Username.", required=True)):
         await cs(ctx, username)
 
