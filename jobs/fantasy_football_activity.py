@@ -1,0 +1,55 @@
+#!/usr/bin/env python3
+import os
+import time
+import discord
+import convertapi
+from espn_api.football import League
+
+
+async def fantasy_football_activity(bot, startTime):
+
+    convertapi.api_secret = os.getenv("CONVERT_API")
+
+    runTime = int(time.time() - startTime)
+    if runTime < 60:
+        return
+
+    guild = discord.utils.get(bot.guilds, name="MEGACORD")
+    channel = discord.utils.get(guild.channels, name="sports")
+
+    embed = discord.Embed(
+        color=0xffffff,
+        title="🏈 Fantasy Football",
+        description="Last 24 Hours of Activity").set_thumbnail(url="https://espnpressroom.com/us/files/2016/08/Fantasy-Football-App-LOGO.png")
+    await channel.send(embed=embed)
+
+    league = League(swid=os.getenv("ESPN_SWID"), espn_s2=os.getenv("ESPN_S2"), league_id=2108883860, year=2023)
+
+    activities = league.recent_activity(size=25)
+    activities.reverse()
+
+    description = ""
+
+    for activity in activities:
+        if activity.date < int(time.time() * 1000) - 24*60*60*1000:
+            continue
+        logo_url = activity.actions[0][0].logo_url
+        if "svg" in activity.actions[0][0].logo_url:
+            logo_url = convertapi.convert('png', {
+                'File': activity.actions[0][0].logo_url
+            }, from_format = 'svg').file.url
+        for action in activity.actions:
+            description += f"**{action[1]}**  {action[2].name}" + "\n"
+        if "DROPPED" in description and "ADDED" in description:
+            color = 0x5eaeeb
+        elif "DROPPED" in description:
+            color = 0xe52534
+        elif "ADDED" in description:
+            color = 0x34e718
+        embed = discord.Embed(
+            color=color,
+            title=f"{activity.actions[0][0].team_name}",
+            description=description).set_thumbnail(url=logo_url)
+        await channel.send(embed=embed)
+        description = ""
+        time.sleep(1)

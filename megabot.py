@@ -16,6 +16,7 @@ from jobs.boost_reward import boost_reward
 from jobs.random_photo import random_photo
 from jobs.album_check import album_check
 from jobs.trivia_check import trivia_check
+from jobs.fantasy_football_activity import fantasy_football_activity
 from commands.age import age
 from commands.album import album
 from commands.balance import balance
@@ -94,6 +95,10 @@ if __name__ == "__main__":
     async def post_random_photo(bot):
         await random_photo(bot, startTime)
 
+    @tasks.loop(time=datetime.time.fromisoformat('16:00:00'))
+    async def post_fantasty_football_activity(bot):
+        await fantasy_football_activity(bot, startTime)
+
     # Event Listeners
     @bot.listen('on_ready')
     async def on_ready():
@@ -102,6 +107,7 @@ if __name__ == "__main__":
         skill_check_trivia.start(bot)
         booster_reward.start(bot)
         post_random_photo.start(bot)
+        post_fantasty_football_activity.start(bot)
 
     @bot.listen('on_message')
     async def on_message(message):
