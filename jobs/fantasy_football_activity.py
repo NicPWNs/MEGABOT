@@ -8,7 +8,7 @@ from espn_api.football import League
 
 async def fantasy_football_activity(bot, startTime):
 
-    convertapi.api_secret = "Gvyy1oVpwlrakVkm"
+    convertapi.api_secret = os.getenv("CONVERT_API")
 
     runTime = int(time.time() - startTime)
     if runTime < 60:
