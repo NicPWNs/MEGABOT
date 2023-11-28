@@ -20,7 +20,7 @@ async def fantasy_football_activity(bot, startTime):
     channel = discord.utils.get(guild.channels, name="sports")
 
     # Find the league
-    league = League(swid=os.getenv("ESPN_SWID"), espn_s2=os.getenv("ESPN_S2"), league_id=2108883860, year=int(datetime.now().year))
+    league = League(swid=os.getenv("ESPN_SWID"), espn_s2=os.getenv("ESPN_S2"), league_id=2108883860, year=int(datetime.date.today().year))
 
     # Get the last 25 activities assuming more than 25 didn't happen in the last 24 hours
     activities = league.recent_activity(size=25)
@@ -32,6 +32,7 @@ async def fantasy_football_activity(bot, startTime):
     # Reverse the activities so they are chronologically descending
     activities.reverse()
 
+    # Description will hold a concatenated string of all actions within an activity
     description = ""
 
     embed = discord.Embed(
@@ -64,4 +65,3 @@ async def fantasy_football_activity(bot, startTime):
             description=description).set_thumbnail(url=logo_url)
         await channel.send(embed=embed)
         description = ""
-        time.sleep(1)
