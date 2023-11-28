@@ -22,7 +22,7 @@ async def dice(ctx):
     if dice == 5:
         roll = "You Rolled 5️⃣"
     if dice == 6:
-        roll = "You Rolled 6️⃣" 
+        roll = "You Rolled 6️⃣"
 
     embed = discord.Embed(color=0xea596e,
                           title="🎲   Dice Roll",

@@ -31,6 +31,7 @@ from commands.cs import cs
 from commands.dice import dice
 from commands.double import double
 from commands.emote import emote
+from commands.ffl import ffl
 from commands.image import image
 from commands.kanye import kanye
 from commands.kill import kill
@@ -63,20 +64,20 @@ if __name__ == "__main__":
     handle = "LOGGER"
     logger = logging.getLogger(handle)
 
+    # Time the bot starts
     startTime = time.time()
 
+    # Load .env file that holds API keys and other secrets
     load_dotenv()
 
     bot = discord.Bot(intents=discord.Intents.all())
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
 
+    # Queue for /play
     queued = []
     nest_asyncio.apply()
     SDL = spotdl.Spotdl(client_id=str(os.getenv('SPOTIFY_CLIENT')), client_secret=str(
         os.getenv('SPOTIFY_SECRET')), headless=True, downloader_settings={"output": "./music/{artists} - {title}.{output-ext}"}, loop=asyncio.get_event_loop())
-
-    # Hold users who are on cooldown from vc_notification
-    cooldownUsersSet = set()
 
     # Timed Events
     @tasks.loop(minutes=random.randint(120, 240))
@@ -214,6 +215,14 @@ if __name__ == "__main__":
                    add: discord.Option(discord.SlashCommandOptionType.boolean, description="Add emote to server?", required=False),
                    id: discord.Option(discord.SlashCommandOptionType.boolean, description="Search by 7TV emote ID.", required=False)):
         await emote(ctx, search, add, id)
+
+    @bot.slash_command(name="ffl", description="Get the last 24 hours of Fantasy Football League activity.")
+    async def call(ctx):
+        if not (ctx.channel.name == "sports" or ctx.channel.name == "bot-testing"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#1070849382729121883>**", ephemeral=True)
+            return
+        await ffl(ctx)
 
     @bot.slash_command(name="image", description="Generate an image with AI.")
     async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for image to be generated from.", required=True)):
