@@ -21,6 +21,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/dice`: Roll a dice.
 - `/double`: Play MEGACOIN double or nothing.
 - `/emote <search> [add:True] [id:True]`: Search for a 7TV emote. Optionally add it to the Discord guild.
+- `/ffl`: Get the last 24 hours of Fantasy Football League activity.
 - `/image`: Generate an image with AI.
 - `/kanye`: Retrieve a random Kanye West quote.
 - `/kill`: Stop the bot's process. (Admin Only)
@@ -46,16 +47,3 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/wheel`: Spin the MEGACOIN wheel.
 
 > Some commands use my own Python package: [random-unicode-emoji-py](https://github.com/NicPWNs/random-unicode-emoji-py)
-
-## 💡 To-Do
-
-- [x] Add `/` application commands
-- [x] Migrate all working commands from [BlessThisMess](https://github.com/NicPWNs/Discord-BTM-Bot)
-- [x] Add `/emote`. Was broken on [BlessThisMess](https://github.com/NicPWNs/Discord-BTM-Bot)
-- [x] Restructure project and commands
-- [x] Add random emoji to `/streak` > 100
-- [x] Fix DST for `/streak`
-- [x] Add `/play`. Music!
-- [x] Add `/queue` and `/skip` to music
-- [ ] Add logging
-- [ ] Improve CI/CD with checks/tests (lint)
