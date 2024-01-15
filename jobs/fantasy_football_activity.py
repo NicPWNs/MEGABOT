@@ -9,6 +9,7 @@ from espn_api.football import League
 
 async def fantasy_football_activity(bot, startTime):
 
+    # Need this API to convert SVG images
     convertapi.api_secret = os.getenv("CONVERT_API")
 
     # Don't run if the bot just restarted
