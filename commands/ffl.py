@@ -12,8 +12,14 @@ async def ffl(ctx):
 
     convertapi.api_secret = os.getenv("CONVERT_API")
 
+    # Get the current NFL season year
+    if int(datetime.now().month) < 4:
+        year = int(datetime.now().year) - 1
+    else:
+        year = int(datetime.now().year)
+
     # Find the league
-    league = League(swid=os.getenv("ESPN_SWID"), espn_s2=os.getenv("ESPN_S2"), league_id=2108883860, year=int(datetime.date.today().year))
+    league = League(swid=os.getenv("ESPN_SWID"), espn_s2=os.getenv("ESPN_S2"), league_id=2108883860, year=year)
 
     # Get the last 25 activities assuming more than 25 didn't happen in the last 24 hours
     activities = league.recent_activity(size=25)
