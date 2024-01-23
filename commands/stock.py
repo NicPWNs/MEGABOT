@@ -6,11 +6,8 @@ import discord
 
 async def stock(ctx, symbol):
 
-    embed = discord.Embed(color=0xfee9b6,
-                        title="⏳  Loading...")
-
+    embed = discord.Embed(color=0xfee9b6, title="⏳  Loading...")
     interaction = await ctx.respond(embed=embed)
-
 
     STOCK_KEY = str(os.getenv('STOCK_KEY'))
 

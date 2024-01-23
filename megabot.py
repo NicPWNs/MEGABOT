@@ -23,6 +23,7 @@ from commands.balance import balance
 from commands.bank import bank
 from commands.blackjack import blackjack
 from commands.bless import bless
+from commands.bug import bug
 from commands.chat import chat
 from commands.clear import clear
 from commands.code import code
@@ -176,6 +177,11 @@ if __name__ == "__main__":
     @bot.slash_command(name="bless", description="Blesses the mess!")
     async def call(ctx):
         await bless(ctx)
+
+    @bot.slash_command(name="bug", description="Report a MEGABOT bug.")
+    async def call(ctx, title: discord.Option(discord.SlashCommandOptionType.string, required=True, description="Give the bug a title."),
+                        description: discord.Option(discord.SlashCommandOptionType.string, required=True, description="Describe the bug behavior.")):
+        await bug(ctx, title, description)
 
     @bot.slash_command(name="chat", description="Chat with MEGABOT.")
     async def call(ctx, prompt: discord.Option(discord.SlashCommandOptionType.string, description="Prompt for MEGABOT to respond to.", required=True)):
