@@ -2,8 +2,8 @@
 import os
 import time
 import discord
-import datetime
 import convertapi
+from datetime import datetime
 from espn_api.football import League
 
 async def ffl(ctx):
