@@ -13,6 +13,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/balance`: View MEGACOIN balance.
 - `/bank`: View the MEGACOIN balance leaderboard.
 - `/bless`: Blesses the mess!
+- `/bug`: Report a MEGABOT bug.
 - `/chat <prompt>`: Chat with MEGABOT. (GPT3.5)
 - `/clear`: Temporarily clear MEGATEST commands. (Admin Only)
 - `/code <prompt>`: Write code with AI.
