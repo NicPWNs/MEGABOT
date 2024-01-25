@@ -4,7 +4,6 @@ import re
 import math
 import time
 import shutil
-import random
 import discord
 import requests
 import asyncio
@@ -20,9 +19,7 @@ async def album_check(bot, startTime):
         return
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
-    channel = discord.utils.get(guild.channels, name="casino")
-
-    genre = "hip-hop"
+    channel = discord.utils.get(guild.channels, name="bot-testing")
 
     def check(msg):
         if msg.channel == channel:
@@ -46,16 +43,14 @@ async def album_check(bot, startTime):
         'Authorization': 'Bearer ' + token
     }
 
-    artist = "Various Artists"
-    type = "single"
+    # Configure genre here
+    genre = "hip-hop"
 
-    while artist == "Various Artists" and type == "single":
-        track = requests.get(
-            f'https://api.spotify.com/v1/search?q=genre%3A{genre}&type=track&market=NA&limit=1&offset={str(random.randint(0, 350))}', headers=headers).json()['tracks']['items'][0]
-        cover = track['album']['images'][0]['url']
-        artist = track['album']['artists'][0]['name']
-        type = track['album']['album_type']
-        popularity = track['popularity']
+    track = requests.get(
+        f"https://api.spotify.com/v1/recommendations?limit=1&market=NA&seed_genres={genre}", headers=headers).json()['tracks'][0]
+    cover = track['album']['images'][0]['url']
+    artist = track['album']['artists'][0]['name']
+    popularity = track['popularity']
 
     with open("cover.jpg", 'wb') as f:
         shutil.copyfileobj(requests.get(cover, stream=True).raw, f)
