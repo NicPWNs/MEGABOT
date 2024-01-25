@@ -19,7 +19,7 @@ async def album_check(bot, startTime):
         return
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
-    channel = discord.utils.get(guild.channels, name="bot-testing")
+    channel = discord.utils.get(guild.channels, name="casino")
 
     def check(msg):
         if msg.channel == channel:
