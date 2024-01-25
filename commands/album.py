@@ -35,11 +35,10 @@ async def album(ctx, genre="hip-hop"):
 
     artist = "Various Artists"
 
-    while artist == "Various Artists":
-        album = requests.get(
-            f'https://api.spotify.com/v1/search?q=genre%3A{genre}&type=track&market=NA&limit=1&offset={str(random.randint(0, 350))}', headers=headers).json()['tracks']['items'][0]['album']
-        cover = album['images'][0]['url']
-        artist = album['artists'][0]['name']
+    album = requests.get(
+        f"https://api.spotify.com/v1/recommendations?limit=1&market=NA&seed_genres={genre}", headers=headers).json()['tracks'][0]['album']
+    cover = album['images'][0]['url']
+    artist = album['artists'][0]['name']
 
     with open("cover.jpg", 'wb') as f:
         shutil.copyfileobj(requests.get(cover, stream=True).raw, f)
