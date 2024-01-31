@@ -1,4 +1,5 @@
 #!/usr/bin/env python3
+import re
 import discord
 import asyncio
 import ffmpeg
@@ -69,7 +70,7 @@ async def play(ctx, search, queued, SDL, skip):
             await voice.move_to(channel)
 
         if "http" in search:
-            if "youtube.com" in search:
+            if bool(re.search(r"https:\/\/www\.youtube\.com\/.*", search)):
                 ydl_opts = {
                     'skip_download': True,
                     'noplaylist': True,
@@ -81,7 +82,7 @@ async def play(ctx, search, queued, SDL, skip):
                 with YoutubeDL(ydl_opts) as ydl:
                     search = ydl.extract_info(
                         search, download=False, process=False)['title']
-            elif "spotify.com" in search:
+            elif bool(re.search(r"https:\/\/open\.spotify\.com\/.*", search)):
                 pass
             else:
                 embed = discord.Embed(color=0xdd2f45,
