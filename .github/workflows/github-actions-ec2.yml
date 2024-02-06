@@ -24,26 +24,20 @@ jobs:
           REMOTE_USER: ${{ secrets.USERNAME }}
           TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: |
-            sudo yum update -y
-            sudo yum upgrade -y
-            sudo yum install git libffi-devel python3.11-devel opus -y
+            sudo dnf upgrade -y
+            sudo dnf install python3.11 python3.11-pip python3.11-devel git libffi-devel opus -y
             wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
             tar xvf ffmpeg-release-amd64-static.tar.xz
             sudo mv ffmpeg-*-amd64-static/ff* /usr/local/bin/
             sudo rm -rf ffmpeg*
             sudo timedatectl set-timezone America/New_York
-            sudo wget https://www.python.org/ftp/python/3.11.7/Python-3.11.7.tgz
-            sudo tar xzf Python-3.11.7.tgz
-            sudo cd Python-3.11.7
-            sudo ./configure --enable-optimizations
-            sudo make install
-            cd ..
             sudo rm /usr/bin/python3
             sudo ln -s /usr/bin/python3.11 /usr/bin/python3
+            sudo sed -i 's|#!/usr/bin/python3|#!/usr/bin/python3.9|g' /usr/bin/dnf
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
-            pip3 install -r requirements.txt
-            pip3 install -r requirements.txt --upgrade
+            python3 -m pip install -r requirements.txt
+            python3 -m pip -r requirements.txt --upgrade
             aws configure set default.region us-east-1
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
             killall python3
