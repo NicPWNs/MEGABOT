@@ -26,15 +26,15 @@ jobs:
           SCRIPT_BEFORE: |
             sudo yum update -y
             sudo yum upgrade -y
-            sudo yum install git libffi-devel python3-devel opus -y
+            sudo yum install git libffi-devel python3.11-devel opus -y
             wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
             tar xvf ffmpeg-release-amd64-static.tar.xz
             sudo mv ffmpeg-*-amd64-static/ff* /usr/local/bin/
             sudo rm -rf ffmpeg*
             sudo timedatectl set-timezone America/New_York
-            sudo amazon-linux-extras install python3.8 -y
+            sudo amazon-linux-extras install python3.11 -y
             sudo rm /usr/bin/python3
-            sudo ln -s /usr/bin/python3.8 /usr/bin/python3
+            sudo ln -s /usr/bin/python3.11 /usr/bin/python3
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             pip3 install -r requirements.txt
