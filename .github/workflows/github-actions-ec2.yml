@@ -31,15 +31,12 @@ jobs:
             sudo mv ffmpeg-*-amd64-static/ff* /usr/local/bin/
             sudo rm -rf ffmpeg*
             sudo timedatectl set-timezone America/New_York
-            sudo rm /usr/bin/python3
-            sudo ln -s /usr/bin/python3.11 /usr/bin/python3
-            sudo sed -i 's|#!/usr/bin/python3|#!/usr/bin/python3.9|g' /usr/bin/dnf
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
-            python3 -m pip install -r requirements.txt
-            python3 -m pip -r requirements.txt --upgrade
+            python3.11 -m pip install -r requirements.txt
+            python3.11 -m pip -r requirements.txt --upgrade
             aws configure set default.region us-east-1
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
-            killall python3
+            killall python3.11
             rm -f blackjack.lock
-            python3 /home/ec2-user/megabot.py >/dev/null &
+            python3.11 /home/ec2-user/megabot.py >/dev/null &
