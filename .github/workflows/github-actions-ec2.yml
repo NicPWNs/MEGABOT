@@ -32,7 +32,12 @@ jobs:
             sudo mv ffmpeg-*-amd64-static/ff* /usr/local/bin/
             sudo rm -rf ffmpeg*
             sudo timedatectl set-timezone America/New_York
-            sudo amazon-linux-extras install python3.11 -y
+            sudo wget https://www.python.org/ftp/python/3.11.7/Python-3.11.7.tgz
+            sudo tar xzf Python-3.11.7.tgz
+            sudo cd Python-3.11.7
+            sudo ./configure --enable-optimizations
+            sudo make install
+            cd ..
             sudo rm /usr/bin/python3
             sudo ln -s /usr/bin/python3.11 /usr/bin/python3
           SCRIPT_AFTER: |
