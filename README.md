@@ -47,4 +47,8 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/weather`: Get the weather forecast based on ZIP code.
 - `/wheel`: Spin the MEGACOIN wheel.
 
+## Versions
+
+Currently runs on Python `v3.11.x`.
+
 > Some commands use my own Python package: [random-unicode-emoji-py](https://github.com/NicPWNs/random-unicode-emoji-py)
