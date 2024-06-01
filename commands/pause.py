@@ -2,7 +2,7 @@
 import discord
 
 
-async def stop(ctx, queued):
+async def pause(ctx):
 
     embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
 
@@ -10,9 +10,12 @@ async def stop(ctx, queued):
 
     voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
     try:
-        await voice.disconnect()
-        queued.clear()
-        embed = discord.Embed(color=0xDD2F45, title="🔇  Music Stopped")
+        if voice.is_playing():
+            voice.pause()
+            embed = discord.Embed(color=0x5DACED, title="⏸️  Music Paused")
+        elif voice.is_paused():
+            voice.resume()
+            embed = discord.Embed(color=0x5DACED, title="▶️  Music Resumed")
 
     except:
         embed = discord.Embed(
