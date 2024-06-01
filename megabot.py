@@ -108,7 +108,7 @@ if __name__ == "__main__":
         await random_photo(bot, startTime)
 
     @tasks.loop(time=datetime.time.fromisoformat("16:00:00"))
-    async def post_fantasty_football_activity(bot):
+    async def post_fantasy_football_activity(bot):
         await fantasy_football_activity(bot, startTime)
 
     # Event Listeners
@@ -124,7 +124,7 @@ if __name__ == "__main__":
         skill_check_trivia.start(bot)
         booster_reward.start(bot)
         post_random_photo.start(bot)
-        post_fantasty_football_activity.start(bot)
+        post_fantasy_football_activity.start(bot)
 
     @bot.listen("on_message")
     async def on_message(message):
