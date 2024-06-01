@@ -2,14 +2,14 @@
 import discord
 from random import randint
 
+
 async def dice(ctx):
 
-    embed = discord.Embed(color=0xfee9b6,
-                        title="⏳  Loading...")
+    embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
 
     interaction = await ctx.respond(embed=embed)
 
-    dice = randint(1,6)
+    dice = randint(1, 6)
 
     if dice == 1:
         roll = "You Rolled 1️⃣"
@@ -24,8 +24,6 @@ async def dice(ctx):
     if dice == 6:
         roll = "You Rolled 6️⃣"
 
-    embed = discord.Embed(color=0xea596e,
-                          title="🎲   Dice Roll",
-                          description=roll)
+    embed = discord.Embed(color=0xEA596E, title="🎲   Dice Roll", description=roll)
 
     await interaction.edit_original_response(embed=embed)

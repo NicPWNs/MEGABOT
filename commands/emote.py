@@ -13,10 +13,7 @@ async def emote(ctx, search, add, id):
             "query": search,
             "limit": 1,
             "page": 1,
-            "sort": {
-                "value": "popularity",
-                "order": "DESCENDING"
-            },
+            "sort": {"value": "popularity", "order": "DESCENDING"},
             "filter": {
                 "category": "TOP",
                 "exact_match": False,
@@ -24,8 +21,8 @@ async def emote(ctx, search, add, id):
                 "ignore_tags": False,
                 "zero_width": False,
                 "animated": False,
-                "aspect_ratio": ""
-            }
+                "aspect_ratio": "",
+            },
         },
         "query": """query SearchEmotes(
   $query: String!
@@ -75,10 +72,13 @@ async def emote(ctx, search, add, id):
     __typename
   }
 }
-"""}
+""",
+    }
 
-    headers = {"authorization": str(
-        os.getenv('7TV_TOKEN')), "content-type": "application/json"}
+    headers = {
+        "authorization": str(os.getenv("7TV_TOKEN")),
+        "content-type": "application/json",
+    }
 
     if id:
         r = requests.get(f"https://7tv.io/v3/emotes/{search}").json()
@@ -87,8 +87,7 @@ async def emote(ctx, search, add, id):
         uri = "/2x.png"
 
     else:
-        r = requests.post("https://7tv.io/v3/gql",
-                          headers=headers, json=query).json()
+        r = requests.post("https://7tv.io/v3/gql", headers=headers, json=query).json()
         try:
             url = "http:" + r["data"]["emotes"]["items"][0]["host"]["url"]
             uri = "/2x.png"

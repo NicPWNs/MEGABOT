@@ -8,8 +8,7 @@ async def pay(ctx, user, amount):
     balance = await megacoin.balance(ctx.user)
 
     description = "Sending..."
-    embed = discord.Embed(
-        color=0xa7d38a, title="💸  Payment", description=description)
+    embed = discord.Embed(color=0xA7D38A, title="💸  Payment", description=description)
     interaction = await ctx.respond(embed=embed)
 
     if amount < 0:
@@ -24,8 +23,8 @@ async def pay(ctx, user, amount):
         await megacoin.add(user, amount)
         channel = await user.create_dm()
         await channel.send(
-            content=f"💸  You received {str(amount)} <:MEGACOIN:1090620048621707324> from <@{ctx.user.id}>")
+            content=f"💸  You received {str(amount)} <:MEGACOIN:1090620048621707324> from <@{ctx.user.id}>"
+        )
 
-    embed = discord.Embed(
-        color=0xa7d38a, title="💸  Payment", description=description)
+    embed = discord.Embed(color=0xA7D38A, title="💸  Payment", description=description)
     await interaction.edit_original_response(embed=embed)

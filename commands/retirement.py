@@ -20,9 +20,9 @@ async def retirement(ctx, age, startingcash, yearlysavings, desiredincome, growt
 
     while age < 60:
         money = (money + yearlysavings) * growthrate
-        annualdividends = money * .04
+        annualdividends = money * 0.04
 
-        testage = int(((60-age)/2) + (startingage))
+        testage = int(((60 - age) / 2) + (startingage))
 
         if age == testage:
             halfwaymoney = money
