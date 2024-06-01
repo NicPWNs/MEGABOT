@@ -47,6 +47,7 @@ from commands.play import play
 from commands.poll import poll
 from commands.queue import queue
 from commands.random_unicode_emoji import random_unicode_emoji
+from commands.resume import resume
 from commands.retirement import retirement
 from commands.stock import stock
 from commands.stop import stop
@@ -544,6 +545,16 @@ if __name__ == "__main__":
     )
     async def call(ctx):
         await random_unicode_emoji(ctx)
+
+    @bot.slash_command(name="resume", description="Resume playing music.")
+    async def call(ctx):
+        if not (ctx.channel.name == "music" or ctx.channel.name == "bot-testing"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#956737389454311506>**",
+                ephemeral=True,
+            )
+            return
+        await resume(ctx)
 
     @bot.slash_command(
         name="retirement",

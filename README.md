@@ -28,6 +28,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/kill`: Stop the bot's process. (Admin Only)
 - `/math <expression>`: Evaluate provided math expression.
 - `/nasa [details:True]`: Retrieve the NASA photo of the day.
+- `/pause`: Pause or resume music.
 - `/pay <user> <amount>`: Pay another user some MEGACOIN.
 - `/payout <user> <amount> <message>`: Payout MEGACOIN. (Admin only)
 - `/ping`: Responds with pong.
@@ -36,6 +37,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/poll`: Create a poll with up to nine options.
 - `/queue`: Show the current music queue.
 - `/random-unicode-emoji`: Return a random Unicode emoji. No Discord emojis.
+- `/resume`: Resume playing music.
 - `/retirement`: Retirement calculator for your planning pleasure. (Developed by @NavyBoy37)
 - `/skip`: Skip the current song.
 - `/stock`: Searches a stock price.
