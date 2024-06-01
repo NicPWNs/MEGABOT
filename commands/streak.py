@@ -10,41 +10,27 @@ import modules.megacoin as megacoin
 
 async def streak(ctx, stats):
 
-    embed = discord.Embed(color=0xfee9b6,
-                          title="⏳  Loading...")
+    embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
 
     interaction = await ctx.respond(embed=embed)
 
     TABLE = "discord-streak"
-    ddb = boto3.resource('dynamodb')
+    ddb = boto3.resource("dynamodb")
     table = ddb.Table(TABLE)
 
-    dataStats = table.get_item(
-        Key={
-            'id': 'allTimeStreak'
-        }
-    )
+    dataStats = table.get_item(Key={"id": "allTimeStreak"})
 
-    dataCurrent = table.get_item(
-        Key={
-            'id': 'currentStreak'
-        }
-    )
+    dataCurrent = table.get_item(Key={"id": "currentStreak"})
 
-    data = table.get_item(
-        Key={
-            'id': str(ctx.user.id)
-        }
-    )
+    data = table.get_item(Key={"id": str(ctx.user.id)})
 
-    dataLength = int(data['ResponseMetadata']
-                     ['HTTPHeaders']['content-length'])
+    dataLength = int(data["ResponseMetadata"]["HTTPHeaders"]["content-length"])
 
     # Format: 2023-02-22 21:11:05.800895
     if dataLength > 5:
-        storedLastMid = datetime.fromisoformat(data['Item']['lastMid'])
-        storedNextMid = datetime.fromisoformat(data['Item']['nextMid'])
-        storedSkipMid = datetime.fromisoformat(data['Item']['skipMid'])
+        storedLastMid = datetime.fromisoformat(data["Item"]["lastMid"])
+        storedNextMid = datetime.fromisoformat(data["Item"]["nextMid"])
+        storedSkipMid = datetime.fromisoformat(data["Item"]["skipMid"])
 
     prefix = ""
     streak = 0
@@ -62,14 +48,14 @@ async def streak(ctx, stats):
 
         table.put_item(
             Item={
-                'id': str(ctx.user.id),
-                'username': str(ctx.user.name),
-                'streak': str(int(streak) + 1),
-                'updated': str(currTime),
-                'lastMid': str(lastMidnight),
-                'nextMid': str(nextMidnight),
-                'skipMid': str(skipMidnight),
-                'personalRecord': str(int(personalRecord) + 1)
+                "id": str(ctx.user.id),
+                "username": str(ctx.user.name),
+                "streak": str(int(streak) + 1),
+                "updated": str(currTime),
+                "lastMid": str(lastMidnight),
+                "nextMid": str(nextMidnight),
+                "skipMid": str(skipMidnight),
+                "personalRecord": str(int(personalRecord) + 1),
             }
         )
 
@@ -81,26 +67,26 @@ async def streak(ctx, stats):
 
         table.put_item(
             Item={
-                'id': str(ctx.user.id),
-                'username': str(ctx.user.name),
-                'streak': str(int(streak) + 1),
-                'updated': str(currTime),
-                'lastMid': str(lastMidnight),
-                'nextMid': str(nextMidnight),
-                'skipMid': str(skipMidnight),
-                'personalRecord': str(data['Item']['personalRecord'])
+                "id": str(ctx.user.id),
+                "username": str(ctx.user.name),
+                "streak": str(int(streak) + 1),
+                "updated": str(currTime),
+                "lastMid": str(lastMidnight),
+                "nextMid": str(nextMidnight),
+                "skipMid": str(skipMidnight),
+                "personalRecord": str(data["Item"]["personalRecord"]),
             }
         )
 
         streak = streak + 1
 
-        if str(ctx.user.id) == str(dataCurrent['Item']['userId']):
+        if str(ctx.user.id) == str(dataCurrent["Item"]["userId"]):
             table.put_item(
                 Item={
-                    'id': 'currentStreak',
-                    'stat': '0',
-                    'username': str(ctx.bot.user.name),
-                    'userId': str(ctx.bot.user.id)
+                    "id": "currentStreak",
+                    "stat": "0",
+                    "username": str(ctx.bot.user.name),
+                    "userId": str(ctx.bot.user.id),
                 }
             )
 
@@ -109,60 +95,60 @@ async def streak(ctx, stats):
     elif currTime > storedLastMid and currTime < storedNextMid:
         prefix = ""
 
-        streak = int(data['Item']['streak'])
+        streak = int(data["Item"]["streak"])
 
         table.put_item(
             Item={
-                'id': str(ctx.user.id),
-                'username': str(ctx.user.name),
-                'streak': str(streak),
-                'updated': str(currTime),
-                'lastMid': str(data['Item']['lastMid']),
-                'nextMid': str(data['Item']['nextMid']),
-                'skipMid': str(data['Item']['skipMid']),
-                'personalRecord': str(data['Item']['personalRecord'])
+                "id": str(ctx.user.id),
+                "username": str(ctx.user.name),
+                "streak": str(streak),
+                "updated": str(currTime),
+                "lastMid": str(data["Item"]["lastMid"]),
+                "nextMid": str(data["Item"]["nextMid"]),
+                "skipMid": str(data["Item"]["skipMid"]),
+                "personalRecord": str(data["Item"]["personalRecord"]),
             }
         )
 
     elif currTime > storedLastMid and currTime > storedNextMid:
         prefix = "You hit your streak! "
         hit = True
-        streak = int(data['Item']['streak']) + 1
-        personalRecord = int(data['Item']['personalRecord'])
+        streak = int(data["Item"]["streak"]) + 1
+        personalRecord = int(data["Item"]["personalRecord"])
 
         if streak > personalRecord:
             personalRecord = streak
 
         table.put_item(
             Item={
-                'id': str(ctx.user.id),
-                'username': str(ctx.user.name),
-                'streak': str(streak),
-                'updated': str(currTime),
-                'lastMid': str(lastMidnight),
-                'nextMid': str(nextMidnight),
-                'skipMid': str(skipMidnight),
-                'personalRecord': str(personalRecord)
+                "id": str(ctx.user.id),
+                "username": str(ctx.user.name),
+                "streak": str(streak),
+                "updated": str(currTime),
+                "lastMid": str(lastMidnight),
+                "nextMid": str(nextMidnight),
+                "skipMid": str(skipMidnight),
+                "personalRecord": str(personalRecord),
             }
         )
 
-        if streak > int(dataStats['Item']['stat']):
+        if streak > int(dataStats["Item"]["stat"]):
             table.put_item(
                 Item={
-                    'id': 'allTimeStreak',
-                    'stat': str(streak),
-                    'username': str(ctx.user.name),
-                    'userId': str(ctx.user.id)
+                    "id": "allTimeStreak",
+                    "stat": str(streak),
+                    "username": str(ctx.user.name),
+                    "userId": str(ctx.user.id),
                 }
             )
 
-        if streak > int(dataCurrent['Item']['stat']):
+        if streak > int(dataCurrent["Item"]["stat"]):
             table.put_item(
                 Item={
-                    'id': 'currentStreak',
-                    'stat': str(streak),
-                    'username': str(ctx.user.name),
-                    'userId': str(ctx.user.id)
+                    "id": "currentStreak",
+                    "stat": str(streak),
+                    "username": str(ctx.user.name),
+                    "userId": str(ctx.user.id),
                 }
             )
 
@@ -200,28 +186,30 @@ async def streak(ctx, stats):
     statMessage = ""
 
     if stats:
-        statMessage = "\n\n📊\n**All-Time Highest Streak:** " + \
-            str(dataStats['Item']['stat']) + \
-            " *by* <@" + \
-            str(dataStats['Item']['userId']) + \
-            ">" + \
-            "\n**Current Highest Streak:** " + \
-            str(dataCurrent['Item']['stat']) + \
-            " *by* <@" + \
-            str(dataCurrent['Item']['userId']) + \
-            ">" + \
-            "\n**Personal Highest Streak:** " + \
-            str(data['Item']['personalRecord']) + \
-            " *by* <@" + \
-            str(ctx.user.id) + ">"
+        statMessage = (
+            "\n\n📊\n**All-Time Highest Streak:** "
+            + str(dataStats["Item"]["stat"])
+            + " *by* <@"
+            + str(dataStats["Item"]["userId"])
+            + ">"
+            + "\n**Current Highest Streak:** "
+            + str(dataCurrent["Item"]["stat"])
+            + " *by* <@"
+            + str(dataCurrent["Item"]["userId"])
+            + ">"
+            + "\n**Personal Highest Streak:** "
+            + str(data["Item"]["personalRecord"])
+            + " *by* <@"
+            + str(ctx.user.id)
+            + ">"
+        )
 
-    content = prefix + "Your streak is: " + \
-        str(streak) + "  " + emote
+    content = prefix + "Your streak is: " + str(streak) + "  " + emote
 
-    color = 0x5965f3
+    color = 0x5965F3
 
     if "missed" in prefix:
-        color = 0xdd2f45
+        color = 0xDD2F45
 
     embed = discord.Embed(color=color, title=content, description=statMessage)
     bonusText = ""
@@ -234,8 +222,11 @@ async def streak(ctx, stats):
         if (streak % 100) == 0:
             bonus = streak
             bonusText = f"  + {bonus} bonus <:MEGACOIN:1090620048621707324>"
-        embed = discord.Embed(color=color, title=content,
-                              description=f"+ {coins} <:MEGACOIN:1090620048621707324>{bonusText}\n{statMessage}")
+        embed = discord.Embed(
+            color=color,
+            title=content,
+            description=f"+ {coins} <:MEGACOIN:1090620048621707324>{bonusText}\n{statMessage}",
+        )
 
         coins += bonus
         await megacoin.add(ctx.user, coins)

@@ -5,18 +5,15 @@ from random import random
 
 async def coin(ctx):
 
-    embed = discord.Embed(color=0xfee9b6,
-                          title="⏳  Loading...")
+    embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
 
     interaction = await ctx.respond(embed=embed)
 
     coin = "🗣️   Heads!"
 
-    if random() < .5:
+    if random() < 0.5:
         coin = "☄️   Tails!"
 
-    embed = discord.Embed(color=0xf6be3c,
-                          title="🪙   Coin Flip",
-                          description=coin)
+    embed = discord.Embed(color=0xF6BE3C, title="🪙   Coin Flip", description=coin)
 
     await interaction.edit_original_response(embed=embed)

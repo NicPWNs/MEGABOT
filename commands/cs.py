@@ -8,11 +8,13 @@ async def cs(ctx, username):
     await ctx.respond(content="*⏳ Loading...*")
 
     headers = {
-        "TRN-Api-Key": os.getenv('TRN_KEY'),
+        "TRN-Api-Key": os.getenv("TRN_KEY"),
     }
 
     r = requests.get(
-        'https://public-api.tracker.gg/v2/csgo/standard/profile/steam/' + username, headers=headers).json()
+        "https://public-api.tracker.gg/v2/csgo/standard/profile/steam/" + username,
+        headers=headers,
+    ).json()
 
     handle = r["data"]["platformInfo"]["platformUserHandle"]
 
@@ -46,10 +48,12 @@ async def cs(ctx, username):
     stat = f"__**{handle} CS2 Stats:**__\n"
 
     for i in range(0, len(types)):
-        stat += "**" + \
-            str(r["data"]["segments"][0]["stats"]
-                [types[i]]["displayName"]) + ":**  " + \
-            str(r["data"]["segments"][0]["stats"]
-                [types[i]]["displayValue"]) + "\n"
+        stat += (
+            "**"
+            + str(r["data"]["segments"][0]["stats"][types[i]]["displayName"])
+            + ":**  "
+            + str(r["data"]["segments"][0]["stats"][types[i]]["displayValue"])
+            + "\n"
+        )
 
     await ctx.edit(content=f"{stat}")

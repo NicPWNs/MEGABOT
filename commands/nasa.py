@@ -5,7 +5,8 @@ import requests
 
 async def nasa(ctx, details):
     r = requests.get(
-        'https://api.nasa.gov/planetary/apod?api_key=' + str(os.getenv('NASA_KEY'))).json()
+        "https://api.nasa.gov/planetary/apod?api_key=" + str(os.getenv("NASA_KEY"))
+    ).json()
 
     desc = ""
 

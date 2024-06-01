@@ -11,17 +11,24 @@ async def wheel(ctx, wager):
 
     if wager < 0:
         embed = discord.Embed(
-            color=0x9366cd, title="☸️  Spin the Wheel", description="🤡  Nice try.")
+            color=0x9366CD, title="☸️  Spin the Wheel", description="🤡  Nice try."
+        )
         await ctx.respond(embed=embed)
         return
     elif balance == 0:
         embed = discord.Embed(
-            color=0x9366cd, title="☸️  Spin the Wheel", description="You have 0 <:MEGACOIN:1090620048621707324>")
+            color=0x9366CD,
+            title="☸️  Spin the Wheel",
+            description="You have 0 <:MEGACOIN:1090620048621707324>",
+        )
         await ctx.respond(embed=embed)
         return
     elif balance < wager:
         embed = discord.Embed(
-            color=0x9366cd, title="☸️  Spin the Wheel", description=f"You don't have {str(wager)} <:MEGACOIN:1090620048621707324>")
+            color=0x9366CD,
+            title="☸️  Spin the Wheel",
+            description=f"You don't have {str(wager)} <:MEGACOIN:1090620048621707324>",
+        )
         await ctx.respond(embed=embed)
         return
 
@@ -30,8 +37,9 @@ async def wheel(ctx, wager):
     win = int(wager * spin)
 
     url = f"https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/{str(spin)}-{str(diff)}.gif"
-    embed = discord.Embed(color=0x9366cd, title="☸️  Spin the Wheel",
-                          description="Spinning...").set_thumbnail(url=url)
+    embed = discord.Embed(
+        color=0x9366CD, title="☸️  Spin the Wheel", description="Spinning..."
+    ).set_thumbnail(url=url)
     interaction = await ctx.respond(embed=embed)
 
     time.sleep(5)
@@ -40,7 +48,12 @@ async def wheel(ctx, wager):
 
     description = f"<@{ctx.user.id}> wagered {str(wager)} <:MEGACOIN:1090620048621707324> and **won {str(win)}** <:MEGACOIN:1090620048621707324>!"
     url = f"https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/{str(spin)}-{str(diff)}.jpg"
-    embed = discord.Embed(
-        color=0x9366cd, title="☸️  Spin the Wheel", description=description).set_thumbnail(url=url).set_footer(text=f"Their balance is now {await megacoin.balance(ctx.user)}")
+    embed = (
+        discord.Embed(
+            color=0x9366CD, title="☸️  Spin the Wheel", description=description
+        )
+        .set_thumbnail(url=url)
+        .set_footer(text=f"Their balance is now {await megacoin.balance(ctx.user)}")
+    )
 
     await interaction.edit_original_response(embed=embed)

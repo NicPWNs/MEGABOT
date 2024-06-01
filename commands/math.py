@@ -9,7 +9,6 @@ async def math(ctx, expression):
     except:
         response = "Invalid Expression!"
 
-    embed = discord.Embed(color=0x5b8f3c, title="🧮  Math",
-                          description=response)
+    embed = discord.Embed(color=0x5B8F3C, title="🧮  Math", description=response)
 
     await ctx.respond(embed=embed)

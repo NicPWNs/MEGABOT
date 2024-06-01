@@ -11,15 +11,14 @@ async def clear(ctx):
 
     if role in ctx.user.roles:
 
-        embed = discord.Embed(
-            color=0xdd2f45, title="🧹  Cleared MEGATEST Commands!")
+        embed = discord.Embed(color=0xDD2F45, title="🧹  Cleared MEGATEST Commands!")
         await ctx.respond(embed=embed)
 
         bot = discord.Bot(intents=discord.Intents.all())
-        await bot.start(os.getenv('DISCORD_TEST_TOKEN'))
+        await bot.start(os.getenv("DISCORD_TEST_TOKEN"))
         await bot.sync_commands(commands=[])
         await bot.close()
 
     else:
-        embed = discord.Embed(color=0xdd2f45, title="❌ Permission Denied")
+        embed = discord.Embed(color=0xDD2F45, title="❌ Permission Denied")
         await ctx.respond(embed=embed)

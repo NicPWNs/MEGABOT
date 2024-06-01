@@ -3,7 +3,7 @@ import requests
 
 
 async def kanye(ctx):
-    r = requests.get('https://api.kanye.rest/').json()
+    r = requests.get("https://api.kanye.rest/").json()
 
     quote = r["quote"]
     content = f"<a:kanyePls:1081048056058871808>  💬  ❝ {quote} ❞"
