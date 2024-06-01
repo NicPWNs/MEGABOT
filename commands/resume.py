@@ -2,7 +2,7 @@
 import discord
 
 
-async def pause(ctx):
+async def resume(ctx):
 
     embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
 
@@ -10,12 +10,11 @@ async def pause(ctx):
 
     voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
     try:
-        if voice.is_playing():
-            voice.pause()
-            embed = discord.Embed(color=0x5DACED, title="⏸️  Music Paused")
-        elif voice.is_paused():
+        if voice.is_paused():
             voice.resume()
             embed = discord.Embed(color=0x5DACED, title="▶️  Music Resumed")
+        elif voice.is_playing():
+            embed = discord.Embed(color=0x5DACED, title="▶️  Music Already Playing!")
         else:
             embed = discord.Embed(color=0x5DACED, title="⏯️  No Music Playing!")
 
