@@ -21,8 +21,8 @@ async def start(ctx):
 
         embed = discord.Embed(
             color=0x69A24A,
-            title=f"🟢  Starting...",
-            description=f"<@{ctx.bot.user.id}> should be online shortly!",
+            title=f"🟢  Restarting...",
+            description=f"<@{ctx.bot.user.id}> should be back online shortly!",
         )
 
         await interaction.edit_original_response(embed=embed)
