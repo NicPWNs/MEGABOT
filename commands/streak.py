@@ -1,6 +1,7 @@
 #!/usr/bin/env python3
 import boto3
 import discord
+from openai import OpenAI
 from datetime import datetime, timedelta
 from random_unicode_emoji import random_emoji
 from modules.random_discord_emoji import random_discord_emoji
@@ -184,6 +185,22 @@ async def streak(ctx, stats):
         emote = str(await random_discord_emoji(guild, ctx.bot, "MEGACORD"))
 
     statMessage = ""
+
+    # For Josh
+    if str(ctx.user.id) == "139595075012395008":
+        openai = OpenAI()
+        response = openai.chat.completions.create(
+            model="gpt-3.5-turbo",
+            messages=[
+                {
+                    "role": "system",
+                    "content": "The person talking to you is trying to quit a Nicotine addiction in the form of Zyn pouches. Give a short and positive message to encourage them to continue the quitting streak. Make it funny or witty if you like. Use emojis if you like.",
+                },
+            ],
+            user=str(ctx.user.id),
+            stream=False,
+        )
+        statMessage = response.choices[0].message.content
 
     if stats:
         statMessage = (
