@@ -16,7 +16,7 @@ async def restart(ctx):
 
         G = Github(os.getenv("GITHUB_TOKEN"))
         repo = G.get_repo("NicPWNs/MEGABOT")
-        workflow = repo.get_workflow("Push-to-EC2")
+        workflow = repo.get_workflow("github-actions-ec2.yml")
         workflow.create_dispatch(ref=repo.get_branch("main"))
 
         embed = discord.Embed(
