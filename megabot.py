@@ -49,6 +49,7 @@ from commands.queue import queue
 from commands.random_unicode_emoji import random_unicode_emoji
 from commands.resume import resume
 from commands.retirement import retirement
+from commands.start import start
 from commands.stock import stock
 from commands.stop import stop
 from commands.streak import streak
@@ -602,6 +603,10 @@ if __name__ == "__main__":
             return
         search = ""
         await play(ctx, search, queued, SDL, skip=True)
+
+    @bot.slash_command(name="start", description="Start MEGABOT. (Admin Only)")
+    async def call(ctx):
+        await start(ctx)
 
     @bot.slash_command(name="stock", description="Searches a stock price.")
     async def call(
