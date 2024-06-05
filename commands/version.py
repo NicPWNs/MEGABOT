@@ -8,5 +8,7 @@ async def version(ctx):
     G = Github(os.getenv("GITHUB_TOKEN"))
     repo = G.get_repo("NicPWNs/MEGABOT")
     release = repo.get_releases()[0].title
-
-    await ctx.respond(content=f"📦  The latest release is **{release}**")
+    # TODO: Add Link to Release
+    await ctx.respond(
+        content=f"📦  The latest <@{ctx.bot.user.id}> release is **{release}**"
+    )
