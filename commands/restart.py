@@ -4,7 +4,7 @@ import discord
 from github import Github
 
 
-async def start(ctx):
+async def restart(ctx):
 
     guild = discord.utils.get(ctx.bot.guilds, name="MEGACORD")
     role = discord.utils.get(guild.roles, name="MEGAKILLERS")
