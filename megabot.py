@@ -1,10 +1,10 @@
 #!/usr/bin/env python3
-import logging
 import os
 import time
 import spotdl
 import random
 import discord
+import logging
 import asyncio
 import nest_asyncio
 import datetime

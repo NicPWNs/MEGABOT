@@ -11,7 +11,7 @@ async def chat(ctx, prompt):
     moderation = openai.moderations.create(input=prompt)
 
     if moderation.results[0].flagged:
-        await ctx.edit(content=f"❌ **ERROR: Your prompt is innapropriate.**")
+        await ctx.edit(content=f"❌ **ERROR: Your prompt is inappropriate.**")
         return
 
     stream = []
