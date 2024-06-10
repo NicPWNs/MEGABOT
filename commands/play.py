@@ -1,7 +1,7 @@
 #!/usr/bin/env python3
 import os
 import re
-import base64
+
 import discord
 import asyncio
 import ffmpeg
@@ -123,7 +123,7 @@ async def play(ctx, search, queued, SDL, skip):
                 embed = discord.Embed(
                     color=0xDD2F45,
                     title="❌  Error",
-                    description=f"Only **YouTube** and **Spotify** URLs are Currently Supported!",
+                    description=f"Only **YouTube**, **Spotify**, and **TIDAL** URLs are currently supported!",
                 ).set_thumbnail(url=ctx.user.display_avatar)
                 await interaction.edit_original_response(embed=embed)
                 return
