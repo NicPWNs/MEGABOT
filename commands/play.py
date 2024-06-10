@@ -1,9 +1,12 @@
 #!/usr/bin/env python3
+import os
 import re
+import base64
 import discord
 import asyncio
 import ffmpeg
 import spotdl
+import requests
 from yt_dlp import YoutubeDL
 
 
@@ -89,11 +92,38 @@ async def play(ctx, search, queued, SDL, skip):
                     ]
             elif bool(re.search(r"https:\/\/open\.spotify\.com\/.*", search)):
                 pass
+            elif bool(re.search(r"https:\/\/tidal\.com\/.*", search)):
+                re_match = re.search(r"https:\/\/tidal\.com\/.*\/(\d*)", search)
+                if re_match:
+                    tidal_id = re_match.group(1)
+
+                data = {"grant_type": "client_credentials"}
+                r = requests.post(
+                    "https://auth.tidal.com/v1/oauth2/token",
+                    auth=requests.auth.HTTPBasicAuth(
+                        os.getenv("TIDAL_CLIENT"), os.getenv("TIDAL_SECRET")
+                    ),
+                    data=data,
+                ).json()
+                bearer = "Bearer " + r["access_token"]
+
+                headers = {
+                    "Authorization": bearer,
+                    "Content-Type": "application/vnd.tidal.v1+json",
+                }
+
+                r = requests.get(
+                    f"https://openapi.tidal.com/tracks/{tidal_id}?countryCode=US",
+                    headers=headers,
+                ).json()
+
+                search = r["resource"]["title"] + r["resource"]["artists"][0]["name"]
+                print(search)
             else:
                 embed = discord.Embed(
                     color=0xDD2F45,
                     title="❌  Error",
-                    description=f"Only **YouTube** and **Spotify** URLs are Currenty Supported!",
+                    description=f"Only **YouTube** and **Spotify** URLs are Currently Supported!",
                 ).set_thumbnail(url=ctx.user.display_avatar)
                 await interaction.edit_original_response(embed=embed)
                 return
