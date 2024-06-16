@@ -3,7 +3,7 @@ import os
 import requests
 
 
-async def emote(ctx, search, add, id):
+async def emote(ctx, search, add):
 
     await ctx.respond(content="⏳ Loading...")
 
@@ -80,23 +80,16 @@ async def emote(ctx, search, add, id):
         "content-type": "application/json",
     }
 
-    if id:
-        r = requests.get(f"https://7tv.io/v3/emotes/{search}").json()
-        name = r["name"]
-        url = f"https://cdn.7tv.app/emote/{search}"
+    r = requests.post("https://7tv.io/v3/gql", headers=headers, json=query).json()
+    try:
+        url = "http:" + r["data"]["emotes"]["items"][0]["host"]["url"]
         uri = "/2x.png"
+        name = r["data"]["emotes"]["items"][0]["name"]
 
-    else:
-        r = requests.post("https://7tv.io/v3/gql", headers=headers, json=query).json()
-        try:
-            url = "http:" + r["data"]["emotes"]["items"][0]["host"]["url"]
-            uri = "/2x.png"
-            name = r["data"]["emotes"]["items"][0]["name"]
-
-        except:
-            content = "❌   **Emote Not Found! Try Again**"
-            await ctx.edit(content=content)
-            return
+    except:
+        content = "❌   **Emote Not Found! Try Again**"
+        await ctx.edit(content=content)
+        return
 
     imageReq = requests.get(url + uri)
     image = imageReq.content

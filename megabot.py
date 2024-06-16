@@ -326,13 +326,8 @@ if __name__ == "__main__":
             description="Add emote to server?",
             required=False,
         ),
-        id: discord.Option(
-            discord.SlashCommandOptionType.boolean,
-            description="Search by 7TV emote ID.",
-            required=False,
-        ),
     ):
-        await emote(ctx, search, add, id)
+        await emote(ctx, search, add)
 
     @bot.slash_command(name="feature", description="Submit a MEGABOT feature request.")
     async def call(
