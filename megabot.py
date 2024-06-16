@@ -84,6 +84,7 @@ if __name__ == "__main__":
 
     # Queue for /play
     queued = []
+    played = []
     nest_asyncio.apply()
     SDL = spotdl.Spotdl(
         client_id=str(os.getenv("SPOTIFY_CLIENT")),
@@ -475,7 +476,7 @@ if __name__ == "__main__":
                 ephemeral=True,
             )
             return
-        await play(ctx, search, queued, SDL, skip=False)
+        await play(ctx, search, queued, played, SDL, skip=False, replay=False)
 
     @bot.slash_command(
         name="poll", description="Create a poll with up to nine options."
@@ -604,6 +605,17 @@ if __name__ == "__main__":
             ctx, age, startingcash, yearlysavings, desiredincome, growthrate
         )
 
+    @bot.slash_command(name="replay", description="Replay the current song.")
+    async def call(ctx):
+        if not (ctx.channel.name == "music" or ctx.channel.name == "bot-testing"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#956737389454311506>**",
+                ephemeral=True,
+            )
+            return
+        search = ""
+        await play(ctx, search, queued, played, SDL, skip=False, replay=True)
+
     @bot.slash_command(name="resume", description="Resume playing music.")
     async def call(ctx):
         if not (ctx.channel.name == "music" or ctx.channel.name == "bot-testing"):
@@ -623,7 +635,7 @@ if __name__ == "__main__":
             )
             return
         search = ""
-        await play(ctx, search, queued, SDL, skip=True)
+        await play(ctx, search, queued, played, SDL, skip=True, replay=False)
 
     @bot.slash_command(name="stock", description="Searches a stock price.")
     async def call(

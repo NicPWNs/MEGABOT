@@ -27,7 +27,7 @@ async def queue(ctx, queued):
 
         else:
             for song in queued:
-                description += f"{num}. {os.path.splitext(song)[0]}\n"
+                description += f"{num}. {os.path.split(os.path.splitext(song)[0])[1]}\n"
                 num += 1
 
         embed = discord.Embed(
