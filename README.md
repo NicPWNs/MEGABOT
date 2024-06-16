@@ -39,6 +39,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/queue`: Show the current music queue.
 - `/random-unicode-emoji`: Return a random Unicode emoji. No Discord emojis.
 - `/resume`: Resume playing music.
+- `/replay`: Replay the current song.
 - `/retirement`: Retirement calculator for your planning pleasure. (Developed by @NavyBoy37)
 - `/skip`: Skip the current song.
 - `/stock`: Searches a stock price.

@@ -8,15 +8,14 @@ async def random_discord_emoji(guild, bot, discordName):
     emojis = await guild.fetch_emojis()
 
     # Remove playing card emojis
-    faces = ['2', '3', '4', '5', '6', '7', '8', '9', '10', 'j', 'q', 'k', 'a']
-    suits = ['c', 'd', 'h', 's']
+    faces = ["2", "3", "4", "5", "6", "7", "8", "9", "10", "j", "q", "k", "a"]
+    suits = ["c", "d", "h", "s"]
     cards = []
     for shape in faces:
         for color in suits:
-            cards.append(shape+color)
+            cards.append(shape + color)
 
     emojis = [x for x in emojis if x.name not in cards]
-    print(emojis)
 
     # Increase ratio of Discord emojis
     for _ in range(0, 6):

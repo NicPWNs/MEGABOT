@@ -10,7 +10,7 @@ import requests
 from yt_dlp import YoutubeDL
 
 
-async def queuer(ctx, queued, interaction, embed):
+async def queuer(ctx, queued, played, interaction, embed):
 
     await interaction.edit_original_response(embed=embed)
     voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
@@ -25,11 +25,12 @@ async def queuer(ctx, queued, interaction, embed):
         voice.play(discord.FFmpegPCMAudio(source=queued[0]))
         voice.source = discord.PCMVolumeTransformer(original=voice.source, volume=0.25)
         length = float(ffmpeg.probe(queued[0])["format"]["duration"])
+        played.insert(0, queued[0])
         queued.pop(0)
         await asyncio.sleep(length)
 
 
-async def play(ctx, search, queued, SDL, skip):
+async def play(ctx, search, queued, played, SDL, skip, replay):
 
     if skip:
         embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
@@ -47,7 +48,26 @@ async def play(ctx, search, queued, SDL, skip):
 
         else:
             embed = discord.Embed(color=0x5DACED, title="⏭️  Skipping Song!")
-            await queuer(ctx, queued, interaction, embed)
+            await queuer(ctx, queued, played, interaction, embed)
+
+    elif replay:
+        embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
+        interaction = await ctx.respond(embed=embed)
+
+        voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
+
+        if not voice:
+            embed = discord.Embed(
+                color=0xDD2F45, title="❌  MEGABOT Is Not In Voice"
+            ).set_thumbnail(
+                url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif"
+            )
+            await interaction.edit_original_response(embed=embed)
+
+        else:
+            embed = discord.Embed(color=0x5DACED, title="🔁  Replaying Current Song!")
+            await interaction.edit_original_response(embed=embed)
+            queued.insert(0, played[0])
 
     else:
         embed = discord.Embed(
@@ -118,7 +138,7 @@ async def play(ctx, search, queued, SDL, skip):
                 ).json()
 
                 search = r["resource"]["title"] + r["resource"]["artists"][0]["name"]
-                print(search)
+
             else:
                 embed = discord.Embed(
                     color=0xDD2F45,
@@ -154,7 +174,7 @@ async def play(ctx, search, queued, SDL, skip):
         )
 
         if not voice.is_playing():
-            await queuer(ctx, queued, interaction, embed)
+            await queuer(ctx, queued, played, interaction, embed)
         else:
             embed = (
                 discord.Embed(
