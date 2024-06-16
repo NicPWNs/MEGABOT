@@ -461,7 +461,7 @@ if __name__ == "__main__":
         ctx,
         search: discord.Option(
             discord.SlashCommandOptionType.string,
-            description="Song to search for on YouTube.",
+            description="YouTube song search or YouTube, TIDAL, Spotify URL.",
             required=True,
         ),
     ):

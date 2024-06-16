@@ -65,9 +65,20 @@ async def play(ctx, search, queued, played, SDL, skip, replay):
             await interaction.edit_original_response(embed=embed)
 
         else:
-            embed = discord.Embed(color=0x5DACED, title="🔁  Replaying Current Song!")
-            await interaction.edit_original_response(embed=embed)
             queued.insert(0, played[0])
+            if not voice.is_playing():
+                embed = discord.Embed(color=0x5DACED, title="🔁  Replaying Last Song!")
+                await interaction.edit_original_response(embed=embed)
+                voice.play(discord.FFmpegPCMAudio(source=queued[0]))
+                voice.source = discord.PCMVolumeTransformer(
+                    original=voice.source, volume=0.25
+                )
+                queued.pop(0)
+            else:
+                embed = discord.Embed(
+                    color=0x5DACED, title="🔁  Replaying Current Song!"
+                )
+                await interaction.edit_original_response(embed=embed)
 
     else:
         embed = discord.Embed(
@@ -137,7 +148,10 @@ async def play(ctx, search, queued, played, SDL, skip, replay):
                     headers=headers,
                 ).json()
 
-                search = r["resource"]["title"] + r["resource"]["artists"][0]["name"]
+                artists = r["resource"]["artists"]
+                artist_names = [name["name"] for name in artists]
+                search = r["resource"]["title"] + " " + " ".join(artist_names)
+                print(search)
 
             else:
                 embed = discord.Embed(
