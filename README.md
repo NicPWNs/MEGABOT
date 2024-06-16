@@ -22,6 +22,7 @@ Another Discord bot for learning and fun. Using ~~discord.py~~ `pycord` to pract
 - `/dice`: Roll a dice.
 - `/double`: Play MEGACOIN double or nothing.
 - `/emote <search> [add:True] [id:True]`: Search for a 7TV emote. Optionally add it to the Discord guild.
+- `/feature`: Submit a MEGABOT feature request.
 - `/ffl`: Get the last 24 hours of Fantasy Football League activity.
 - `/image`: Generate an image with AI.
 - `/kanye`: Retrieve a random Kanye West quote.

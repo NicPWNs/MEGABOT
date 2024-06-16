@@ -32,6 +32,7 @@ from commands.cs import cs
 from commands.dice import dice
 from commands.double import double
 from commands.emote import emote
+from commands.feature import feature
 from commands.ffl import ffl
 from commands.image import image
 from commands.kanye import kanye
@@ -331,6 +332,22 @@ if __name__ == "__main__":
         ),
     ):
         await emote(ctx, search, add, id)
+
+    @bot.slash_command(name="feature", description="Submit a MEGABOT feature request.")
+    async def call(
+        ctx,
+        title: discord.Option(
+            discord.SlashCommandOptionType.string,
+            required=True,
+            description="Give the feature request a title.",
+        ),
+        description: discord.Option(
+            discord.SlashCommandOptionType.string,
+            required=True,
+            description="Describe the feature you desire.",
+        ),
+    ):
+        await feature(ctx, title, description)
 
     @bot.slash_command(
         name="ffl",
