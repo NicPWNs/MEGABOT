@@ -151,7 +151,6 @@ async def play(ctx, search, queued, played, SDL, skip, replay):
                 artists = r["resource"]["artists"]
                 artist_names = [name["name"] for name in artists]
                 search = r["resource"]["title"] + " " + " ".join(artist_names)
-                print(search)
 
             else:
                 embed = discord.Embed(
