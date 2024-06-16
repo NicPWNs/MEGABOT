@@ -3,9 +3,7 @@ import boto3
 import discord
 from openai import OpenAI
 from datetime import datetime, timedelta
-from random_unicode_emoji import random_emoji
 from modules.random_discord_emoji import random_discord_emoji
-
 import modules.megacoin as megacoin
 
 
