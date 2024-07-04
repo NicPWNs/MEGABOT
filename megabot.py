@@ -49,8 +49,8 @@ from commands.poll import poll
 from commands.queue import queue
 from commands.random_unicode_emoji import random_unicode_emoji
 from commands.restart import restart
-from commands.retirement import retirement
 from commands.resume import resume
+from commands.retirement import retirement
 from commands.stock import stock
 from commands.stop import stop
 from commands.streak import streak
