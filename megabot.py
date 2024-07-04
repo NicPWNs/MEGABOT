@@ -49,15 +49,14 @@ from commands.poll import poll
 from commands.queue import queue
 from commands.random_unicode_emoji import random_unicode_emoji
 from commands.restart import restart
-from commands.retirement import retirement
 from commands.resume import resume
+from commands.retirement import retirement
 from commands.stock import stock
 from commands.stop import stop
 from commands.streak import streak
 from commands.test import test
 from commands.upload import upload
 from commands.version import version
-from commands.vote import vote
 from commands.weather import weather
 from commands.wheel import wheel
 
@@ -692,16 +691,6 @@ if __name__ == "__main__":
     )
     async def call(ctx):
         await version(ctx)
-
-    @bot.slash_command(name="vote", description="Vote daily for MEGACOINS!")
-    async def call(ctx):
-        if not (ctx.channel.name == "casino" or ctx.channel.name == "bot-testing"):
-            await ctx.send_response(
-                content="❗**ERROR: You can only use this command in <#1091083497868886108>**",
-                ephemeral=True,
-            )
-            return
-        await vote(ctx)
 
     @bot.slash_command(name="weather", description="Seven day weather forecast.")
     async def call(
