@@ -50,7 +50,7 @@ Another fully customized Discord bot for learning and fun. Using `pycord` to pra
 - `/test`: Run a series of tests on MEGABOT.
 - `/upload <photo>`: Upload a photo to the MEGABOT database.
 - `/version`: Return the latest MEGABOT version number.
-- `/weather`: Get the weather forecast based on ZIP code.
+- `/weather`: Get the weather forecast based on ZIP code. (Developed by [@RandyOwensGit](https://github.com/RandyOwensGit))
 - `/wheel`: Spin the MEGACOIN wheel.
 
 ## Versions
