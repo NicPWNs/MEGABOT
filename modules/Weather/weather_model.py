@@ -85,23 +85,34 @@ async def get_weekly_temps(lat, long):
     return dailyTemps
 
 
-# Get 7 day forecast for preciptation - not implemented
+# Get 7 day forecast for precipitation - not implemented
 async def get_precip(lat, long):
     precipChance = []
 
     return precipChance
 
 
-# Get geocode from zipcode
+# Get geocode from ZIP code
 async def get_geocode(zipCode):
-    request = requests.get(
+
+    # https://nominatim.openstreetmap.org/search?q=20024+United+States&format=json
+    url = (
         "https://nominatim.openstreetmap.org/search?q="
         + str(zipCode)
         + "+United+States&format=json"
+    )
+
+    headers = {
+        "user-agent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/18.0 Safari/605.1.15"
+    }
+
+    response = requests.get(
+        url=url,
+        headers=headers,
     ).json()
 
-    latitude = round(float(request[0]["lat"]), 2)
-    longitude = round(float(request[0]["lon"]), 2)
-    location = request[0]["display_name"]
+    latitude = round(float(response[0]["lat"]), 2)
+    longitude = round(float(response[0]["lon"]), 2)
+    location = response[0]["display_name"]
 
     return [location, latitude, longitude]
