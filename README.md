@@ -42,7 +42,7 @@ Another fully customized Discord bot for learning and fun. Using `pycord` to pra
 - `/replay`: Replay the current or previous song.
 - `/restart`: Restart MEGABOT. Only works if it is online, of course. (Admin Only)
 - `/resume`: Resume music.
-- `/retirement`: Retirement calculator for your planning pleasure. (Developed by @NavyBoy37)
+- `/retirement`: Retirement calculator for your planning pleasure. (Developed by [@NavyBoy37](https://github.com/NavyBoy37))
 - `/skip`: Skip the current song.
 - `/stock`: Searches a stock price.
 - `/stop`: Stops music.
