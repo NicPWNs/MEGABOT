@@ -5,6 +5,9 @@ import requests
 
 async def cs(ctx, username):
 
+    await ctx.respond(content="This command is currently non-operational.")
+    return
+
     await ctx.respond(content="*⏳ Loading...*")
 
     headers = {
@@ -15,6 +18,8 @@ async def cs(ctx, username):
         "https://public-api.tracker.gg/v2/csgo/standard/profile/steam/" + username,
         headers=headers,
     ).json()
+
+    print(r)
 
     handle = r["data"]["platformInfo"]["platformUserHandle"]
 
