@@ -1,13 +1,12 @@
 import requests
 
+
 # Model for weather command
-
-
 # Get todays weather for location
 async def get_todays_temps(lat, long):
-    # only get temp right now and the time it will occur
+    # Only get temp right now and the time it will occur
 
-    # request api call for single day with lat & long
+    # Request API call for single day with lat & long
     request = requests.get(
         "https://api.open-meteo.com/v1/forecast?latitude="
         + str(lat)
@@ -19,7 +18,7 @@ async def get_todays_temps(lat, long):
     # Get the temperature by hour for today (includes past hours of day)
     hourlyList = list(map(float, request["hourly"]["temperature_2m"]))
 
-    # variables to hold info
+    # Variables to hold info
     dailyHigh = float(hourlyList[0])
     dailyLow = float(hourlyList[0])
     dailyHighTime = ""
@@ -35,7 +34,7 @@ async def get_todays_temps(lat, long):
             dailyLowTime = count
         count += 1
 
-    # index: high, high time, low, low time
+    # Index: high, high time, low, low time
     dailyWeatherList = [dailyHigh, dailyHighTime, dailyLow, dailyLowTime]
 
     return dailyWeatherList
