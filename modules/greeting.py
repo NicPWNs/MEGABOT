@@ -1,7 +1,7 @@
 import random
 
-# Return random greeting message
 
+# Return random greeting message
 def greeting():
 
     greetings = [

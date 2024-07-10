@@ -12,9 +12,9 @@ from discord.ext import tasks
 from dotenv import load_dotenv
 from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
+from jobs.album_check import album_check
 from jobs.boost_reward import boost_reward
 from jobs.random_photo import random_photo
-from jobs.album_check import album_check
 from jobs.trivia_check import trivia_check
 from jobs.fantasy_football_activity import fantasy_football_activity
 from commands.age import age
@@ -26,14 +26,12 @@ from commands.bless import bless
 from commands.bug import bug
 from commands.chat import chat
 from commands.clear import clear
-from commands.code import code
 from commands.coin import coin
 from commands.cs import cs
 from commands.dice import dice
 from commands.double import double
 from commands.emote import emote
 from commands.feature import feature
-from commands.ffl import ffl
 from commands.image import image
 from commands.kanye import kanye
 from commands.kill import kill
@@ -75,7 +73,7 @@ if __name__ == "__main__":
     # Time the bot starts
     startTime = time.time()
 
-    # Load .env file that holds API keys and other secrets
+    # Load .env file with API keys and other secrets
     load_dotenv()
 
     bot = discord.Bot(intents=discord.Intents.all())
@@ -263,17 +261,6 @@ if __name__ == "__main__":
     async def call(ctx):
         await clear(ctx)
 
-    @bot.slash_command(name="code", description="Write code with AI.")
-    async def call(
-        ctx,
-        prompt: discord.Option(
-            discord.SlashCommandOptionType.string,
-            description="Prompt for code to be written from.",
-            required=True,
-        ),
-    ):
-        await code(ctx, prompt)
-
     @bot.slash_command(name="coin", description="Flip a coin.")
     async def call(ctx):
         await coin(ctx)
@@ -343,19 +330,6 @@ if __name__ == "__main__":
         ),
     ):
         await feature(ctx, title, description)
-
-    @bot.slash_command(
-        name="ffl",
-        description="Get the last 24 hours of Fantasy Football League activity.",
-    )
-    async def call(ctx):
-        if not (ctx.channel.name == "sports" or ctx.channel.name == "bot-testing"):
-            await ctx.send_response(
-                content="❗**ERROR: You can only use this command in <#1070849382729121883>**",
-                ephemeral=True,
-            )
-            return
-        await ffl(ctx)
 
     @bot.slash_command(name="image", description="Generate an image with AI.")
     async def call(
@@ -721,4 +695,5 @@ if __name__ == "__main__":
             return
         await wheel(ctx, wager)
 
+    # Start the bot
     bot.run(os.getenv("DISCORD_TOKEN"))
