@@ -1,6 +1,5 @@
+from re import match
 from datetime import datetime
-import re
-from time import strftime
 from modules.Weather.weather_model import get_geocode, get_todays_temps
 from modules.Weather.weather_view import WeatherUI, invalidZipCode
 from modules.Weather.weather_model import get_weekly_temps
@@ -13,7 +12,7 @@ from modules.Weather.weather_model import get_weekly_temps
 async def weather(ctx, zipCode):
 
     # Validate zipCode
-    if not re.match(r"^[0-9]{5}$", zipCode):
+    if not match(r"^[0-9]{5}$", zipCode):
         invalidZipCode(ctx)
 
     # Get geocode - [location, lat, long]
