@@ -543,19 +543,19 @@ if __name__ == "__main__":
     )
     async def call(
         ctx,
-        age: discord.Option(
+        startingage: discord.Option(
             discord.SlashCommandOptionType.integer,
             description="How old are you?",
             required=True,
         ),
         startingcash: discord.Option(
             discord.SlashCommandOptionType.integer,
-            description="Current investments.",
+            description="Total of current investments.",
             required=True,
         ),
         yearlysavings: discord.Option(
             discord.SlashCommandOptionType.integer,
-            description="Money saved each year.",
+            description="Money you save each year.",
             required=True,
         ),
         desiredincome: discord.Option(
@@ -565,12 +565,12 @@ if __name__ == "__main__":
         ),
         growthrate: discord.Option(
             discord.SlashCommandOptionType.integer,
-            description="Optimistic => %, Expected => %, Conservative => %",
+            description="Expected growth rate as a percentage.",
             required=True,
         ),
     ):
         await retirement(
-            ctx, age, startingcash, yearlysavings, desiredincome, growthrate
+            ctx, startingage, startingcash, yearlysavings, desiredincome, growthrate
         )
 
     @bot.slash_command(name="replay", description="Replay the current song.")
