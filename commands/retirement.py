@@ -2,48 +2,45 @@
 import discord
 
 
-async def retirement(
-    ctx, startingage, startingcash, yearlysavings, desiredincome, growthrate
-):
+async def retirement(ctx, age, cash, yearlysavings, desiredincome, growthrate):
 
     # Initial Response
     embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
     interaction = await ctx.respond(embed=embed)
 
-    sustainingyear = 0
+    # Initalize Variables
+    sustainingage = 0
     halfwaymoney = 0
-    midage = 0
     ageset = False
-    age = startingage
-    money = startingcash
     growthrate = (growthrate / 100) + 1
+    midage = int(((60 - age) / 2) + (age))
 
+    # Run Calculations
     while age < 60:
-        money = (money + yearlysavings) * growthrate
-        annualdividends = money * 0.04
-
-        midage = int(((60 - age) / 2) + (startingage))
+        cash = (cash + yearlysavings) * growthrate
+        annualdividends = cash * 0.04
 
         if age == midage:
-            halfwaymoney = money
+            halfwaymoney = cash
 
         if annualdividends >= desiredincome and ageset is False:
-            sustainingyear = str(age)
+            sustainingage = age
             ageset = True
+
         age = age + 1
 
-    if sustainingyear == 0:
-        sustainingyear = str("You'll be dead, buddy")
+    # Check Retirement Goals
+    if sustainingage == 0:
+        sustainingage = str("You'll be dead, buddy...")
 
-    content = f"Investment value at 60 years old => {str(format(money, ',d'))} \n"
-    content += (
-        f"Annual dividends at 60 years old => {str(format(annualdividends, ',d'))} \n"
-    )
-    content += f"Age you can live off dividends => {str(sustainingyear)} \n"
-    content += f"Investment value halfway to retirement => {str(halfwaymoney)} \n"
+    # Return Results
+    content = f"**Investment value at 60 years old:** ${cash:,.2f}\n"
+    content += f"**Annual dividends at 60 years old:** ${annualdividends:,.2f}\n"
+    content += f"**Age you can live off dividends:** {sustainingage}\n"
+    content += f"**Investment value halfway to retirement (Age {midage}):** ${halfwaymoney:,.2f}\n"
 
     embed = discord.Embed(
-        color=0xD89B82,
+        color=0xDD2E44,
         title="📈 Retirement",
         description=content,
     )
