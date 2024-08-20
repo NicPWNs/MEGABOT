@@ -108,7 +108,7 @@ async def play(ctx, search, queued, played, SDL, skip, replay):
             await voice.move_to(channel)
 
         if "http" in search:
-            if bool(re.search(r"https:\/\/www\.youtube\.com\/.*", search)):
+            if bool(re.search(r"https*:\/\/[www\.]*youtu\.*be[\.com]*\/.*", search)):
                 ydl_opts = {
                     "skip_download": True,
                     "noplaylist": True,
@@ -121,10 +121,10 @@ async def play(ctx, search, queued, played, SDL, skip, replay):
                     search = ydl.extract_info(search, download=False, process=False)[
                         "title"
                     ]
-            elif bool(re.search(r"https:\/\/open\.spotify\.com\/.*", search)):
+            elif bool(re.search(r"https*:\/\/open\.spotify\.com\/.*", search)):
                 pass
-            elif bool(re.search(r"https:\/\/tidal\.com\/.*", search)):
-                re_match = re.search(r"https:\/\/tidal\.com\/.*\/(\d*)", search)
+            elif bool(re.search(r"https*:\/\/tidal\.com\/.*", search)):
+                re_match = re.search(r"https*:\/\/tidal\.com\/.*\/(\d*)", search)
                 if re_match:
                     tidal_id = re_match.group(1)
 
