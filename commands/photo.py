@@ -17,7 +17,11 @@ async def photo(ctx):
     data = table.scan()["Items"]
     name = random.choice(data)["name"]
 
-    url = boto3.client("s3").generate_presigned_url(
+    url = boto3.client(
+        "s3",
+        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    ).generate_presigned_url(
         ClientMethod="get_object",
         Params={"Bucket": str(os.getenv("PHOTO_BUCKET")), "Key": name},
         ExpiresIn=604800,

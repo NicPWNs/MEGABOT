@@ -16,21 +16,28 @@ async def random_photo(bot, startTime):
     channel = discord.utils.get(guild.channels, name="main")
 
     embed = discord.Embed(
-        color=0xfee9b6, title="⏳  Posting Random Photo of the Day...")
+        color=0xFEE9B6, title="⏳  Posting Random Photo of the Day..."
+    )
     message = await channel.send(embed=embed)
 
     TABLE = "discord-photos"
-    ddb = boto3.resource('dynamodb')
+    ddb = boto3.resource("dynamodb")
     table = ddb.Table(TABLE)
 
-    data = table.scan()['Items']
-    name = random.choice(data)['name']
+    data = table.scan()["Items"]
+    name = random.choice(data)["name"]
 
-    url = boto3.client('s3').generate_presigned_url(
-        ClientMethod='get_object',
-        Params={'Bucket': str(os.getenv('PHOTO_BUCKET')), 'Key': name},
-        ExpiresIn=604800)
+    url = boto3.client(
+        "s3",
+        aws_access_key_id=os.getenv("AWS_ACCESS_KEY_ID"),
+        aws_secret_access_key=os.getenv("AWS_SECRET_ACCESS_KEY"),
+    ).generate_presigned_url(
+        ClientMethod="get_object",
+        Params={"Bucket": str(os.getenv("PHOTO_BUCKET")), "Key": name},
+        ExpiresIn=604800,
+    )
 
-    embed = discord.Embed(
-        color=0xffcc4d, title="🌞 Random Photo of the Day").set_image(url=url)
+    embed = discord.Embed(color=0xFFCC4D, title="🌞 Random Photo of the Day").set_image(
+        url=url
+    )
     await message.edit(embed=embed)
