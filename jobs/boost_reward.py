@@ -24,6 +24,7 @@ async def boost_reward(bot, startTime):
         for booster in boosters:
             await megacoin.add(booster, coins)
             await channel.send(
-                f"<:boost:1090737525607379025>  Thank you for boosting the MEGACORD this month <@{booster.id}>! + {coins} <:MEGACOIN:1090620048621707324>")
+                f"<:boost:1090737525607379025>  Thank you for boosting the MEGACORD this month <@{booster.id}>! + {coins} <:MEGACOIN:1090620048621707324>"
+            )
     else:
         return
