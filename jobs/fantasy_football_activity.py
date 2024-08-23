@@ -13,7 +13,7 @@ async def fantasy_football_activity(bot):
     convertapi.api_secret = os.getenv("CONVERT_API")
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
-    channel = discord.utils.get(guild.channels, name="bot-testing")
+    channel = discord.utils.get(guild.channels, name="sports")
 
     # Get the current NFL season year
     if int(datetime.now().month) < 4:
