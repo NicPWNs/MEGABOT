@@ -12,11 +12,7 @@ from difflib import SequenceMatcher
 from colorthief import ColorThief
 
 
-async def album_check(bot, startTime):
-
-    runTime = int(time.time() - startTime)
-    if runTime < 60:
-        return
+async def album_check(bot):
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
     channel = discord.utils.get(guild.channels, name="casino")

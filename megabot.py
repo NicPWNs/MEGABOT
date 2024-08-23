@@ -94,23 +94,23 @@ if __name__ == "__main__":
     # Timed Events
     @tasks.loop(minutes=random.randint(120, 240))
     async def skill_check_album(bot):
-        await album_check(bot, startTime)
+        await album_check(bot)
 
     @tasks.loop(minutes=random.randint(120, 240))
     async def skill_check_trivia(bot):
-        await trivia_check(bot, startTime)
+        await trivia_check(bot)
 
     @tasks.loop(time=datetime.time.fromisoformat("13:00:00"))
     async def booster_reward(bot):
-        await boost_reward(bot, startTime)
+        await boost_reward(bot)
 
     @tasks.loop(time=datetime.time.fromisoformat("13:00:00"))
     async def post_random_photo(bot):
-        await random_photo(bot, startTime)
+        await random_photo(bot)
 
     @tasks.loop(time=datetime.time.fromisoformat("16:00:00"))
     async def post_fantasy_football_activity(bot):
-        await fantasy_football_activity(bot, startTime)
+        await fantasy_football_activity(bot)
 
     # Event Listeners
     @bot.listen("on_ready")

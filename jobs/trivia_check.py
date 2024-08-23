@@ -6,7 +6,7 @@ import requests
 import modules.megacoin as megacoin
 
 
-async def trivia_check(bot, startTime):
+async def trivia_check(bot):
 
     def check(reaction, user):
         if reaction.message.channel == channel:
@@ -15,10 +15,6 @@ async def trivia_check(bot, startTime):
                     answered.append(user)
                     if reaction.emoji == choices[index]:
                         return True
-
-    runTime = int(time.time() - startTime)
-    if runTime < 60:
-        return
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
     channel = discord.utils.get(guild.channels, name="casino")

@@ -6,11 +6,7 @@ import random
 import discord
 
 
-async def random_photo(bot, startTime):
-
-    runTime = int(time.time() - startTime)
-    if runTime < 60:
-        return
+async def random_photo(bot):
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
     channel = discord.utils.get(guild.channels, name="main")

@@ -5,11 +5,7 @@ import datetime
 import modules.megacoin as megacoin
 
 
-async def boost_reward(bot, startTime):
-
-    runTime = int(time.time() - startTime)
-    if runTime < 60:
-        return
+async def boost_reward(bot):
 
     d = datetime.datetime.now()
     date = int(d.strftime("%d"))
