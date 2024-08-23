@@ -7,15 +7,10 @@ from datetime import datetime
 from espn_api.football import League
 
 
-async def fantasy_football_activity(bot, startTime):
+async def fantasy_football_activity(bot):
 
     # Need this API to convert SVG images
     convertapi.api_secret = os.getenv("CONVERT_API")
-
-    # Don't run if the bot just restarted
-    runTime = int(time.time() - startTime)
-    if runTime < 60:
-        return
 
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
     channel = discord.utils.get(guild.channels, name="sports")
@@ -30,12 +25,16 @@ async def fantasy_football_activity(bot, startTime):
     league = League(
         swid=os.getenv("ESPN_SWID"),
         espn_s2=os.getenv("ESPN_S2"),
-        league_id=2108883860,
+        league_id=192814871,
         year=year,
     )
 
     # Get the last 25 activities assuming more than 25 didn't happen in the last 24 hours
     activities = league.recent_activity(size=25)
+
+    # If no activities
+    if activities == []:
+        return
 
     # If the latest activity didn't happen in the last 24 hours then don't run
     if activities[0].date < int(time.time() * 1000) - 24 * 60 * 60 * 1000:
