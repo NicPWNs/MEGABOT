@@ -9,6 +9,12 @@ import requests
 from yt_dlp import YoutubeDL
 
 
+FFMPEG_OPTIONS = {
+    "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
+    "option": "-vn",
+}
+
+
 async def queuer(ctx, queued, played, interaction, embed):
 
     await interaction.edit_original_response(embed=embed)
@@ -68,7 +74,9 @@ async def play(ctx, search, queued, played, SDL, skip, replay):
             if not voice.is_playing():
                 embed = discord.Embed(color=0x5DACED, title="🔁  Replaying Last Song!")
                 await interaction.edit_original_response(embed=embed)
-                voice.play(discord.FFmpegPCMAudio(source=queued[0]))
+                voice.play(
+                    discord.FFmpegPCMAudio(source=queued[0], options=FFMPEG_OPTIONS)
+                )
                 voice.source = discord.PCMVolumeTransformer(
                     original=voice.source, volume=0.25
                 )
