@@ -11,7 +11,7 @@ from yt_dlp import YoutubeDL
 
 FFMPEG_OPTIONS = {
     "before_options": "-reconnect 1 -reconnect_streamed 1 -reconnect_delay_max 5",
-    "option": "-vn",
+    "options": "-vn",
 }
 
 
