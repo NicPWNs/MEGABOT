@@ -12,13 +12,9 @@ from discord.ext import tasks
 from dotenv import load_dotenv
 from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
-from jobs.album_check import album_check
 from jobs.boost_reward import boost_reward
 from jobs.random_photo import random_photo
-from jobs.trivia_check import trivia_check
 from jobs.fantasy_football_activity import fantasy_football_activity
-from commands.age import age
-from commands.album import album
 from commands.balance import balance
 from commands.bank import bank
 from commands.blackjack import blackjack
@@ -27,7 +23,6 @@ from commands.bug import bug
 from commands.chat import chat
 from commands.clear import clear
 from commands.coin import coin
-from commands.cs import cs
 from commands.dice import dice
 from commands.double import double
 from commands.emote import emote
@@ -45,10 +40,8 @@ from commands.ping import ping
 from commands.play import play
 from commands.poll import poll
 from commands.queue import queue
-from commands.random_unicode_emoji import random_unicode_emoji
 from commands.restart import restart
 from commands.resume import resume
-from commands.retirement import retirement
 from commands.stock import stock
 from commands.stop import stop
 from commands.streak import streak
@@ -92,14 +85,6 @@ if __name__ == "__main__":
     )
 
     # Timed Events
-    @tasks.loop(minutes=random.randint(120, 240))
-    async def skill_check_album(bot):
-        await album_check(bot)
-
-    @tasks.loop(minutes=random.randint(120, 240))
-    async def skill_check_trivia(bot):
-        await trivia_check(bot)
-
     @tasks.loop(time=datetime.time.fromisoformat("13:00:00"))
     async def booster_reward(bot):
         await boost_reward(bot)
@@ -121,8 +106,6 @@ if __name__ == "__main__":
                 type=discord.ActivityType.watching, name="You..."
             ),
         )
-        skill_check_album.start(bot)
-        skill_check_trivia.start(bot)
         booster_reward.start(bot)
         post_random_photo.start(bot)
         post_fantasy_football_activity.start(bot)
@@ -161,29 +144,6 @@ if __name__ == "__main__":
         channel = discord.utils.get(guild.channels, name="main")
         await channel.send(f"I'm watching you <@{member.id}> 👀...")
 
-    # Slash Commands
-    @bot.slash_command(name="age", description="Guesses the age of a specified name.")
-    async def call(
-        ctx,
-        name: discord.Option(
-            discord.SlashCommandOptionType.string,
-            description="Name to guess age of.",
-            required=True,
-        ),
-    ):
-        await age(ctx, name)
-
-    @bot.slash_command(name="album", description="Play an album artist guessing game.")
-    async def call(
-        ctx,
-        genre: discord.Option(
-            description="Pick a genre. Hip-Hop is default.",
-            default="hip-hop",
-            choices=["hip-hop", "pop", "rock", "alternative", "hard-rock"],
-        ),
-    ):
-        await album(ctx, genre)
-
     @bot.slash_command(name="balance", description="View MEGACOIN balance.")
     async def call(
         ctx,
@@ -207,7 +167,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await bank(ctx)
 
-    @bot.slash_command(name="bj", description="Play blackjack.")
+    @bot.slash_command(name="blackjack", description="Play blackjack.")
     async def call(
         ctx,
         wager: discord.Option(
@@ -526,50 +486,9 @@ if __name__ == "__main__":
             return
         await queue(ctx, queued)
 
-    @bot.slash_command(
-        name="random-unicode-emoji",
-        description="Return a random Unicode emoji. No Discord emojis.",
-    )
-    async def call(ctx):
-        await random_unicode_emoji(ctx)
-
     @bot.slash_command(name="restart", description="Restart MEGABOT. (Admin Only)")
     async def call(ctx):
         await restart(ctx)
-
-    @bot.slash_command(
-        name="retirement",
-        description="Retirement calculator for your planning pleasure.",
-    )
-    async def call(
-        ctx,
-        age: discord.Option(
-            discord.SlashCommandOptionType.integer,
-            description="How old are you?",
-            required=True,
-        ),
-        cash: discord.Option(
-            discord.SlashCommandOptionType.integer,
-            description="Total of current investments.",
-            required=True,
-        ),
-        yearlysavings: discord.Option(
-            discord.SlashCommandOptionType.integer,
-            description="Money you save each year.",
-            required=True,
-        ),
-        desiredincome: discord.Option(
-            discord.SlashCommandOptionType.integer,
-            description="Desired yearly income at retirement.",
-            required=True,
-        ),
-        growthrate: discord.Option(
-            discord.SlashCommandOptionType.integer,
-            description="Expected growth rate as a percentage.",
-            required=True,
-        ),
-    ):
-        await retirement(ctx, age, cash, yearlysavings, desiredincome, growthrate)
 
     @bot.slash_command(name="replay", description="Replay the current song.")
     async def call(ctx):
