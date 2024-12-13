@@ -31,7 +31,6 @@ jobs:
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             python3.11 -m pip install -r requirements.txt
-            python3.11 -m pip install --upgrade -r requirements.txt
             aws configure set default.region us-east-1
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
             killall java
