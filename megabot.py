@@ -1,13 +1,10 @@
 #!/usr/bin/env python3
 import os
 import time
-import spotdl
 import random
 import discord
-import logging
-import asyncio
-import nest_asyncio
 import datetime
+import wavelink
 from discord.ext import tasks
 from dotenv import load_dotenv
 from modules.greeting import greeting
@@ -30,7 +27,9 @@ from commands.feature import feature
 from commands.image import image
 from commands.kanye import kanye
 from commands.kill import kill
+from commands.loop import loop
 from commands.math import math
+from commands.play import play
 from commands.nasa import nasa
 from commands.pause import pause
 from commands.pay import pay
@@ -40,8 +39,10 @@ from commands.ping import ping
 from commands.play import play
 from commands.poll import poll
 from commands.queue import queue
+from commands.replay import replay
 from commands.restart import restart
 from commands.resume import resume
+from commands.skip import skip
 from commands.stock import stock
 from commands.stop import stop
 from commands.streak import streak
@@ -54,15 +55,6 @@ from commands.wheel import wheel
 
 if __name__ == "__main__":
 
-    # Logging Configuration
-    logging.basicConfig(
-        format="%(asctime)s-[ %(levelname)s ]:    %(message)s",
-        level=logging.INFO,
-        datefmt="%H:%M:%S",
-    )
-    handle = "LOGGER"
-    logger = logging.getLogger(handle)
-
     # Time the bot starts
     startTime = time.time()
 
@@ -72,17 +64,19 @@ if __name__ == "__main__":
     bot = discord.Bot(intents=discord.Intents.all())
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
 
-    # Queue for /play
-    queued = []
-    played = []
-    nest_asyncio.apply()
-    SDL = spotdl.Spotdl(
-        client_id=str(os.getenv("SPOTIFY_CLIENT")),
-        client_secret=str(os.getenv("SPOTIFY_SECRET")),
-        headless=True,
-        downloader_settings={"output": "./music/{artists} - {title}.{output-ext}"},
-        loop=asyncio.get_event_loop(),
-    )
+    # For /play
+    async def connect_nodes():
+        await bot.wait_until_ready()
+
+        nodes = [
+            wavelink.Node(
+                identifier="Node1",
+                uri="http://127.0.0.1:2333",
+                password="youshallnotpass",
+            )
+        ]
+
+        await wavelink.Pool.connect(nodes=nodes, client=bot)
 
     # Timed Events
     @tasks.loop(time=datetime.time.fromisoformat("13:00:00"))
@@ -109,6 +103,7 @@ if __name__ == "__main__":
         booster_reward.start(bot)
         post_random_photo.start(bot)
         post_fantasy_football_activity.start(bot)
+        await connect_nodes()
 
     @bot.listen("on_message")
     async def on_message(message):
@@ -225,19 +220,6 @@ if __name__ == "__main__":
     async def call(ctx):
         await coin(ctx)
 
-    @bot.slash_command(
-        name="cs", description="Retrieve a player's Counter-Strike stats."
-    )
-    async def call(
-        ctx,
-        username: discord.Option(
-            discord.SlashCommandOptionType.string,
-            description="User on Steam, a Steam ID, Steam Community URI, or Steam Vanity Username.",
-            required=True,
-        ),
-    ):
-        await cs(ctx, username)
-
     @bot.slash_command(name="dice", description="Roll a dice.")
     async def call(ctx):
         await dice(ctx)
@@ -309,6 +291,10 @@ if __name__ == "__main__":
     @bot.slash_command(name="kill", description="Stop MEGABOT. (Admin Only)")
     async def call(ctx):
         await kill(ctx)
+
+    @bot.slash_command(name="loop", description="Loop current music queue.")
+    async def call(ctx):
+        await loop(ctx)
 
     @bot.slash_command(name="math", description="Evaluate provided math expression.")
     async def call(
@@ -394,7 +380,7 @@ if __name__ == "__main__":
         ctx,
         search: discord.Option(
             discord.SlashCommandOptionType.string,
-            description="YouTube song search or YouTube, TIDAL, Spotify URL.",
+            description="Song to search for.",
             required=True,
         ),
     ):
@@ -404,7 +390,7 @@ if __name__ == "__main__":
                 ephemeral=True,
             )
             return
-        await play(ctx, search, queued, played, SDL, skip=False, replay=False)
+        await play(ctx, search)
 
     @bot.slash_command(
         name="poll", description="Create a poll with up to nine options."
@@ -484,7 +470,7 @@ if __name__ == "__main__":
                 ephemeral=True,
             )
             return
-        await queue(ctx, queued)
+        await queue(ctx)
 
     @bot.slash_command(name="restart", description="Restart MEGABOT. (Admin Only)")
     async def call(ctx):
@@ -498,8 +484,7 @@ if __name__ == "__main__":
                 ephemeral=True,
             )
             return
-        search = ""
-        await play(ctx, search, queued, played, SDL, skip=False, replay=True)
+        await replay(ctx)
 
     @bot.slash_command(name="resume", description="Resume playing music.")
     async def call(ctx):
@@ -520,7 +505,7 @@ if __name__ == "__main__":
             )
             return
         search = ""
-        await play(ctx, search, queued, played, SDL, skip=True, replay=False)
+        await skip(ctx)
 
     @bot.slash_command(name="stock", description="Searches a stock price.")
     async def call(
@@ -541,7 +526,7 @@ if __name__ == "__main__":
                 ephemeral=True,
             )
             return
-        await stop(ctx, queued)
+        await stop(ctx)
 
     @bot.slash_command(name="streak", description="Keep a daily streak going!")
     async def call(

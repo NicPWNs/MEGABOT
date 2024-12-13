@@ -2,18 +2,18 @@
 import discord
 
 
-async def stop(ctx, queued):
+async def stop(ctx):
 
     embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
 
     interaction = await ctx.respond(embed=embed)
 
-    voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
     try:
-        await voice.disconnect()
-        queued.clear()
-        embed = discord.Embed(color=0xDD2F45, title="🔇  Music Stopped")
+        voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
 
+        await voice.disconnect()
+
+        embed = discord.Embed(color=0xDD2F45, title="🔇  Music Stopped")
     except:
         embed = discord.Embed(
             color=0xDD2F45, title="❌  MEGABOT Is Not In Voice"

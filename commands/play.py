@@ -1,199 +1,99 @@
 #!/usr/bin/env python3
-import os
 import re
+import typing
 import discord
-import asyncio
-import ffmpeg
-import spotdl
-import requests
-from yt_dlp import YoutubeDL
+import wavelink
 
 
-async def queuer(ctx, queued, played, interaction, embed):
+async def play(ctx, search):
+    # Initial response
+    embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
+    interaction = await ctx.respond(embed=embed)
 
-    await interaction.edit_original_response(embed=embed)
-    voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-    voice.stop()
+    # Get player
+    voice = typing.cast(wavelink.Player, ctx.voice_client)
 
-    if len(queued) == 0:
-        embed = discord.Embed(color=0x5DACED, title="☑️  Queue Complete")
-        await ctx.channel.send(embed=embed)
-        await voice.disconnect()
+    # Join voice if not already
+    if not voice:
+        voice = await ctx.author.voice.channel.connect(cls=wavelink.Player)
 
-    while len(queued) > 0:
-        voice.play(discord.FFmpegPCMAudio(source=queued[0]))
-        voice.source = discord.PCMVolumeTransformer(original=voice.source, volume=0.25)
-        length = float(ffmpeg.probe(queued[0])["format"]["duration"])
-        played.insert(0, queued[0])
-        queued.pop(0)
-        await asyncio.sleep(length)
-
-
-async def play(ctx, search, queued, played, SDL, skip, replay):
-
-    if skip:
-        embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
-        interaction = await ctx.respond(embed=embed)
-
-        voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-
-        if not voice:
-            embed = discord.Embed(
-                color=0xDD2F45, title="❌  MEGABOT Is Not In Voice"
-            ).set_thumbnail(
-                url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif"
-            )
-            await interaction.edit_original_response(embed=embed)
-
-        else:
-            embed = discord.Embed(color=0x5DACED, title="⏭️  Skipping Song!")
-            await queuer(ctx, queued, played, interaction, embed)
-
-    elif replay:
-        embed = discord.Embed(color=0xFEE9B6, title="⏳  Loading...")
-        interaction = await ctx.respond(embed=embed)
-
-        voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-
-        if not voice:
-            embed = discord.Embed(
-                color=0xDD2F45, title="❌  MEGABOT Is Not In Voice"
-            ).set_thumbnail(
-                url="https://raw.githubusercontent.com/NicPWNs/MEGABOT/main/images/thumbnail.gif"
-            )
-            await interaction.edit_original_response(embed=embed)
-
-        else:
-            queued.insert(0, played[0])
-            if not voice.is_playing():
-                embed = discord.Embed(color=0x5DACED, title="🔁  Replaying Last Song!")
-                await interaction.edit_original_response(embed=embed)
-                voice.play(discord.FFmpegOpusAudio(source=queued[0]))
-                voice.source = discord.PCMVolumeTransformer(
-                    original=voice.source, volume=0.25
-                )
-                queued.pop(0)
-            else:
-                embed = discord.Embed(
-                    color=0x5DACED, title="🔁  Replaying Current Song!"
-                )
-                await interaction.edit_original_response(embed=embed)
-
-    else:
+    # Check if user is in voice with bot
+    if ctx.author.voice.channel.id != voice.channel.id:
         embed = discord.Embed(
-            color=0xFEE9B6,
-            title="⏳  Downloading...",
-            description=f'**Request:** "{search}"',
-        )
+            color=0xDD2F45,
+            title="❌  Error",
+            description=f"<@{ctx.user.id}> is not in <#{voice.channel.id}> with <@1077260321833635941>!",
+        ).set_thumbnail(url=ctx.user.display_avatar)
 
-        interaction = await ctx.respond(embed=embed)
+        await interaction.edit_original_response(embed=embed)
+        return
 
-        if not ctx.author.voice:
-            embed = discord.Embed(
-                color=0xDD2F45,
-                title="❌  Error",
-                description=f"<@{ctx.user.id}> is not connected to a voice channel!",
-            ).set_thumbnail(url=ctx.user.display_avatar)
+    # Search for songs
+    songs = await wavelink.Playable.search(search)
 
-            await interaction.edit_original_response(embed=embed)
-            return
+    # Song not found
+    if not songs:
+        embed = discord.Embed(
+            color=0xDD2F45,
+            title="❌  Error",
+            description=f"**No results found for:** {search}",
+        ).set_thumbnail(url=ctx.user.display_avatar)
 
-        channel = ctx.author.voice.channel
+        await interaction.edit_original_response(embed=embed)
+        return
 
-        try:
-            voice = await channel.connect()
-        except:
-            voice = discord.utils.get(ctx.bot.voice_clients, guild=ctx.guild)
-            await voice.move_to(channel)
+    # Rest of playlist
+    playlist = []
 
-        if "http" in search:
-            if bool(re.search(r"https*:\/\/[www\.]*youtu\.*be[\.com]*\/.*", search)):
-                ydl_opts = {
-                    "skip_download": True,
-                    "noplaylist": True,
-                    "quiet": True,
-                    "no_warnings": True,
-                    "get_title": True,
-                }
+    # Parse songs or playlist
+    if type(songs) == wavelink.tracks.Playlist:
+        playlist = songs[1:]
 
-                with YoutubeDL(ydl_opts) as ydl:
-                    search = ydl.extract_info(search, download=False, process=False)[
-                        "title"
-                    ]
-            elif bool(re.search(r"https*:\/\/open\.spotify\.com\/.*", search)):
-                pass
-            elif bool(re.search(r"https*:\/\/tidal\.com\/.*", search)):
-                re_match = re.search(r"https*:\/\/tidal\.com\/.*\/(\d*)", search)
-                if re_match:
-                    tidal_id = re_match.group(1)
+    song = songs[0]
 
-                data = {"grant_type": "client_credentials"}
-                r = requests.post(
-                    "https://auth.tidal.com/v1/oauth2/token",
-                    auth=requests.auth.HTTPBasicAuth(
-                        os.getenv("TIDAL_CLIENT"), os.getenv("TIDAL_SECRET")
-                    ),
-                    data=data,
-                ).json()
-                bearer = "Bearer " + r["access_token"]
+    # Turn on autoplay
+    voice.autoplay = wavelink.AutoPlayMode.enabled
 
-                headers = {
-                    "Authorization": bearer,
-                    "Content-Type": "application/vnd.tidal.v1+json",
-                }
+    if voice.playing == True:
 
-                r = requests.get(
-                    f"https://openapi.tidal.com/tracks/{tidal_id}?countryCode=US",
-                    headers=headers,
-                ).json()
+        # Add song to queue
+        voice.queue.put(song)
+        voice.queue.put(playlist)
 
-                artists = r["resource"]["artists"]
-                artist_names = [name["name"] for name in artists]
-                search = r["resource"]["title"] + " " + " ".join(artist_names)
-
-            else:
-                embed = discord.Embed(
-                    color=0xDD2F45,
-                    title="❌  Error",
-                    description=f"Only **YouTube**, **Spotify**, and **TIDAL** URLs are currently supported!",
-                ).set_thumbnail(url=ctx.user.display_avatar)
-                await interaction.edit_original_response(embed=embed)
-                return
-
-        try:
-            song = SDL.search([search])[0]
-            title = song.name
-            cover = song.cover_url
-            artist = song.artist
-            song, path = SDL.download(song)
-            queued.append(path)
-
-        except spotdl.types.song.SongError:
-            embed = discord.Embed(
-                color=0xDD2F45,
-                title="❌  Error",
-                description=f"**No results found for:** {search}",
-            ).set_thumbnail(url=ctx.user.display_avatar)
-            await interaction.edit_original_response(embed=embed)
-            return
-
+        # Added to queue
         embed = (
             discord.Embed(
-                color=0x5DACED, title="🎵  Now Playing", description=f"{title}"
+                color=0x5DACED,
+                title="↩️  Added to Queue",
+                description=f"[**{song.title}**]({song.uri})",
             )
-            .set_thumbnail(url=cover)
-            .set_footer(text=f"by {artist}")
+            .set_thumbnail(url=song.artwork)
+            .set_footer(text=f"by {song.author}")
         )
 
-        if not voice.is_playing():
-            await queuer(ctx, queued, played, interaction, embed)
-        else:
-            embed = (
-                discord.Embed(
-                    color=0x5DACED, title="↩️  Added to Queue", description=f"{title}"
-                )
-                .set_thumbnail(url=cover)
-                .set_footer(text=f"by {artist}")
-            )
+    else:
+        # Turn down volume before playing
+        await voice.set_volume(15)
 
-            await interaction.edit_original_response(embed=embed)
+        # Play and populate autoqueue
+        await voice.play(song, populate=True)
+
+        # Add rest of playlist
+        voice.queue.put(playlist)
+
+        # Clean song title
+        title = re.sub(r"\s*[\(\[][^)]*[\)\]]", "", song.title).strip()
+
+        # Now playing
+        embed = (
+            discord.Embed(
+                color=0x5DACED,
+                title="🎵  Now Playing",
+                description=f"[**{title}**]({song.uri})",
+            )
+            .set_thumbnail(url=song.artwork)
+            .set_footer(text=f"by {song.author}")
+        )
+
+    # Response
+    await interaction.edit_original_response(embed=embed)
