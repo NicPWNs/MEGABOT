@@ -6,15 +6,11 @@ py-cord
 py-cord[voice]
 py-cord[speed]
 python-dotenv
-nest-asyncio
 openai
 requests
-spotdl
-yt-dlp
-ffmpeg-python
 boto3
 random-unicode-emoji
-colorthief
 PyGithub
 espn_api
 convertapi
+wavelink

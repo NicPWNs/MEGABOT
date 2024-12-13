@@ -19,8 +19,6 @@ class WeatherUI(discord.ui.View):
         self.weeklyForecast = weeklyForecast
         self.todaysForecast = todaysForecast
 
-        # print(self.func)
-
     # Disable buttons
     async def on_timeout(self):
         self.disable_all_items()

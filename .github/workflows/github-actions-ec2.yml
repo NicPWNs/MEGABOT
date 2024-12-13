@@ -26,11 +26,7 @@ jobs:
           TARGET: ${{ secrets.TARGET_DIR }}
           SCRIPT_BEFORE: |
             sudo dnf upgrade -y
-            sudo dnf install python3.11 python3.11-pip python3.11-devel git libffi-devel opus -y
-            wget https://johnvansickle.com/ffmpeg/releases/ffmpeg-release-amd64-static.tar.xz
-            tar xvf ffmpeg-release-amd64-static.tar.xz
-            sudo mv ffmpeg-*-amd64-static/ff* /usr/local/bin/
-            sudo rm -rf ffmpeg*
+            sudo dnf install python3.11 python3.11-pip python3.11-devel git libffi-devel opus java-21-amazon-corretto -y
             sudo timedatectl set-timezone America/New_York
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
@@ -40,4 +36,5 @@ jobs:
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
             killall python3.11
             rm -f blackjack.lock
+            java -jar Lavalink.jar >/dev/null &
             python3.11 /home/ec2-user/megabot.py >/dev/null &
