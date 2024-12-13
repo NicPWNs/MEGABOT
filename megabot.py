@@ -292,7 +292,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await kill(ctx)
 
-    @bot.slash_command(name="loop", description="Loop current music queue.")
+    @bot.slash_command(name="loop", description="Toggle loop of music queue.")
     async def call(ctx):
         await loop(ctx)
 
@@ -476,7 +476,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await restart(ctx)
 
-    @bot.slash_command(name="replay", description="Replay the current song.")
+    @bot.slash_command(name="replay", description="Toggle replay of the current song.")
     async def call(ctx):
         if not (ctx.channel.name == "music" or ctx.channel.name == "bot-testing"):
             await ctx.send_response(
