@@ -34,6 +34,7 @@ jobs:
             python3.11 -m pip install --upgrade -r requirements.txt
             aws configure set default.region us-east-1
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
+            killall java
             killall python3.11
             rm -f blackjack.lock
             java -jar Lavalink.jar >/dev/null &
