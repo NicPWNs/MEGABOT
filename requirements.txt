@@ -13,4 +13,3 @@ random-unicode-emoji
 PyGithub
 espn_api
 convertapi
-wavelink
