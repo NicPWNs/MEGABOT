@@ -89,7 +89,7 @@ async def play(ctx, search):
             discord.Embed(
                 color=0x5DACED,
                 title="🎵  Now Playing",
-                description=f"[**{title}**]({song.uri})",
+                description=f"[**{title}**]({song.uri})\n▶️🔘▬▬▬▬▬▬▬▬▬▬▬▬▬▬🔊",
             )
             .set_thumbnail(url=song.artwork)
             .set_footer(text=f"by {song.author}")

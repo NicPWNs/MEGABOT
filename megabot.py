@@ -292,7 +292,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await kill(ctx)
 
-    @bot.slash_command(name="loop", description="Toggle loop of music queue.")
+    @bot.slash_command(name="loop", description="Toggle loop of the music queue.")
     async def call(ctx):
         await loop(ctx)
 

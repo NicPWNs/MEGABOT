@@ -23,6 +23,7 @@ Another fully customized Discord bot for learning and fun. Using `pycord` to pra
 - `/image`: Generate an image with AI.
 - `/kanye`: Retrieve a random Kanye West quote.
 - `/kill`: Stop MEGABOT's process. (Admin Only)
+- `/loop`: Toggle loop of the music queue.
 - `/math <expression>`: Evaluate provided math expression.
 - `/nasa [details:True]`: Retrieve the NASA photo of the day.
 - `/pause`: Pause or resume music.
@@ -33,7 +34,7 @@ Another fully customized Discord bot for learning and fun. Using `pycord` to pra
 - `/play`: Plays music.
 - `/poll`: Create a poll with up to nine options.
 - `/queue`: Show the current music queue.
-- `/replay`: Replay the current or previous song.
+- `/replay`: Toggle replay of the current song.
 - `/restart`: Restart MEGABOT. Only works if it is online, of course. (Admin Only)
 - `/resume`: Resume music.
 - `/skip`: Skip the current song.
