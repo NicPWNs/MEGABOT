@@ -211,7 +211,7 @@ if __name__ == "__main__":
         await chat(ctx, prompt)
 
     @bot.slash_command(
-        name="clear", description="Temporarily clear MEGATEST commands. (Admin Only)"
+        name="clear", description="Clear MEGATEST commands. (Admin Only)"
     )
     async def call(ctx):
         await clear(ctx)
@@ -292,7 +292,7 @@ if __name__ == "__main__":
     async def call(ctx):
         await kill(ctx)
 
-    @bot.slash_command(name="loop", description="Toggle loop of music queue.")
+    @bot.slash_command(name="loop", description="Toggle loop of the music queue.")
     async def call(ctx):
         await loop(ctx)
 
@@ -440,7 +440,7 @@ if __name__ == "__main__":
         option8: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=False,
-            description="Eigth option.",
+            description="Eighth option.",
         ),
         option9: str = discord.Option(
             discord.SlashCommandOptionType.string,
