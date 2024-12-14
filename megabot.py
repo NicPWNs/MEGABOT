@@ -142,7 +142,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="balance", description="View MEGACOIN balance.")
     async def call(
         ctx,
-        user: discord.Option(
+        user: discord.Member = discord.Option(
             discord.SlashCommandOptionType.user,
             required=False,
             description="User to get the balance of.",
@@ -165,7 +165,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="blackjack", description="Play blackjack.")
     async def call(
         ctx,
-        wager: discord.Option(
+        wager: int = discord.Option(
             discord.SlashCommandOptionType.integer,
             required=True,
             description="Amount you want to wager in blackjack.",
@@ -186,12 +186,12 @@ if __name__ == "__main__":
     @bot.slash_command(name="bug", description="Report a MEGABOT bug.")
     async def call(
         ctx,
-        title: discord.Option(
+        title: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=True,
             description="Give the bug a title.",
         ),
-        description: discord.Option(
+        description: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=True,
             description="Describe the bug behavior.",
@@ -202,7 +202,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="chat", description="Chat with MEGABOT.")
     async def call(
         ctx,
-        prompt: discord.Option(
+        prompt: str = discord.Option(
             discord.SlashCommandOptionType.string,
             description="Prompt for MEGABOT to respond to.",
             required=True,
@@ -227,7 +227,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="double", description="Play MEGACOIN double or nothing.")
     async def call(
         ctx,
-        wager: discord.Option(
+        wager: int = discord.Option(
             discord.SlashCommandOptionType.integer,
             required=True,
             description="Amount you want to wager.",
@@ -244,12 +244,12 @@ if __name__ == "__main__":
     @bot.slash_command(name="emote", description="Search for a 7TV emote.")
     async def call(
         ctx,
-        search: discord.Option(
+        search: str = discord.Option(
             discord.SlashCommandOptionType.string,
             description="Emote to search for.",
             required=True,
         ),
-        add: discord.Option(
+        add: bool = discord.Option(
             discord.SlashCommandOptionType.boolean,
             description="Add emote to server?",
             required=False,
@@ -260,12 +260,12 @@ if __name__ == "__main__":
     @bot.slash_command(name="feature", description="Submit a MEGABOT feature request.")
     async def call(
         ctx,
-        title: discord.Option(
+        title: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=True,
             description="Give the feature request a title.",
         ),
-        description: discord.Option(
+        description: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=True,
             description="Describe the feature you desire.",
@@ -276,7 +276,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="image", description="Generate an image with AI.")
     async def call(
         ctx,
-        prompt: discord.Option(
+        prompt: str = discord.Option(
             discord.SlashCommandOptionType.string,
             description="Prompt for image to be generated from.",
             required=True,
@@ -299,7 +299,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="math", description="Evaluate provided math expression.")
     async def call(
         ctx,
-        expression: discord.Option(
+        expression: str = discord.Option(
             discord.SlashCommandOptionType.string,
             description="Expression to evaluate.",
             required=True,
@@ -310,7 +310,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="nasa", description="Retrieve the NASA photo of the day.")
     async def call(
         ctx,
-        details: discord.Option(
+        details: bool = discord.Option(
             discord.SlashCommandOptionType.boolean,
             description="Provide the explanation of the photo.",
             required=False,
@@ -331,12 +331,12 @@ if __name__ == "__main__":
     @bot.slash_command(name="pay", description="Pay another user some MEGACOIN.")
     async def call(
         ctx,
-        user: discord.Option(
+        user: discord.Member = discord.Option(
             discord.SlashCommandOptionType.user,
             required=True,
             description="User to pay.",
         ),
-        amount: discord.Option(
+        amount: int = discord.Option(
             discord.SlashCommandOptionType.integer,
             required=True,
             description="Amount to pay.",
@@ -347,17 +347,17 @@ if __name__ == "__main__":
     @bot.slash_command(name="payout", description="Payout MEGACOIN. (Admin only)")
     async def call(
         ctx,
-        user: discord.Option(
+        user: discord.Member = discord.Option(
             discord.SlashCommandOptionType.user,
             required=True,
             description="User to pay.",
         ),
-        amount: discord.Option(
+        amount: int = discord.Option(
             discord.SlashCommandOptionType.integer,
             required=True,
             description="Amount to pay.",
         ),
-        message: discord.Option(
+        message: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=True,
             description="Message to send.",
@@ -378,7 +378,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="play", description="Plays music.")
     async def call(
         ctx,
-        search: discord.Option(
+        search: str = discord.Option(
             discord.SlashCommandOptionType.string,
             description="Song to search for.",
             required=True,
@@ -397,52 +397,52 @@ if __name__ == "__main__":
     )
     async def call(
         ctx,
-        question: discord.Option(
+        question: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=True,
             description="Question to poll for.",
         ),
-        option1: discord.Option(
+        option1: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=True,
             description="First option.",
         ),
-        option2: discord.Option(
+        option2: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=True,
             description="Second option.",
         ),
-        option3: discord.Option(
+        option3: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=False,
             description="Third option.",
         ),
-        option4: discord.Option(
+        option4: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=False,
             description="Fourth option.",
         ),
-        option5: discord.Option(
+        option5: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=False,
             description="Fifth option.",
         ),
-        option6: discord.Option(
+        option6: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=False,
             description="Sixth option.",
         ),
-        option7: discord.Option(
+        option7: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=False,
             description="Seventh option.",
         ),
-        option8: discord.Option(
+        option8: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=False,
             description="Eigth option.",
         ),
-        option9: discord.Option(
+        option9: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=False,
             description="Ninth option.",
@@ -510,7 +510,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="stock", description="Searches a stock price.")
     async def call(
         ctx,
-        symbol: discord.Option(
+        symbol: str = discord.Option(
             discord.SlashCommandOptionType.string,
             description="Stock symbol to search for (ie. PLTR).",
             required=True,
@@ -531,7 +531,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="streak", description="Keep a daily streak going!")
     async def call(
         ctx,
-        stats: discord.Option(
+        stats: bool = discord.Option(
             discord.SlashCommandOptionType.boolean,
             description="Get streak stats.",
             required=False,
@@ -554,7 +554,7 @@ if __name__ == "__main__":
     )
     async def call(
         ctx,
-        photo: discord.Option(
+        photo: discord.Attachment = discord.Option(
             discord.SlashCommandOptionType.attachment,
             required=True,
             description="Photo to upload.",
@@ -571,10 +571,10 @@ if __name__ == "__main__":
     @bot.slash_command(name="weather", description="Seven day weather forecast.")
     async def call(
         ctx,
-        zipcode: discord.Option(
+        zipcode: str = discord.Option(
             discord.SlashCommandOptionType.string,
             required=True,
-            descripton="ZIP code for weather.",
+            description="ZIP code for weather.",
         ),
     ):
         view = await weather(ctx, zipcode)
@@ -583,7 +583,7 @@ if __name__ == "__main__":
     @bot.slash_command(name="wheel", description="Spin the MEGACOIN wheel.")
     async def call(
         ctx,
-        wager: discord.Option(
+        wager: int = discord.Option(
             discord.SlashCommandOptionType.integer,
             required=True,
             description="Amount you want to wager.",
