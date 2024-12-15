@@ -1,5 +1,6 @@
 #!/usr/bin/env python3
 import re
+import time
 import typing
 import discord
 import wavelink
@@ -71,6 +72,9 @@ async def play(ctx, search):
             .set_footer(text=f"by {song.author}")
         )
 
+        # Response
+        await interaction.edit_original_response(embed=embed)
+
     else:
         # Turn down volume before playing
         await voice.set_volume(15)
@@ -84,16 +88,27 @@ async def play(ctx, search):
         # Clean song title
         title = re.sub(r"\s*[\(\[][^)]*[\)\]]", "", song.title).strip()
 
-        # Now playing
-        embed = (
-            discord.Embed(
-                color=0x5DACED,
-                title="🎵  Now Playing",
-                description=f"[**{title}**]({song.uri})\n▶️🔘▬▬▬▬▬▬▬▬▬▬▬▬▬▬🔊",
-            )
-            .set_thumbnail(url=song.artwork)
-            .set_footer(text=f"by {song.author}")
-        )
+        # Calculate progress bar
+        length = int(song.length / 1000)
+        increment = int(length / 15)
 
-    # Response
-    await interaction.edit_original_response(embed=embed)
+        while voice.position < song.length:
+            position = voice.position / 1000
+            bars = int(position / increment)
+            status = ("▬" * bars) + "🔘" + ("▬" * (15 - bars))
+
+            # Now playing
+            embed = (
+                discord.Embed(
+                    color=0x5DACED,
+                    title="🎵  Now Playing",
+                    description=f"[**{title}**]({song.uri})\n\n▶️ {status} 🔊\n`[0:00/3:00]`",
+                )
+                .set_thumbnail(url=song.artwork)
+                .set_footer(text=f"by {song.author}")
+            )
+
+            # Response
+            await interaction.edit_original_response(embed=embed)
+
+            time.sleep(1)
