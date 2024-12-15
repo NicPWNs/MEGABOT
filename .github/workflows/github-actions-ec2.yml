@@ -31,11 +31,12 @@ jobs:
           SCRIPT_AFTER: |
             echo $RSYNC_STDOUT
             python3.11 -m pip install -r requirements.txt
-            python3.11 -m pip uninstall discord.py
-            python3.11 -m pip uninstall py-cord
+            python3.11 -m pip uninstall discord.py -y
+            python3.11 -m pip uninstall py-cord -y
             python3.11 -m pip install py-cord
             aws configure set default.region us-east-1
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
+            rm local_ssh_script-before*
             killall java
             killall python3.11
             rm -f blackjack.lock
