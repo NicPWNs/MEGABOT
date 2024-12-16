@@ -5,7 +5,7 @@ plugins:
   youtube:
     enabled: true
     oauth:
-      enabled: true
+      enabled: false
       # if you have a refresh token, you may set it below (make sure to uncomment the line to apply it).
       # setting a valid refresh token will skip the OAuth flow entirely. See above note on how to retrieve
       # your refreshToken.
@@ -77,8 +77,8 @@ logging:
     path: ./logs/
 
   level:
-    root: OFF
-    lavalink: OFF
+    root: INFO
+    lavalink: INFO
 
   request:
     enabled: true
