@@ -1,15 +1,11 @@
-server: # REST and WS server
+server:
   port: 2333
   address: 0.0.0.0
-  http2:
-    enabled: false # Whether to enable HTTP/2 support
 plugins:
   youtube:
-    enabled: true # Whether this source can be used.
+    enabled: true
     oauth:
-      # setting "enabled: true" is the bare minimum to get OAuth working.
       enabled: true
-
       # if you have a refresh token, you may set it below (make sure to uncomment the line to apply it).
       # setting a valid refresh token will skip the OAuth flow entirely. See above note on how to retrieve
       # your refreshToken.
@@ -22,8 +18,6 @@ plugins:
     allowSearch: true # Whether "ytsearch:" and "ytmsearch:" can be used.
     allowDirectVideoIds: true # Whether just video IDs can match. If false, only complete URLs will be loaded.
     allowDirectPlaylistIds: true # Whether just playlist IDs can match. If false, only complete URLs will be loaded.
-    # The clients to use for track loading. See below for a list of valid clients.
-    # Clients are queried in the order they are given (so the first client is queried first and so on...)
     clients:
       - MUSIC
       - ANDROID_VR
@@ -33,12 +27,6 @@ lavalink:
   plugins:
     - dependency: "dev.lavalink.youtube:youtube-plugin:1.11.1"
       snapshot: false
-  #    - dependency: "com.github.example:example-plugin:1.0.0" # required, the coordinates of your plugin
-  #      repository: "https://maven.example.com/releases" # optional, defaults to the Lavalink releases repository by default
-  #      snapshot: false # optional, defaults to false, used to tell Lavalink to use the snapshot repository instead of the release repository
-  #  pluginsDir: "./plugins" # optional, defaults to "./plugins"
-  #  defaultPluginRepository: "https://maven.lavalink.dev/releases" # optional, defaults to the Lavalink release repository
-  #  defaultPluginSnapshotRepository: "https://maven.lavalink.dev/snapshots" # optional, defaults to the Lavalink snapshot repository
   server:
     password: "youshallnotpass"
     sources:
@@ -49,9 +37,9 @@ lavalink:
       twitch: true
       vimeo: true
       nico: true
-      http: true # warning: keeping HTTP enabled without a proxy configured could expose your server's IP address.
+      http: true
       local: false
-    filters: # All filters are enabled by default
+    filters:
       volume: true
       equalizer: true
       karaoke: true
@@ -74,20 +62,6 @@ lavalink:
     youtubeSearchEnabled: true
     soundcloudSearchEnabled: true
     gc-warnings: true
-    #ratelimit:
-    #ipBlocks: ["1.0.0.0/8", "..."] # list of ip blocks
-    #excludedIps: ["...", "..."] # ips which should be explicit excluded from usage by lavalink
-    #strategy: "RotateOnBan" # RotateOnBan | LoadBalance | NanoSwitch | RotatingNanoSwitch
-    #searchTriggersFail: true # Whether a search 429 should trigger marking the ip as failing
-    #retryLimit: -1 # -1 = use default lavaplayer value | 0 = infinity | >0 = retry will happen this numbers times
-    #youtubeConfig: # Required for avoiding all age restrictions by YouTube, some restricted videos still can be played without.
-    #email: "" # Email of Google account
-    #password: "" # Password of Google account
-    #httpConfig: # Useful for blocking bad-actors from ip-grabbing your music node and attacking it, this way only the http proxy will be attacked
-    #proxyHost: "localhost" # Hostname of the proxy, (ip or domain)
-    #proxyPort: 3128 # Proxy port, 3128 is the default for squidProxy
-    #proxyUser: "" # Optional user for basic authentication fields, leave blank if you don't use basic auth
-    #proxyPassword: "" # Password for basic authentication
 
 metrics:
   prometheus:
@@ -97,9 +71,6 @@ metrics:
 sentry:
   dsn: ""
   environment: ""
-#  tags:
-#    some_key: some_value
-#    another_key: another_value
 
 logging:
   file:
