@@ -89,10 +89,11 @@ async def play(ctx, search):
         title = re.sub(r"\s*[\(\[][^)]*[\)\]]", "", song.title).strip()
 
         # Calculate progress bar
+        position = int(voice.position / 1000)
         length = int(song.length / 1000)
         increment = int(length / 15)
 
-        while voice.position < song.length:
+        while position < length:
             position = voice.position / 1000
             bars = int(position / increment)
             status = ("▬" * bars) + "🔘" + ("▬" * (15 - bars))
