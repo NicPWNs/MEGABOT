@@ -42,6 +42,7 @@ from commands.queue import queue
 from commands.replay import replay
 from commands.restart import restart
 from commands.resume import resume
+from commands.shuffle import shuffle
 from commands.skip import skip
 from commands.stock import stock
 from commands.stop import stop
@@ -495,6 +496,10 @@ if __name__ == "__main__":
             )
             return
         await resume(ctx)
+
+    @bot.slash_command(name="shuffle", description="Shuffle the current queue.")
+    async def call(ctx):
+        await shuffle(ctx)
 
     @bot.slash_command(name="skip", description="Skip the current song.")
     async def call(ctx):
