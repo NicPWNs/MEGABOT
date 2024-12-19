@@ -8,97 +8,40 @@ async def emote(ctx, search, add):
     await ctx.respond(content="⏳ Loading...")
 
     query = {
-        "operationName": "SearchEmotes",
+        "operationName": "EmoteSearch",
+        "query": "query EmoteSearch($query: String, $tags: [String!]!, $sortBy: SortBy!, $filters: Filters, $page: Int, $perPage: Int!, $isDefaultSetSet: Boolean!, $defaultSetId: Id!) {\n  emotes {\n    search(\n      query: $query\n      tags: {tags: $tags, match: ANY}\n      sort: {sortBy: $sortBy, order: DESCENDING}\n      filters: $filters\n      page: $page\n      perPage: $perPage\n    ) {\n      items {\n        id\n        defaultName\n        owner {\n          mainConnection {\n            platformDisplayName\n            __typename\n          }\n          style {\n            activePaint {\n              id\n              name\n              data {\n                layers {\n                  id\n                  ty {\n                    __typename\n                    ... on PaintLayerTypeSingleColor {\n                      color {\n                        hex\n                        __typename\n                      }\n                      __typename\n                    }\n                    ... on PaintLayerTypeLinearGradient {\n                      angle\n                      repeating\n                      stops {\n                        at\n                        color {\n                          hex\n                          __typename\n                        }\n                        __typename\n                      }\n                      __typename\n                    }\n                    ... on PaintLayerTypeRadialGradient {\n                      repeating\n                      stops {\n                        at\n                        color {\n                          hex\n                          __typename\n                        }\n                        __typename\n                      }\n                      shape\n                      __typename\n                    }\n                    ... on PaintLayerTypeImage {\n                      images {\n                        url\n                        mime\n                        size\n                        scale\n                        width\n                        height\n                        frameCount\n                        __typename\n                      }\n                      __typename\n                    }\n                  }\n                  opacity\n                  __typename\n                }\n                shadows {\n                  color {\n                    hex\n                    __typename\n                  }\n                  offsetX\n                  offsetY\n                  blur\n                  __typename\n                }\n                __typename\n              }\n              __typename\n            }\n            __typename\n          }\n          highestRoleColor {\n            hex\n            __typename\n          }\n          __typename\n        }\n        deleted\n        flags {\n          defaultZeroWidth\n          publicListed\n          __typename\n        }\n        imagesPending\n        images {\n          url\n          mime\n          size\n          scale\n          width\n          frameCount\n          __typename\n        }\n        ranking(ranking: TRENDING_WEEKLY)\n        inEmoteSets(emoteSetIds: [$defaultSetId]) @include(if: $isDefaultSetSet) {\n          emoteSetId\n          emote {\n            id\n            alias\n            __typename\n          }\n          __typename\n        }\n        __typename\n      }\n      totalCount\n      pageCount\n      __typename\n    }\n    __typename\n  }\n}",
         "variables": {
-            "query": search,
-            "limit": 1,
+            "defaultSetId": "",
+            "filters": {"exactMatch": True},
+            "isDefaultSetSet": False,
             "page": 1,
-            "sort": {"value": "popularity", "order": "DESCENDING"},
-            "filter": {
-                "category": "TOP",
-                "exact_match": False,
-                "case_sensitive": False,
-                "ignore_tags": False,
-                "zero_width": False,
-                "animated": False,
-                "aspect_ratio": "",
-            },
+            "perPage": 1,
+            "query": search,
+            "sortBy": "TOP_ALL_TIME",
+            "tags": [],
         },
-        "query": """query SearchEmotes(
-  $query: String!
-  $page: Int
-  $sort: Sort
-  $limit: Int
-  $filter: EmoteSearchFilter
-) {
-  emotes(
-    query: $query
-    page: $page
-    sort: $sort
-    limit: $limit
-    filter: $filter
-  ) {
-    count
-    items {
-      id
-      name
-      state
-      trending
-      owner {
-        id
-        username
-        display_name
-        style {
-          color
-          paint_id
-          __typename
-        }
-        __typename
-      }
-      flags
-      host {
-        url
-        files {
-          name
-          format
-          width
-          height
-          __typename
-        }
-        __typename
-      }
-      __typename
-    }
-    __typename
-  }
-}
-""",
     }
 
     headers = {
         "authorization": str(os.getenv("7TV_TOKEN")),
         "content-type": "application/json",
     }
-
-    r = requests.post("https://7tv.io/v3/gql", headers=headers, json=query).json()
     try:
-        url = "http:" + r["data"]["emotes"]["items"][0]["host"]["url"]
-        uri = "/2x.png"
-        name = r["data"]["emotes"]["items"][0]["name"]
-
+        r = requests.post("https://7tv.io/v4/gql", headers=headers, json=query).json()
+        images = r["data"]["emotes"]["search"]["items"][0]["images"]
+        webp_2x = next(
+            img for img in images if img["mime"] == "image/webp" and img["scale"] == 2
+        )
+        url = webp_2x["url"]
+        name = r["data"]["emotes"]["search"]["items"][0]["defaultName"]
     except:
         content = "❌   **Emote Not Found! Try Again**"
         await ctx.edit(content=content)
         return
 
-    imageReq = requests.get(url + uri)
+    imageReq = requests.get(url)
     image = imageReq.content
-
-    if imageReq.status_code != 200:
-        uri = "/1x.gif"
-        image = requests.get(url + uri).content
-
-    content = url + uri
+    content = url
 
     if add:
         emote = await ctx.guild.create_custom_emoji(name=name, image=image)
