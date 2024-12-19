@@ -34,7 +34,8 @@ jobs:
             python3.11 -m pip uninstall discord.py -y
             python3.11 -m pip uninstall py-cord -y
             python3.11 -m pip install py-cord
-            aws configure set default.region us-east-1
+            aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+            aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
             aws s3 cp s3://${{ secrets.SECRET_BUCKET }}/.env .
             rm local_ssh_script-before*
             killall java

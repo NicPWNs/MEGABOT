@@ -40,7 +40,7 @@ async def queue(ctx):
         num += 1
 
     # Songs in auto queue
-    for song in voice.auto_queue[:10]:
+    for song in voice.auto_queue[:5]:
         title = re.sub(r"\s*[\(\[][^)]*[\)\]]", "", song.title).strip()
         description += f"{num}. **{title}** - *{song.author}*  ♾️\n"
         num += 1
