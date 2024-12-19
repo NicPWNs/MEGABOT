@@ -37,6 +37,7 @@ Another fully customized Discord bot for learning and fun. Using `pycord` to pra
 - `/replay`: Toggle replay of the current song.
 - `/restart`: Restart MEGABOT. Only works if it is online, of course. (Admin Only)
 - `/resume`: Resume music.
+- `/shuffle`: Shuffle the current queue.
 - `/skip`: Skip the current song.
 - `/stock`: Searches a stock price.
 - `/stop`: Stops music.
