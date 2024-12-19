@@ -31,7 +31,7 @@ async def queue(ctx):
     title = re.sub(r"\s*[\(\[][^)]*[\)\]]", "", voice.current.title).strip()
 
     # Now playing
-    description += f"__Now Playing 🎶:__ **{title}** - *{voice.current.author}*\n\n"
+    description += f"__Now Playing__🎶: **{title}** - *{voice.current.author}*\n\n"
 
     # Songs in regular queue
     for song in voice.queue:
