@@ -98,12 +98,18 @@ async def play(ctx, search):
             bars = int(position / increment)
             status = ("▬" * bars) + "🔘" + ("▬" * (15 - bars))
 
+            # Calculate current time and total time
+            current_minutes = int(position // 60)
+            current_seconds = int(position % 60)
+            total_minutes = int(length // 60)
+            total_seconds = int(length % 60)
+
             # Now playing
             embed = (
                 discord.Embed(
                     color=0x5DACED,
                     title="🎵  Now Playing",
-                    description=f"[**{title}**]({song.uri})\n\n▶️ {status} 🔊\n`[0:00/3:00]`",
+                    description=f"[**{title}**]({song.uri})\n\n▐{status}▌\n`[{current_minutes}:{current_seconds:02d}]`                      `[{total_minutes}:{total_seconds:02d}]`",
                 )
                 .set_thumbnail(url=song.artwork)
                 .set_footer(text=f"by {song.author}")
