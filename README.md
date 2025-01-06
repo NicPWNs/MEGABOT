@@ -8,6 +8,7 @@ Another fully customized Discord bot for learning and fun. Using `pycord` to pra
 
 ## 🤖 Commands
 
+- `/autoplay`: Toggle autoplay for music.
 - `/balance`: View MEGACOIN balance.
 - `/bank`: View the MEGACOIN balance leaderboard.
 - `/blackjack`: Play a hand of MEGACOIN blackjack.
