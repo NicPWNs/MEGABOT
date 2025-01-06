@@ -11,6 +11,7 @@ from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
 from jobs.boost_reward import boost_reward
 from jobs.random_photo import random_photo
+from commands.autoplay import autoplay
 from commands.balance import balance
 from commands.bank import bank
 from commands.blackjack import blackjack
