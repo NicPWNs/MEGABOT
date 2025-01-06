@@ -134,7 +134,7 @@ if __name__ == "__main__":
         channel = discord.utils.get(guild.channels, name="main")
         await channel.send(f"I'm watching you <@{member.id}> 👀...")
 
-    @bot.slash_command(name="autoplay", description="Disable or enable autoplay.")
+    @bot.slash_command(name="autoplay", description="Toggle autoplay for music.")
     async def call(ctx):
         if not (ctx.channel.name == "music" or ctx.channel.name == "bot-testing"):
             await ctx.send_response(
