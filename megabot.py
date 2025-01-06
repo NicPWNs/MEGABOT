@@ -12,6 +12,7 @@ from modules.random_discord_emoji import random_discord_emoji
 from jobs.boost_reward import boost_reward
 from jobs.random_photo import random_photo
 from jobs.fantasy_football_activity import fantasy_football_activity
+from commands.autoplay import autoplay
 from commands.balance import balance
 from commands.bank import bank
 from commands.blackjack import blackjack
@@ -139,6 +140,16 @@ if __name__ == "__main__":
 
         channel = discord.utils.get(guild.channels, name="main")
         await channel.send(f"I'm watching you <@{member.id}> 👀...")
+
+    @bot.slash_command(name="autoplay", description="Disable or enable autoplay.")
+    async def call(ctx):
+        if not (ctx.channel.name == "music" or ctx.channel.name == "bot-testing"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#956737389454311506>**",
+                ephemeral=True,
+            )
+            return
+        await autoplay(ctx)
 
     @bot.slash_command(name="balance", description="View MEGACOIN balance.")
     async def call(
