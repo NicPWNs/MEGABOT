@@ -11,8 +11,6 @@ from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
 from jobs.boost_reward import boost_reward
 from jobs.random_photo import random_photo
-from jobs.fantasy_football_activity import fantasy_football_activity
-from commands.autoplay import autoplay
 from commands.balance import balance
 from commands.bank import bank
 from commands.blackjack import blackjack
@@ -89,10 +87,6 @@ if __name__ == "__main__":
     async def post_random_photo(bot):
         await random_photo(bot)
 
-    @tasks.loop(time=datetime.time.fromisoformat("16:00:00"))
-    async def post_fantasy_football_activity(bot):
-        await fantasy_football_activity(bot)
-
     # Event Listeners
     @bot.listen("on_ready")
     async def on_ready():
@@ -104,7 +98,6 @@ if __name__ == "__main__":
         )
         booster_reward.start(bot)
         post_random_photo.start(bot)
-        post_fantasy_football_activity.start(bot)
         await connect_nodes()
 
     @bot.listen("on_message")
