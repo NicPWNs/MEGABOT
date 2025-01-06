@@ -134,6 +134,16 @@ if __name__ == "__main__":
         channel = discord.utils.get(guild.channels, name="main")
         await channel.send(f"I'm watching you <@{member.id}> 👀...")
 
+    @bot.slash_command(name="autoplay", description="Disable or enable autoplay.")
+    async def call(ctx):
+        if not (ctx.channel.name == "music" or ctx.channel.name == "bot-testing"):
+            await ctx.send_response(
+                content="❗**ERROR: You can only use this command in <#956737389454311506>**",
+                ephemeral=True,
+            )
+            return
+        await autoplay(ctx)
+
     @bot.slash_command(name="balance", description="View MEGACOIN balance.")
     async def call(
         ctx,
