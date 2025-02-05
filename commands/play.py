@@ -29,6 +29,18 @@ async def play(ctx, search):
         await interaction.edit_original_response(embed=embed)
         return
 
+    # Check if the input is a URL but not a YouTube URL
+    if search.startswith(("http://", "https://")) and not bool(
+        re.match(r"^(https?://)?(www\.)?(youtube\.com|youtu\.be)/.+$", search)
+    ):
+        embed = discord.Embed(
+            color=0xDD2F45,
+            title="❌  Error",
+            description="Only YouTube is supported. Please provide a YouTube URL or a search term.",
+        ).set_thumbnail(url=ctx.user.display_avatar)
+        await interaction.edit_original_response(embed=embed)
+        return
+
     # Search for songs
     songs = await wavelink.Playable.search(search)
 
