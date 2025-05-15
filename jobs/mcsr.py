@@ -7,7 +7,7 @@ import time
 
 async def mcsr(bot):
     guild = discord.utils.get(bot.guilds, name="MEGACORD")
-    channel = discord.utils.get(guild.channels, name="bot-testing")
+    channel = discord.utils.get(guild.channels, name="mc")
 
     # Get current leaderboard data
     discord_ids = [member.id for member in guild.members]
