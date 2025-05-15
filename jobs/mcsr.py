@@ -60,33 +60,49 @@ async def mcsr(bot):
         ).json()
 
         if matches["status"] == "success":
-            for match in matches["data"]:
-                match_time = match["date"]
+            # Get player's UUID from first match (will be same for all matches)
+            if matches["data"]:
+                player_uuid = next(
+                    (
+                        p["uuid"]
+                        for p in matches["data"][0]["players"]
+                        if p["nickname"] == matches["data"][0]["players"][0]["nickname"]
+                    ),
+                    None,
+                )
 
-                if match_time >= ten_mins_ago:
-                    # Convert milliseconds to min:sec format
-                    run_time_ms = match["result"]["time"]
-                    minutes = run_time_ms // 60000
-                    seconds = (run_time_ms % 60000) // 1000
+                for match in matches["data"]:
+                    match_time = match["date"]
 
-                    # Get list of all players in the match
-                    players = [p["nickname"] for p in match["players"]]
-                    versus_text = " **vs** ".join(players)
+                    # Only process if this player won the match
+                    if (
+                        match_time >= ten_mins_ago
+                        and match["result"]["uuid"] == player_uuid
+                    ):
 
-                    # Format date
-                    date_str = datetime.fromtimestamp(match_time).strftime(
-                        "%Y-%m-%d %H:%M"
-                    )
+                        # Convert milliseconds to min:sec format
+                        run_time_ms = match["result"]["time"]
+                        minutes = run_time_ms // 60000
+                        seconds = (run_time_ms % 60000) // 1000
 
-                    # Create and send individual embed for each run
-                    description = (
-                        f"<@{discord_id}> ({players[0]})  -  **{minutes}:{seconds:02d}**\n\n"
-                        f"__Match:__ {versus_text}"
-                    )
+                        # Get list of all players in the match
+                        players = [p["nickname"] for p in match["players"]]
+                        versus_text = " **vs** ".join(players)
 
-                    embed = discord.Embed(
-                        color=0x86CE34,
-                        title="<:MCSR:1372588978959548527>  New Minecraft Speed Run!",
-                        description=description,
-                    ).set_footer(text=date_str)
-                    await channel.send(embed=embed)
+                        # Format date
+                        date_str = datetime.fromtimestamp(match_time).strftime(
+                            "%Y-%m-%d %H:%M"
+                        )
+
+                        # Create and send individual embed for each run
+                        description = (
+                            f"<@{discord_id}> ({players[0]})  -  **{minutes}:{seconds:02d}**\n\n"
+                            f"__Match:__ {versus_text}"
+                        )
+
+                        embed = discord.Embed(
+                            color=0x86CE34,
+                            title="<:MCSR:1372588978959548527>  New Minecraft Speed Run!",
+                            description=description,
+                        ).set_footer(text=date_str)
+                        await channel.send(embed=embed)
