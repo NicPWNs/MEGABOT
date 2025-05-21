@@ -26,6 +26,7 @@ Another fully customized Discord bot for learning and fun. Using `pycord` to pra
 - `/kill`: Stop MEGABOT's process. (Admin Only)
 - `/loop`: Toggle loop of the music queue.
 - `/math <expression>`: Evaluate provided math expression.
+- `/mc`: View the Minecraft Speed Running Leaderboard.
 - `/nasa [details:True]`: Retrieve the NASA photo of the day.
 - `/pause`: Pause or resume music.
 - `/pay <user> <amount>`: Pay another user some MEGACOIN.
