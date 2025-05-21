@@ -9,7 +9,6 @@ from discord.ext import tasks
 from dotenv import load_dotenv
 from modules.greeting import greeting
 from modules.random_discord_emoji import random_discord_emoji
-from jobs.mcsr import mcsr
 from jobs.boost_reward import boost_reward
 from jobs.random_photo import random_photo
 from commands.autoplay import autoplay
@@ -90,10 +89,6 @@ if __name__ == "__main__":
     async def post_random_photo(bot):
         await random_photo(bot)
 
-    @tasks.loop(minutes=10)
-    async def post_new_speedrun(bot):
-        await mcsr(bot)
-
     # Event Listeners
     @bot.listen("on_ready")
     async def on_ready():
@@ -105,7 +100,6 @@ if __name__ == "__main__":
         )
         booster_reward.start(bot)
         post_random_photo.start(bot)
-        post_new_speedrun.start(bot)
         await connect_nodes()
 
     @bot.listen("on_message")
