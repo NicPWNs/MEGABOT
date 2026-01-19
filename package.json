@@ -17,7 +17,7 @@
     "@aws-sdk/client-s3": "^3.500.0",
     "@aws-sdk/lib-dynamodb": "^3.500.0",
     "@aws-sdk/s3-request-presigner": "^3.500.0",
-    "@octokit/rest": "^20.0.0",
+    "@octokit/rest": "^22.0.1",
     "discord-interactions": "^4.4.0",
     "tweetnacl": "^1.0.3"
   },
