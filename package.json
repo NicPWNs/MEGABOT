@@ -1,0 +1,34 @@
+{
+  "name": "megabot",
+  "version": "2.0.0",
+  "description": "MEGABOT Discord Bot - Serverless TypeScript on AWS with SST",
+  "type": "module",
+  "scripts": {
+    "dev": "sst dev",
+    "build": "sst build",
+    "deploy": "sst deploy --stage dev && sst shell --stage dev -- npx tsx scripts/register-commands.ts",
+    "deploy:prod": "sst deploy --stage production && sst shell --stage production -- npx tsx scripts/register-commands.ts",
+    "remove": "sst remove",
+    "register-commands": "sst shell -- npx tsx scripts/register-commands.ts",
+    "typecheck": "tsc --noEmit"
+  },
+  "dependencies": {
+    "@aws-sdk/client-dynamodb": "^3.500.0",
+    "@aws-sdk/client-s3": "^3.500.0",
+    "@aws-sdk/lib-dynamodb": "^3.500.0",
+    "@aws-sdk/s3-request-presigner": "^3.500.0",
+    "@octokit/rest": "^20.0.0",
+    "discord-interactions": "^3.4.0",
+    "tweetnacl": "^1.0.3"
+  },
+  "devDependencies": {
+    "@types/aws-lambda": "^8.10.145",
+    "@types/node": "^20.10.0",
+    "sst": "^3.0.0",
+    "tsx": "^4.7.0",
+    "typescript": "^5.3.0"
+  },
+  "engines": {
+    "node": ">=20.0.0"
+  }
+}
