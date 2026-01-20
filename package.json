@@ -22,7 +22,7 @@
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
-    "@types/aws-lambda": "^8.10.145",
+    "@types/aws-lambda": "^8.10.160",
     "@types/node": "^25.0.9",
     "sst": "^3.0.0",
     "tsx": "^4.7.0",
