@@ -26,3 +26,9 @@ jobs:
         run: |
           npm i --legacy-peer-deps
           npx sst@latest deploy --stage production
+
+      - name: Register Discord commands
+        env:
+          DISCORD_APPLICATION_ID: ${{ secrets.DISCORD_APPLICATION_ID }}
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+        run: npx tsx scripts/register-commands.ts
