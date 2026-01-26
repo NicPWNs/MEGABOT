@@ -1,0 +1,29 @@
+name: SST Deploy
+permissions:
+  contents: read
+on:
+  push:
+    branches:
+      - main
+  workflow_dispatch:
+
+jobs:
+  DeployApp:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Git clone the repository
+        uses: actions/checkout@v4
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Deploy app
+        env:
+          AWS_ACCESS_KEY_ID: ${{ secrets.AWS_ACCESS_KEY_ID }}
+          AWS_SECRET_ACCESS_KEY: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+          AWS_DEFAULT_REGION: "us-east-1"
+        run: |
+          npm i --legacy-peer-deps
+          npx sst@latest deploy --stage production
+          npx sst@latest shell --stage production -- npx tsx scripts/register-commands.ts
