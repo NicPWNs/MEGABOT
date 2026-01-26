@@ -13,17 +13,17 @@
     "typecheck": "tsc --noEmit"
   },
   "dependencies": {
-    "@aws-sdk/client-dynamodb": "^3.500.0",
-    "@aws-sdk/client-s3": "^3.500.0",
-    "@aws-sdk/lib-dynamodb": "^3.500.0",
-    "@aws-sdk/s3-request-presigner": "^3.500.0",
+    "@aws-sdk/client-dynamodb": "^3.975.0",
+    "@aws-sdk/client-s3": "^3.975.0",
+    "@aws-sdk/lib-dynamodb": "^3.975.0",
+    "@aws-sdk/s3-request-presigner": "^3.975.0",
     "@octokit/rest": "^22.0.1",
     "discord-interactions": "^4.4.0",
     "tweetnacl": "^1.0.3"
   },
   "devDependencies": {
     "@types/aws-lambda": "^8.10.160",
-    "@types/node": "^25.0.9",
+    "@types/node": "^25.0.10",
     "sst": "^3.17.38",
     "tsx": "^4.7.0",
     "typescript": "^5.3.0"
