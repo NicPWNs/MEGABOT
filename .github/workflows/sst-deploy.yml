@@ -26,4 +26,3 @@ jobs:
         run: |
           npm i --legacy-peer-deps
           npx sst@latest deploy --stage production
-          npx sst@latest shell --stage production -- npx tsx scripts/register-commands.ts
