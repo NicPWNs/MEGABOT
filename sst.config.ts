@@ -104,32 +104,6 @@ export default $config({
       },
     });
 
-    // Random Photo - Daily at 1 PM UTC
-    new sst.aws.Cron("RandomPhotoJob", {
-      schedule: "cron(0 13 * * ? *)",
-      job: {
-        handler: "handlers/jobs/random-photo.handler",
-        timeout: "30 seconds",
-        memory: "256 MB",
-        environment: {
-          DISCORD_BOT_TOKEN: discordBotToken.value,
-          MAIN_CHANNEL_ID: mainChannelId.value,
-          PHOTOS_TABLE: photosTableName,
-          PHOTO_BUCKET: photoBucket.value,
-        },
-        permissions: [
-          {
-            actions: ["dynamodb:Scan"],
-            resources: [`arn:aws:dynamodb:*:*:table/${photosTableName}`],
-          },
-          {
-            actions: ["s3:GetObject"],
-            resources: ["arn:aws:s3:::*/*"],
-          },
-        ],
-      },
-    });
-
     return {
       apiUrl: api.url,
       interactionsEndpoint: $interpolate`${api.url}interactions`,
