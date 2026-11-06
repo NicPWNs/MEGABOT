@@ -14,6 +14,8 @@ export interface CommandOption {
   choices?: { name: string; value: string | number }[];
   min_value?: number;
   max_value?: number;
+  min_length?: number;
+  max_length?: number;
 }
 
 export enum CommandOptionType {
@@ -57,61 +59,79 @@ export const COMMANDS: SlashCommand[] = [
         name: "question",
         description: "Question to poll for.",
         type: CommandOptionType.STRING,
+        max_length: 300,
         required: true,
       },
       {
         name: "option1",
         description: "First option.",
         type: CommandOptionType.STRING,
+        max_length: 55,
         required: true,
       },
       {
         name: "option2",
         description: "Second option.",
         type: CommandOptionType.STRING,
+        max_length: 55,
         required: true,
       },
       {
         name: "option3",
         description: "Third option.",
         type: CommandOptionType.STRING,
+        max_length: 55,
         required: false,
       },
       {
         name: "option4",
         description: "Fourth option.",
         type: CommandOptionType.STRING,
+        max_length: 55,
         required: false,
       },
       {
         name: "option5",
         description: "Fifth option.",
         type: CommandOptionType.STRING,
+        max_length: 55,
         required: false,
       },
       {
         name: "option6",
         description: "Sixth option.",
         type: CommandOptionType.STRING,
+        max_length: 55,
         required: false,
       },
       {
         name: "option7",
         description: "Seventh option.",
         type: CommandOptionType.STRING,
+        max_length: 55,
         required: false,
       },
       {
         name: "option8",
         description: "Eighth option.",
         type: CommandOptionType.STRING,
+        max_length: 55,
         required: false,
       },
       {
         name: "option9",
         description: "Ninth option.",
         type: CommandOptionType.STRING,
+        max_length: 55,
         required: false,
+      },
+      {
+        name: "hours",
+        description: "How long the poll stays open, in hours (default 24).",
+        type: CommandOptionType.INTEGER,
+        required: false,
+        min_value: 1,
+        max_value: 768,
       },
     ],
   },

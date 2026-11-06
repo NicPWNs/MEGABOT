@@ -149,6 +149,21 @@ export interface InteractionResponseData {
   components?: ActionRow[];
   flags?: number;
   tts?: boolean;
+  poll?: PollCreateRequest;
+}
+
+// Native Discord poll (https://discord.com/developers/docs/resources/poll)
+export interface PollMedia {
+  text?: string;
+  emoji?: { id?: string; name?: string };
+}
+
+export interface PollCreateRequest {
+  question: PollMedia;
+  answers: { poll_media: PollMedia }[];
+  duration?: number; // hours, 1-768
+  allow_multiselect?: boolean;
+  layout_type?: number;
 }
 
 // Message Flags

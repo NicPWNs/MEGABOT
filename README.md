@@ -26,7 +26,7 @@ MEGABOT is a fully customized Discord bot, now rewritten in **TypeScript** and d
 - `/payout <user> <amount> <message>`: Payout MEGACOIN. (Admin Only)
 - `/photo`: Return a random photo from the MEGABOT database.
 - `/ping`: Responds with pong.
-- `/poll`: Create a poll with up to nine options.
+- `/poll [hours:24]`: Create a Discord poll with up to nine options.
 - `/streak [stats:True]`: Keep a daily streak going!
 - `/stock`: Searches a stock price.
 - `/version`: Return the latest MEGABOT version number.
