@@ -44,7 +44,7 @@ export async function handleColor(
     {
       title: "MEGAMODS Name Color",
       description: reset
-        ? "Your color is back to the default MEGAMODS red."
+        ? "Your color is back to the default color."
         : `Your name color is now **#${color!.toString(16).padStart(6, "0").toUpperCase()}**. Use \`/color reset:true\` to return to red.`,
       color: color ?? 0xdd2f45,
     },
