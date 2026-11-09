@@ -53,11 +53,6 @@ export const COLOR_PALETTE = [
   { name: "Turquoise", value: "turquoise", color: 0x1b987f },
   { name: "Sky Blue", value: "sky-blue", color: 0x2391c7 },
   { name: "Azure", value: "azure", color: 0x388adc },
-  { name: "Indigo", value: "indigo", color: 0x7881e2 },
-  { name: "Periwinkle", value: "periwinkle", color: 0x8978dd },
-  { name: "Violet", value: "violet", color: 0x9c75d1 },
-  { name: "Orchid", value: "orchid", color: 0xc262cb },
-  { name: "Magenta", value: "magenta", color: 0xe04dbb },
 ] as const;
 
 // All registered commands

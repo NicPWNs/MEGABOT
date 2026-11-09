@@ -129,20 +129,6 @@ export interface GuildRole {
   position: number;
 }
 
-export interface GuildMemberResponse {
-  user: DiscordGuildUser;
-  nick?: string;
-  roles: string[];
-  joined_at?: string;
-  premium_since?: string;
-}
-
-export interface DiscordGuildUser {
-  id: string;
-  username: string;
-  bot?: boolean;
-}
-
 export interface ColorRoleState {
   roles: GuildRole[];
   byValue: Map<string, GuildRole>;
@@ -260,24 +246,6 @@ export async function setMegamodColor(
   const member = await getGuildMember(guildId, userId);
   if (!member) throw new Error("Guild member was not found");
   await assignColorRole(guildId, userId, role.id, member.roles, roleState);
-}
-
-export async function getGuildMembersPage(
-  guildId: string,
-  after?: string,
-): Promise<GuildMemberResponse[]> {
-  const query = new URLSearchParams({ limit: "1000" });
-  if (after) query.set("after", after);
-  return discordFetch<GuildMemberResponse[]>(
-    `/guilds/${guildId}/members?${query.toString()}`,
-  );
-}
-
-export function isColorRole(role: GuildRole): boolean {
-  return (
-    role.name.startsWith(SHARED_COLOR_ROLE_PREFIX) ||
-    role.name.startsWith(LEGACY_COLOR_ROLE_PREFIX)
-  );
 }
 
 // Type definitions
