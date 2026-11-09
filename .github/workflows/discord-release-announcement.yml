@@ -1,0 +1,69 @@
+name: Discord Release Announcement
+
+on:
+  release:
+    types: [published]
+
+permissions:
+  contents: read
+
+jobs:
+  announce:
+    if: ${{ !github.event.release.prerelease }}
+    runs-on: ubuntu-latest
+    steps:
+      - name: Post release summary to Discord
+        env:
+          DISCORD_TOKEN: ${{ secrets.DISCORD_TOKEN }}
+          DISCORD_APPLICATION_ID: ${{ secrets.DISCORD_APPLICATION_ID }}
+          ANNOUNCEMENTS_CHANNEL_ID: ${{ secrets.ANNOUNCEMENTS_CHANNEL_ID }}
+          GITHUB_EVENT_PATH: ${{ github.event_path }}
+        run: |
+          node <<'NODE'
+          const { readFileSync } = require("node:fs");
+
+          async function main() {
+            const { release } = JSON.parse(readFileSync(process.env.GITHUB_EVENT_PATH, "utf8"));
+            const body = release.body || "";
+            const heading = /^##\s+Discord Announcement\s*$/im;
+            const match = heading.exec(body);
+            if (!match) {
+              throw new Error('Release notes must include a "## Discord Announcement" section.');
+            }
+
+            const start = match.index + match[0].length;
+            const remaining = body.slice(start);
+            const nextHeading = /^##\s+/m.exec(remaining);
+            const summary = (nextHeading ? remaining.slice(0, nextHeading.index) : remaining).trim();
+            if (!summary) throw new Error("The Discord Announcement section is empty.");
+
+            const botId = process.env.DISCORD_APPLICATION_ID;
+            const content = `<@${botId}> ${release.tag_name} Release\n${summary}`;
+            if (content.length > 2000) throw new Error("Discord announcement exceeds 2,000 characters.");
+
+            const response = await fetch(
+              `https://discord.com/api/v10/channels/${process.env.ANNOUNCEMENTS_CHANNEL_ID}/messages`,
+              {
+                method: "POST",
+                headers: {
+                  Authorization: `Bot ${process.env.DISCORD_TOKEN}`,
+                  "Content-Type": "application/json",
+                },
+                body: JSON.stringify({
+                  content,
+                  allowed_mentions: { users: [botId] },
+                }),
+              },
+            );
+
+            if (!response.ok) {
+              throw new Error(`Discord API returned ${response.status}: ${await response.text()}`);
+            }
+            console.log(`Posted ${release.tag_name} announcement to Discord.`);
+          }
+
+          main().catch((error) => {
+            console.error(error);
+            process.exitCode = 1;
+          });
+          NODE
