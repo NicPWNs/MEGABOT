@@ -218,7 +218,7 @@ export const COMMANDS: SlashCommand[] = [
   },
   {
     name: "color",
-    description: "Set or reset your MEGAMODS name color.",
+    description: "Set or reset your name color.",
     options: [
       {
         name: "color",

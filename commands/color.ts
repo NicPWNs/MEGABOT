@@ -3,7 +3,7 @@ import { getOptionValue, getUser } from "../handlers/commands";
 import { embedResponse, errorResponse } from "../utils/discord";
 import { setMegamodColor } from "../utils/discord-api";
 
-const MEGAMODS_ROLE_ID = "1022557623859556452";
+const MODERATOR_ROLE_ID = "1022557623859556452";
 
 const NAMED_COLORS: Record<string, number> = {
   black: 0x000000,
@@ -74,8 +74,8 @@ export async function handleColor(
     return errorResponse("This command can only be used in a server.");
   }
 
-  if (!interaction.member.roles.includes(MEGAMODS_ROLE_ID)) {
-    return errorResponse("This command is only available to MEGAMODS members.");
+  if (!interaction.member.roles.includes(MODERATOR_ROLE_ID)) {
+    return errorResponse("This command is only available to moderators.");
   }
 
   const inputColor = getOptionValue<string>(interaction, "color");
@@ -97,15 +97,15 @@ export async function handleColor(
   try {
     await setMegamodColor(guildId, user.id, color);
   } catch (error) {
-    console.error("Failed to update MEGAMODS color:", error);
+    console.error("Failed to update color:", error);
     return errorResponse(
-      "I couldn't update your color. The bot needs Manage Roles, and its role must be above MEGAMODS.",
+      "I couldn't update your color. The bot needs Manage Roles and must be ranked above your color role.",
     );
   }
 
   return embedResponse(
     {
-      title: "MEGAMODS Name Color",
+      title: "Name Color",
       description: reset
         ? "Your color is back to the default color."
         : `Your name color is now **#${color!.toString(16).padStart(6, "0").toUpperCase()}**. Use \`/color reset:true\` to return to red.`,
