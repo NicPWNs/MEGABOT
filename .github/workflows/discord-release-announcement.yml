@@ -38,7 +38,7 @@ jobs:
             if (!summary) throw new Error("The Discord Announcement section is empty.");
 
             const botId = process.env.DISCORD_APPLICATION_ID;
-            const content = `<@${botId}> ${release.tag_name} Release\n${summary}`;
+            const content = `<@${botId}> **${release.tag_name} Release**\n${summary}`;
             if (content.length > 2000) throw new Error("Discord announcement exceeds 2,000 characters.");
 
             const response = await fetch(
