@@ -5,7 +5,7 @@ import { setMegamodColor } from "../utils/discord-api";
 
 const MEGAMODS_ROLE_ID = "1022557623859556452";
 
-export async function handleMegaColor(
+export async function handleColor(
   interaction: DiscordInteraction,
 ): Promise<InteractionResponse> {
   const guildId = interaction.guild_id;
@@ -45,7 +45,7 @@ export async function handleMegaColor(
       title: "MEGAMODS Name Color",
       description: reset
         ? "Your color is back to the default MEGAMODS red."
-        : `Your name color is now **#${color!.toString(16).padStart(6, "0").toUpperCase()}**. Use \`/megacolor reset:true\` to return to red.`,
+        : `Your name color is now **#${color!.toString(16).padStart(6, "0").toUpperCase()}**. Use \`/color reset:true\` to return to red.`,
       color: color ?? 0xdd2f45,
     },
     true,
