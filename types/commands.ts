@@ -194,7 +194,7 @@ export const COMMANDS: SlashCommand[] = [
   },
   {
     name: "payout",
-    description: "Payout MEGACOIN. (Admin only)",
+    description: "Payout MEGACOIN. (MEGALORDS only)",
     options: [
       {
         name: "user",
@@ -228,7 +228,7 @@ export const COMMANDS: SlashCommand[] = [
       },
       {
         name: "reset",
-        description: "Reset your name color to the default MEGAMODS red.",
+        description: "Reset your name color to your default color.",
         type: CommandOptionType.BOOLEAN,
         required: false,
       },

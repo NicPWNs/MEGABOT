@@ -3,8 +3,6 @@ import { getOptionValue, getUser } from "../handlers/commands";
 import { embedResponse, errorResponse } from "../utils/discord";
 import { setMegamodColor } from "../utils/discord-api";
 
-const MODERATOR_ROLE_ID = "1022557623859556452";
-
 const NAMED_COLORS: Record<string, number> = {
   black: 0x000000,
   white: 0xffffff,
@@ -72,10 +70,6 @@ export async function handleColor(
   const user = getUser(interaction);
   if (!guildId || !interaction.member) {
     return errorResponse("This command can only be used in a server.");
-  }
-
-  if (!interaction.member.roles.includes(MODERATOR_ROLE_ID)) {
-    return errorResponse("This command is only available to moderators.");
   }
 
   const inputColor = getOptionValue<string>(interaction, "color");
