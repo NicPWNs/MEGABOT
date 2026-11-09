@@ -14,21 +14,19 @@ export async function handleColor(
   }
 
   const inputColor = getOptionValue<string>(interaction, "color");
-  const reset = getOptionValue<boolean>(interaction, "reset") === true;
-  if ((inputColor === undefined) === !reset) {
-    return errorResponse("Choose a palette color or set reset to true.");
+  if (inputColor === undefined) {
+    return errorResponse("Choose a color from the palette.");
   }
 
   const selectedColor = COLOR_PALETTE.find(
     (option) => option.value === inputColor,
   );
-  if (!reset && !selectedColor) {
+  if (!selectedColor) {
     return errorResponse("Choose one of the available palette colors.");
   }
-  const color = reset ? null : selectedColor!.color;
 
   try {
-    await setMegamodColor(guildId, user.id, color);
+    await setMegamodColor(guildId, user.id, selectedColor.value);
   } catch (error) {
     console.error("Failed to update color:", error);
     return errorResponse(
@@ -39,10 +37,8 @@ export async function handleColor(
   return embedResponse(
     {
       title: "Name Color",
-      description: reset
-        ? "Your color is back to the default color."
-        : `Your name color is now **${selectedColor!.name}**. Use \`/color reset:true\` to return to your default color.`,
-      color: color ?? 0xdd2f45,
+      description: `Your name color is now **${selectedColor.name}**.`,
+      color: selectedColor.color,
     },
     true,
   );

@@ -2,6 +2,8 @@
  * Discord REST API utilities for making authenticated API calls
  */
 
+import { COLOR_PALETTE } from "../types/commands";
+
 const DISCORD_API = "https://discord.com/api/v10";
 
 interface DiscordAPIOptions {
@@ -21,14 +23,21 @@ async function discordFetch<T>(
     throw new Error("DISCORD_BOT_TOKEN not configured");
   }
 
-  const response = await fetch(`${DISCORD_API}${endpoint}`, {
-    method: options.method || "GET",
-    headers: {
-      Authorization: `Bot ${token}`,
-      "Content-Type": "application/json",
-    },
-    body: options.body ? JSON.stringify(options.body) : undefined,
-  });
+  let response: Response;
+  for (let attempt = 0; ; attempt++) {
+    response = await fetch(`${DISCORD_API}${endpoint}`, {
+      method: options.method || "GET",
+      headers: {
+        Authorization: `Bot ${token}`,
+        "Content-Type": "application/json",
+      },
+      body: options.body ? JSON.stringify(options.body) : undefined,
+    });
+    if (response.status !== 429 || attempt >= 5) break;
+    const rateLimit = (await response.json()) as { retry_after?: number };
+    const retryAfterMs = Math.ceil((rateLimit.retry_after ?? 1) * 1000);
+    await new Promise((resolve) => setTimeout(resolve, retryAfterMs));
+  }
 
   if (!response.ok) {
     const error = await response.text();
@@ -111,73 +120,139 @@ export async function userHasRole(
 }
 
 const MEGAMODS_ROLE_ID = "1022557623859556452";
-const COLOR_ROLE_PREFIX = "MEGAMOD-COLOR-";
+const SHARED_COLOR_ROLE_PREFIX = "MEGABOT-COLOR-";
+const LEGACY_COLOR_ROLE_PREFIX = "MEGAMOD-COLOR-";
 
-/** Assign a per-member color role positioned above MEGAMODS, or remove it. */
-export async function setMegamodColor(
-  guildId: string,
-  userId: string,
-  color: number | null,
-): Promise<void> {
-  const roles = await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`);
-  const megamodsRole = roles.find((role) => role.id === MEGAMODS_ROLE_ID);
-  if (!megamodsRole) throw new Error("MEGAMODS role was not found");
-
-  const roleName = `${COLOR_ROLE_PREFIX}${userId}`;
-  let colorRole = roles.find((role) => role.name === roleName);
-
-  if (color === null) {
-    if (colorRole) {
-      await discordFetch(`/guilds/${guildId}/roles/${colorRole.id}`, {
-        method: "DELETE",
-      });
-    }
-    return;
-  }
-
-  if (colorRole) {
-    colorRole = await discordFetch<GuildRole>(
-      `/guilds/${guildId}/roles/${colorRole.id}`,
-      { method: "PATCH", body: { color } },
-    );
-  } else {
-    colorRole = await discordFetch<GuildRole>(`/guilds/${guildId}/roles`, {
-      method: "POST",
-      body: {
-        name: roleName,
-        color,
-        permissions: "0",
-        hoist: false,
-        mentionable: false,
-      },
-    });
-    await discordFetch(`/guilds/${guildId}/roles`, {
-      method: "PATCH",
-      body: [{ id: colorRole.id, position: megamodsRole.position + 1 }],
-    });
-  }
-
-  await discordFetch(
-    `/guilds/${guildId}/members/${userId}/roles/${colorRole.id}`,
-    { method: "PUT" },
-  );
-}
-
-// Type definitions
-interface GuildMemberResponse {
-  user?: {
-    id: string;
-    username: string;
-    avatar?: string;
-  };
-  nick?: string;
-  roles: string[];
-  premium_since?: string;
-}
-
-interface GuildRole {
+export interface GuildRole {
   id: string;
   name: string;
   color: number;
   position: number;
 }
+
+export interface GuildMemberResponse {
+  user: DiscordGuildUser;
+  nick?: string;
+  roles: string[];
+  joined_at?: string;
+  premium_since?: string;
+}
+
+export interface DiscordGuildUser {
+  id: string;
+  username: string;
+  bot?: boolean;
+}
+
+export interface ColorRoleState {
+  roles: GuildRole[];
+  byValue: Map<string, GuildRole>;
+  roleIds: Set<string>;
+}
+
+/** Ensure the shared palette roles exist and sit above MEGAMODS. */
+export async function ensureColorRoles(
+  guildId: string,
+  requestedValues: string[] = [],
+): Promise<ColorRoleState> {
+  const roles = await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`);
+  const megamodsRole = roles.find((role) => role.id === MEGAMODS_ROLE_ID);
+  if (!megamodsRole) throw new Error("MEGAMODS role was not found");
+
+  const byValue = new Map<string, GuildRole>();
+  for (const color of COLOR_PALETTE) {
+    const roleName = `${SHARED_COLOR_ROLE_PREFIX}${color.value.toUpperCase()}`;
+    let role = roles.find((existing) => existing.name === roleName);
+    if (!role && requestedValues.includes(color.value)) {
+      role = await discordFetch<GuildRole>(`/guilds/${guildId}/roles`, {
+        method: "POST",
+        body: {
+          name: roleName,
+          color: color.color,
+          permissions: "0",
+          hoist: false,
+          mentionable: false,
+        },
+      });
+      roles.push(role);
+    }
+    if (role) byValue.set(color.value, role);
+  }
+
+  const colorRoles = roles.filter((role) =>
+    role.name.startsWith(SHARED_COLOR_ROLE_PREFIX),
+  );
+  if (colorRoles.some((role) => role.position <= megamodsRole.position)) {
+    const positions = colorRoles.map((role, index) => ({
+      id: role.id,
+      position: megamodsRole.position + index + 1,
+    }));
+    await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`, {
+      method: "PATCH",
+      body: positions,
+    });
+  }
+
+  return { roles, byValue, roleIds: new Set(colorRoles.map((role) => role.id)) };
+}
+
+/** Assign a shared palette role, removing any previous shared or legacy color role. */
+export async function assignColorRole(
+  guildId: string,
+  userId: string,
+  roleId: string,
+  memberRoles: string[],
+  roleState: ColorRoleState,
+): Promise<void> {
+  const legacyRole = roleState.roles.find(
+    (role) => role.name === `${LEGACY_COLOR_ROLE_PREFIX}${userId}`,
+  );
+  const oldRoleIds = memberRoles.filter(
+    (id) => roleState.roleIds.has(id) || id === legacyRole?.id,
+  );
+  if (oldRoleIds.length) {
+    for (const oldRoleId of oldRoleIds) {
+      await discordFetch(
+        `/guilds/${guildId}/members/${userId}/roles/${oldRoleId}`,
+        { method: "DELETE" },
+      );
+    }
+  }
+  await discordFetch(
+    `/guilds/${guildId}/members/${userId}/roles/${roleId}`,
+    { method: "PUT" },
+  );
+}
+
+export async function setMegamodColor(
+  guildId: string,
+  userId: string,
+  colorValue: string,
+): Promise<void> {
+  const roleState = await ensureColorRoles(guildId, [colorValue]);
+  const role = roleState.byValue.get(colorValue);
+  if (!role) throw new Error("Unknown palette color");
+  const member = await getGuildMember(guildId, userId);
+  if (!member) throw new Error("Guild member was not found");
+  await assignColorRole(guildId, userId, role.id, member.roles, roleState);
+}
+
+export async function getGuildMembersPage(
+  guildId: string,
+  after?: string,
+): Promise<GuildMemberResponse[]> {
+  const query = new URLSearchParams({ limit: "1000" });
+  if (after) query.set("after", after);
+  return discordFetch<GuildMemberResponse[]>(
+    `/guilds/${guildId}/members?${query.toString()}`,
+  );
+}
+
+export function isColorRole(role: GuildRole): boolean {
+  return (
+    role.name.startsWith(SHARED_COLOR_ROLE_PREFIX) ||
+    role.name.startsWith(LEGACY_COLOR_ROLE_PREFIX)
+  );
+}
+
+// Type definitions

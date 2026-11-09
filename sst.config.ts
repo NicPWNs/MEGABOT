@@ -104,6 +104,22 @@ export default $config({
       },
     });
 
+    // Fill missing member colors and assign colors to members who have joined
+    // since the previous scan. Existing color roles are left as-is.
+    new sst.aws.Cron("MemberColorJob", {
+      schedule: "rate(5 minutes)",
+      job: {
+        handler: "handlers/jobs/member-colors.handler",
+        timeout: "15 minutes",
+        memory: "1024 MB",
+        concurrency: { reserved: 1 },
+        environment: {
+          DISCORD_BOT_TOKEN: discordBotToken.value,
+          GUILD_ID: guildId.value,
+        },
+      },
+    });
+
     return {
       apiUrl: api.url,
       interactionsEndpoint: $interpolate`${api.url}interactions`,

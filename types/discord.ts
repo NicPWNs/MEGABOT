@@ -55,6 +55,7 @@ export interface DiscordUser {
   discriminator: string;
   global_name?: string;
   avatar?: string;
+  bot?: boolean;
 }
 
 export interface DiscordMessage {

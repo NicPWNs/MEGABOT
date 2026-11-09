@@ -246,20 +246,14 @@ export const COMMANDS: SlashCommand[] = [
   },
   {
     name: "color",
-    description: "Set or reset your name color.",
+    description: "Set your name color.",
     options: [
       {
         name: "color",
         description: "Choose a color from the palette.",
         type: CommandOptionType.STRING,
-        required: false,
+        required: true,
         choices: COLOR_PALETTE.map(({ name, value }) => ({ name, value })),
-      },
-      {
-        name: "reset",
-        description: "Reset your name color to your default color.",
-        type: CommandOptionType.BOOLEAN,
-        required: false,
       },
     ],
   },

@@ -14,7 +14,7 @@ MEGABOT is a customized Discord bot written in **TypeScript** and deployed on AW
 - `/bless`: Blesses the mess!
 - `/bug <title> <description>`: Report a MEGABOT bug.
 - `/coin`: Flip a coin.
-- `/color`: Set or reset your name color (available to all members).
+- `/color`: Choose your name color.
 - `/dice`: Roll a dice.
 - `/double <wager>`: Play MEGACOIN double or nothing.
 - `/emote <search>`: Search for a 7TV emote.
