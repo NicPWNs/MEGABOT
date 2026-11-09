@@ -3,7 +3,7 @@ import {
   InteractionResponse,
   MEGACOIN_EMOJI,
 } from "../types/discord";
-import { embedResponse } from "../utils/discord";
+import { embedResponse, errorResponse } from "../utils/discord";
 import { getOptionValue, getUser, getResolvedUser } from "../handlers/commands";
 import { getBalance, transferCoins } from "../services/megacoin";
 import { sendDM } from "../utils/discord-api";
@@ -17,7 +17,7 @@ export async function handlePay(
 
   // Can't pay negative or zero (matches Python)
   if (amount < 0) {
-    return embedResponse({
+    return errorResponse({
       title: "💸 Payment",
       description: "🤡 Nice try.",
       color: 0xa7d38a,
@@ -28,7 +28,7 @@ export async function handlePay(
   const balance = await getBalance(user.id);
 
   if (balance === 0) {
-    return embedResponse({
+    return errorResponse({
       title: "💸 Payment",
       description: `You have 0 ${MEGACOIN_EMOJI}`,
       color: 0xa7d38a,
@@ -36,7 +36,7 @@ export async function handlePay(
   }
 
   if (balance < amount) {
-    return embedResponse({
+    return errorResponse({
       title: "💸 Payment",
       description: `You don't have ${amount} ${MEGACOIN_EMOJI}`,
       color: 0xa7d38a,
@@ -57,7 +57,7 @@ export async function handlePay(
   );
 
   if (!result.success) {
-    return embedResponse({
+    return errorResponse({
       title: "💸 Payment",
       description: result.message,
       color: 0xa7d38a,

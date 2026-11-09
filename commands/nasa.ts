@@ -1,5 +1,9 @@
-import { DiscordInteraction, InteractionResponse } from "../types/discord";
-import { embedResponse, errorResponse, textResponse } from "../utils/discord";
+import {
+  DiscordInteraction,
+  InteractionResponse,
+  Colors,
+} from "../types/discord";
+import { embedResponse, errorResponse } from "../utils/discord";
 import { getOptionValue } from "../handlers/commands";
 
 interface NasaApodResponse {
@@ -18,15 +22,21 @@ export async function handleNasa(
   try {
     const url = `https://api.nasa.gov/planetary/apod?api_key=${apiKey}`;
     const response = await fetch(url);
+    if (!response.ok) throw new Error(`NASA API returned ${response.status}`);
     const data = (await response.json()) as NasaApodResponse;
 
-    let content = data.url;
+    const description = showDetails
+      ? `${data.explanation}${data.media_type === "image" ? "" : `\n\n[Open today's media](${data.url})`}`
+      : data.media_type === "image"
+        ? undefined
+        : `[Open today's media](${data.url})`;
 
-    if (showDetails) {
-      content += `\n\n**${data.title}**\n${data.explanation}`;
-    }
-
-    return textResponse(content);
+    return embedResponse({
+      title: data.title || "NASA Astronomy Picture of the Day",
+      description,
+      color: Colors.BLUE,
+      image: data.media_type === "image" ? { url: data.url } : undefined,
+    });
   } catch (error) {
     console.error("NASA API error:", error);
     return errorResponse(

@@ -57,17 +57,20 @@ export async function handleStreak(
     const stats = await getStreakStats();
     const userData = await getStreakData(user.id);
 
-    return embedResponse({
-      title: "📊 Streak Stats",
-      description:
-        `**Your Stats:**\n` +
-        `Current Streak: **${userData?.streak || 0}** days\n` +
-        `Personal Record: **${userData?.personalRecord || 0}** days\n\n` +
-        `**Server Records:**\n` +
-        `🏆 All-Time Record: **${stats.allTimeStreak.stat}** days by <@${stats.allTimeStreak.userId}>\n` +
-        `🔥 Current Highest: **${stats.currentStreak.stat}** days by <@${stats.currentStreak.userId}>`,
-      color: Colors.GOLD,
-    });
+    return embedResponse(
+      {
+        title: "📊 Streak Stats",
+        description:
+          `**Your Stats:**\n` +
+          `Current Streak: **${userData?.streak || 0}** days\n` +
+          `Personal Record: **${userData?.personalRecord || 0}** days\n\n` +
+          `**Server Records:**\n` +
+          `🏆 All-Time Record: **${stats.allTimeStreak.stat}** days by <@${stats.allTimeStreak.userId}>\n` +
+          `🔥 Current Highest: **${stats.currentStreak.stat}** days by <@${stats.currentStreak.userId}>`,
+        color: Colors.GOLD,
+      },
+      true,
+    );
   }
 
   // Process the streak

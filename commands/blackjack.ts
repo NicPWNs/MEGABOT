@@ -125,7 +125,7 @@ export async function handleBlackjack(
 
   // Validation (matches Python: wager < 0 check)
   if (wager < 0) {
-    return embedResponse({
+    return errorResponse({
       title: "🃏 Blackjack",
       description: "🤡 Nice try.",
       color: Colors.PURPLE,
@@ -135,7 +135,7 @@ export async function handleBlackjack(
   const balance = await getBalance(user.id);
 
   if (balance === 0) {
-    return embedResponse({
+    return errorResponse({
       title: "🃏 Blackjack",
       description: `You have 0 ${MEGACOIN_EMOJI}`,
       color: Colors.PURPLE,
@@ -143,7 +143,7 @@ export async function handleBlackjack(
   }
 
   if (balance < wager) {
-    return embedResponse({
+    return errorResponse({
       title: "🃏 Blackjack",
       description: `You don't have ${wager} ${MEGACOIN_EMOJI}`,
       color: Colors.PURPLE,

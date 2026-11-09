@@ -10,25 +10,7 @@ import {
   Colors,
 } from "../types/discord";
 
-/**
- * Create a simple text response
- */
-export function textResponse(
-  content: string,
-  ephemeral = false,
-): InteractionResponse {
-  return {
-    type: InteractionResponseType.CHANNEL_MESSAGE_WITH_SOURCE,
-    data: {
-      content,
-      flags: ephemeral ? MessageFlags.EPHEMERAL : undefined,
-    },
-  };
-}
-
-/**
- * Create an embed response
- */
+/** Create an embed response; public by default, or private when ephemeral is true. */
 export function embedResponse(
   embed: DiscordEmbed,
   ephemeral = false,
@@ -45,17 +27,20 @@ export function embedResponse(
 }
 
 /**
- * Create an error response (ephemeral)
+ * Create a red error embed visible only to the command user.
  */
-export function errorResponse(message: string): InteractionResponse {
-  return embedResponse(
-    {
-      title: "❌ Error",
-      description: message,
-      color: Colors.RED,
-    },
-    true,
-  );
+export function errorResponse(
+  message: string | DiscordEmbed,
+): InteractionResponse {
+  const embed =
+    typeof message === "string"
+      ? {
+          title: "❌ Error",
+          description: message,
+          color: Colors.RED,
+        }
+      : { ...message, color: Colors.RED };
+  return embedResponse(embed, true);
 }
 
 /**

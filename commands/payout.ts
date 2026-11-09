@@ -3,7 +3,7 @@ import {
   InteractionResponse,
   MEGACOIN_EMOJI,
 } from "../types/discord";
-import { embedResponse } from "../utils/discord";
+import { embedResponse, errorResponse } from "../utils/discord";
 import { getOptionValue, getUser, getResolvedUser } from "../handlers/commands";
 import { addCoins } from "../services/megacoin";
 import { userHasRole } from "../utils/discord-api";
@@ -18,7 +18,7 @@ export async function handlePayout(
 
   // Check if user has the MEGALORDS role.
   if (!guildId) {
-    return embedResponse({
+    return errorResponse({
       title: "🏆 Payout",
       description: "🤡 This command can only be used in a server.",
       color: 0xffcd4c,
@@ -27,7 +27,7 @@ export async function handlePayout(
 
   const hasPerm = await userHasRole(guildId, user.id, MEGALORDS_ROLE_ID);
   if (!hasPerm) {
-    return embedResponse({
+    return errorResponse({
       title: "🏆 Payout",
       description: `🤡 Nice try <@${user.id}>.`,
       color: 0xffcd4c,

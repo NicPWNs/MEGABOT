@@ -3,7 +3,7 @@ import {
   InteractionResponse,
   MEGACOIN_EMOJI,
 } from "../types/discord";
-import { embedResponse } from "../utils/discord";
+import { embedResponse, errorResponse } from "../utils/discord";
 import { getOptionValue, getUser } from "../handlers/commands";
 import { getBalance, addCoins, subtractCoins } from "../services/megacoin";
 
@@ -25,7 +25,7 @@ export async function handleWheel(
 
   // Validation (matches Python)
   if (wager < 0) {
-    return embedResponse({
+    return errorResponse({
       title: "☸️ Spin the Wheel",
       description: "🤡 Nice try.",
       color: 0x9366cd,
@@ -35,7 +35,7 @@ export async function handleWheel(
   const balance = await getBalance(user.id);
 
   if (balance === 0) {
-    return embedResponse({
+    return errorResponse({
       title: "☸️ Spin the Wheel",
       description: `You have 0 ${MEGACOIN_EMOJI}`,
       color: 0x9366cd,
@@ -43,7 +43,7 @@ export async function handleWheel(
   }
 
   if (balance < wager) {
-    return embedResponse({
+    return errorResponse({
       title: "☸️ Spin the Wheel",
       description: `You don't have ${wager} ${MEGACOIN_EMOJI}`,
       color: 0x9366cd,

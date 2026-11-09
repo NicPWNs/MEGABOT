@@ -16,7 +16,7 @@ export async function handleDouble(
 
   // Validation
   if (wager <= 0) {
-    return embedResponse({
+    return errorResponse({
       title: "⚖️ Double or Nothing",
       description: "🤡 Nice try.",
       color: Colors.PURPLE,
@@ -26,7 +26,7 @@ export async function handleDouble(
   const balance = await getBalance(user.id);
 
   if (balance === 0) {
-    return embedResponse({
+    return errorResponse({
       title: "⚖️ Double or Nothing",
       description: `You have 0 ${MEGACOIN_EMOJI}`,
       color: Colors.PURPLE,
@@ -34,7 +34,7 @@ export async function handleDouble(
   }
 
   if (balance < wager) {
-    return embedResponse({
+    return errorResponse({
       title: "⚖️ Double or Nothing",
       description: `You don't have ${wager} ${MEGACOIN_EMOJI}`,
       color: Colors.PURPLE,

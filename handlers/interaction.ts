@@ -5,7 +5,7 @@ import {
   InteractionResponse,
 } from "../types/discord";
 import { verifyDiscordSignature } from "../utils/verify";
-import { pongResponse } from "../utils/discord";
+import { errorResponse, pongResponse } from "../utils/discord";
 import { handleSlashCommand } from "./commands";
 import { handleComponentInteraction } from "./components";
 
@@ -69,23 +69,13 @@ export async function handler(
 
       default:
         console.warn("Unknown interaction type:", interaction.type);
-        response = {
-          type: 4,
-          data: {
-            content: "Unknown interaction type",
-            flags: 64,
-          },
-        };
+        response = errorResponse("Unknown interaction type");
     }
   } catch (error) {
     console.error("Error handling interaction:", error);
-    response = {
-      type: 4,
-      data: {
-        content: "❌ An error occurred while processing your request.",
-        flags: 64,
-      },
-    };
+    response = errorResponse(
+      "An error occurred while processing your request.",
+    );
   }
 
   const result = {

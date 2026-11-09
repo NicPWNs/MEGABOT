@@ -4,7 +4,7 @@ import {
   Colors,
   MEGACOIN_EMOJI,
 } from "../types/discord";
-import { embedResponse, textResponse } from "../utils/discord";
+import { embedResponse } from "../utils/discord";
 import { getOptionValue, getUser } from "../handlers/commands";
 import { getBalance } from "../services/megacoin";
 
@@ -18,13 +18,13 @@ export async function handleBalance(
   const userId = targetUserId || commandUser.id;
   const balance = await getBalance(userId);
 
-  if (targetUserId) {
-    return textResponse(
-      `<@${targetUserId}>'s balance is **${balance}** ${MEGACOIN_EMOJI}`,
-    );
-  }
-
-  return textResponse(
-    `<@${commandUser.id}>'s balance is **${balance}** ${MEGACOIN_EMOJI}`,
+  const displayUser = targetUserId || commandUser.id;
+  return embedResponse(
+    {
+      title: "MEGACOIN Balance",
+      description: `<@${displayUser}>'s balance is **${balance}** ${MEGACOIN_EMOJI}`,
+      color: Colors.BLUE,
+    },
+    true,
   );
 }

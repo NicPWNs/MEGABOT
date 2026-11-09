@@ -128,6 +128,17 @@ export interface GuildRole {
   position: number;
 }
 
+interface GuildMemberResponse {
+  user?: {
+    id: string;
+    username: string;
+    avatar?: string;
+  };
+  nick?: string;
+  roles: string[];
+  premium_since?: string;
+}
+
 export interface ColorRoleState {
   byValue: Map<string, GuildRole>;
   roleIds: Set<string>;
