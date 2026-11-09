@@ -36,6 +36,10 @@ async function discordFetch<T>(
     throw new Error(`Discord API error: ${response.status}`);
   }
 
+  // Several Discord endpoints (including adding/removing member roles) return
+  // 204 No Content, so there is no JSON body to parse.
+  if (response.status === 204) return undefined as T;
+
   return response.json() as Promise<T>;
 }
 
