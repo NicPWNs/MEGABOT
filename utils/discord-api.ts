@@ -121,6 +121,9 @@ export async function userHasRole(
 
 const SHARED_COLOR_ROLE_PREFIX = "MEGABOT-COLOR-";
 const LEGACY_COLOR_ROLE_PREFIX = "MEGAMOD-COLOR-";
+const LEGACY_COLOR_ROLE_NAMES: Record<string, string> = {
+  gray: `${SHARED_COLOR_ROLE_PREFIX}BLUE-GRAY`,
+};
 
 export interface GuildRole {
   id: string;
@@ -144,6 +147,22 @@ export async function ensureColorRoles(
   for (const color of COLOR_PALETTE) {
     const roleName = `${SHARED_COLOR_ROLE_PREFIX}${color.value.toUpperCase()}`;
     let role = roles.find((existing) => existing.name === roleName);
+    if (!role && LEGACY_COLOR_ROLE_NAMES[color.value]) {
+      const legacyRoleName = LEGACY_COLOR_ROLE_NAMES[color.value];
+      const legacyRole = roles.find(
+        (existing) => existing.name === legacyRoleName,
+      );
+      if (legacyRole) {
+        role = await discordFetch<GuildRole>(
+          `/guilds/${guildId}/roles/${legacyRole.id}`,
+          { method: "PATCH", body: { name: roleName } },
+        );
+        const roleIndex = roles.findIndex(
+          (existing) => existing.id === legacyRole.id,
+        );
+        roles[roleIndex] = role;
+      }
+    }
     if (!role) {
       role = await discordFetch<GuildRole>(`/guilds/${guildId}/roles`, {
         method: "POST",

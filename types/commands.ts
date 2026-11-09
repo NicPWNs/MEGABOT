@@ -41,7 +41,7 @@ export const COLOR_PALETTE = [
   { name: "Orange", value: "orange", color: 0xe67e22 },
   { name: "Red", value: "red", color: 0xe74c3c },
   { name: "Silver", value: "silver", color: 0x95a5a6 },
-  { name: "Blue Gray", value: "blue-gray", color: 0x607d8b },
+  { name: "Gray", value: "gray", color: 0x607d8b },
   { name: "Rose", value: "rose", color: 0xe35484 },
   { name: "Coral", value: "coral", color: 0xe25e32 },
   { name: "Lime", value: "lime", color: 0x409c21 },
