@@ -120,10 +120,6 @@ export async function userHasRole(
 }
 
 const SHARED_COLOR_ROLE_PREFIX = "MEGABOT-COLOR-";
-const LEGACY_COLOR_ROLE_PREFIX = "MEGAMOD-COLOR-";
-const LEGACY_COLOR_ROLE_NAMES: Record<string, string> = {
-  gray: `${SHARED_COLOR_ROLE_PREFIX}BLUE-GRAY`,
-};
 
 export interface GuildRole {
   id: string;
@@ -133,7 +129,6 @@ export interface GuildRole {
 }
 
 export interface ColorRoleState {
-  roles: GuildRole[];
   byValue: Map<string, GuildRole>;
   roleIds: Set<string>;
 }
@@ -147,22 +142,6 @@ export async function ensureColorRoles(
   for (const color of COLOR_PALETTE) {
     const roleName = `${SHARED_COLOR_ROLE_PREFIX}${color.value.toUpperCase()}`;
     let role = roles.find((existing) => existing.name === roleName);
-    if (!role && LEGACY_COLOR_ROLE_NAMES[color.value]) {
-      const legacyRoleName = LEGACY_COLOR_ROLE_NAMES[color.value];
-      const legacyRole = roles.find(
-        (existing) => existing.name === legacyRoleName,
-      );
-      if (legacyRole) {
-        role = await discordFetch<GuildRole>(
-          `/guilds/${guildId}/roles/${legacyRole.id}`,
-          { method: "PATCH", body: { name: roleName } },
-        );
-        const roleIndex = roles.findIndex(
-          (existing) => existing.id === legacyRole.id,
-        );
-        roles[roleIndex] = role;
-      }
-    }
     if (!role) {
       role = await discordFetch<GuildRole>(`/guilds/${guildId}/roles`, {
         method: "POST",
@@ -220,13 +199,12 @@ export async function ensureColorRoles(
   );
 
   return {
-    roles: [...roles.filter((role) => !roleIds.has(role.id)), ...colorRoles],
     byValue,
     roleIds,
   };
 }
 
-/** Assign a shared palette role, removing any previous shared or legacy color role. */
+/** Assign a shared palette role, replacing any previous palette role. */
 export async function assignColorRole(
   guildId: string,
   userId: string,
@@ -234,12 +212,7 @@ export async function assignColorRole(
   memberRoles: string[],
   roleState: ColorRoleState,
 ): Promise<void> {
-  const legacyRole = roleState.roles.find(
-    (role) => role.name === `${LEGACY_COLOR_ROLE_PREFIX}${userId}`,
-  );
-  const oldRoleIds = memberRoles.filter(
-    (id) => roleState.roleIds.has(id) || id === legacyRole?.id,
-  );
+  const oldRoleIds = memberRoles.filter((id) => roleState.roleIds.has(id));
   if (oldRoleIds.length) {
     for (const oldRoleId of oldRoleIds) {
       await discordFetch(
@@ -254,7 +227,7 @@ export async function assignColorRole(
   );
 }
 
-export async function setMegamodColor(
+export async function setMemberColor(
   guildId: string,
   userId: string,
   colorValue: string,

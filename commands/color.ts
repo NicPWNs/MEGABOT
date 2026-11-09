@@ -2,7 +2,7 @@ import { DiscordInteraction, InteractionResponse } from "../types/discord";
 import { COLOR_PALETTE } from "../types/commands";
 import { getOptionValue, getUser } from "../handlers/commands";
 import { embedResponse, errorResponse } from "../utils/discord";
-import { setMegamodColor } from "../utils/discord-api";
+import { setMemberColor } from "../utils/discord-api";
 
 export async function handleColor(
   interaction: DiscordInteraction,
@@ -26,7 +26,7 @@ export async function handleColor(
   }
 
   try {
-    await setMegamodColor(guildId, user.id, selectedColor.value);
+    await setMemberColor(guildId, user.id, selectedColor.value);
   } catch (error) {
     console.error("Failed to update color:", error);
     return errorResponse(
