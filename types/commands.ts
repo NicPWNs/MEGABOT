@@ -33,7 +33,7 @@ export enum CommandOptionType {
 }
 
 export const COLOR_PALETTE = [
-  { name: "Crimson", value: "crimson", color: 0xea5353 },
+  { name: "Red", value: "red", color: 0xea5353 },
   { name: "Rose", value: "rose", color: 0xe35484 },
   { name: "Coral", value: "coral", color: 0xe25e32 },
   { name: "Orange", value: "orange", color: 0xcf6d17 },
