@@ -32,6 +32,34 @@ export enum CommandOptionType {
   ATTACHMENT = 11,
 }
 
+export const COLOR_PALETTE = [
+  { name: "Crimson", value: "crimson", color: 0xea5353 },
+  { name: "Rose", value: "rose", color: 0xe35484 },
+  { name: "Coral", value: "coral", color: 0xe25e32 },
+  { name: "Orange", value: "orange", color: 0xcf6d17 },
+  { name: "Gold", value: "gold", color: 0xa4850a },
+  { name: "Chartreuse", value: "chartreuse", color: 0x5c9720 },
+  { name: "Lime", value: "lime", color: 0x409c21 },
+  { name: "Green", value: "green", color: 0x1c9c26 },
+  { name: "Emerald", value: "emerald", color: 0x239a54 },
+  { name: "Mint", value: "mint", color: 0x3a9875 },
+  { name: "Jade", value: "jade", color: 0x1c9c71 },
+  { name: "Turquoise", value: "turquoise", color: 0x1b987f },
+  { name: "Teal", value: "teal", color: 0x1c95a0 },
+  { name: "Sky Blue", value: "sky-blue", color: 0x2391c7 },
+  { name: "Azure", value: "azure", color: 0x388adc },
+  { name: "Blue", value: "blue", color: 0x5a87e2 },
+  { name: "Indigo", value: "indigo", color: 0x7881e2 },
+  { name: "Periwinkle", value: "periwinkle", color: 0x8978dd },
+  { name: "Violet", value: "violet", color: 0x9c75d1 },
+  { name: "Purple", value: "purple", color: 0xa972c0 },
+  { name: "Orchid", value: "orchid", color: 0xc262cb },
+  { name: "Magenta", value: "magenta", color: 0xe04dbb },
+  { name: "Pink", value: "pink", color: 0xe05299 },
+  { name: "Silver", value: "silver", color: 0x778c8d },
+  { name: "Blue Gray", value: "blue-gray", color: 0x6f8c9b },
+] as const;
+
 // All registered commands
 export const COMMANDS: SlashCommand[] = [
   // Utility Commands
@@ -222,9 +250,10 @@ export const COMMANDS: SlashCommand[] = [
     options: [
       {
         name: "color",
-        description: "Hex (with or without #) or a color name like red, gold, teal, or violet.",
+        description: "Choose a color from the palette.",
         type: CommandOptionType.STRING,
         required: false,
+        choices: COLOR_PALETTE.map(({ name, value }) => ({ name, value })),
       },
       {
         name: "reset",
