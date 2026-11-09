@@ -6,7 +6,9 @@ import {
 import { embedResponse } from "../utils/discord";
 import { getOptionValue, getUser, getResolvedUser } from "../handlers/commands";
 import { addCoins } from "../services/megacoin";
-import { userHasRoleByName } from "../utils/discord-api";
+import { userHasRole } from "../utils/discord-api";
+
+const MEGALORDS_ROLE_ID = "712850872111071283";
 
 export async function handlePayout(
   interaction: DiscordInteraction,
@@ -14,7 +16,7 @@ export async function handlePayout(
   const user = getUser(interaction);
   const guildId = interaction.guild_id;
 
-  // Check if user has MEGAPAYERS role (matches Python)
+  // Check if user has the MEGALORDS role.
   if (!guildId) {
     return embedResponse({
       title: "🏆 Payout",
@@ -23,7 +25,7 @@ export async function handlePayout(
     });
   }
 
-  const hasPerm = await userHasRoleByName(guildId, user.id, "MEGAPAYERS");
+  const hasPerm = await userHasRole(guildId, user.id, MEGALORDS_ROLE_ID);
   if (!hasPerm) {
     return embedResponse({
       title: "🏆 Payout",

@@ -138,6 +138,59 @@ export async function userHasRoleByName(
   return userHasRole(guildId, userId, roleId);
 }
 
+const MEGAMODS_ROLE_ID = "1022557623859556452";
+const COLOR_ROLE_PREFIX = "MEGAMOD-COLOR-";
+
+/** Assign a per-member color role positioned above MEGAMODS, or remove it. */
+export async function setMegamodColor(
+  guildId: string,
+  userId: string,
+  color: number | null,
+): Promise<void> {
+  const roles = await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`);
+  const megamodsRole = roles.find((role) => role.id === MEGAMODS_ROLE_ID);
+  if (!megamodsRole) throw new Error("MEGAMODS role was not found");
+
+  const roleName = `${COLOR_ROLE_PREFIX}${userId}`;
+  let colorRole = roles.find((role) => role.name === roleName);
+
+  if (color === null) {
+    if (colorRole) {
+      await discordFetch(`/guilds/${guildId}/roles/${colorRole.id}`, {
+        method: "DELETE",
+      });
+    }
+    return;
+  }
+
+  if (colorRole) {
+    colorRole = await discordFetch<GuildRole>(
+      `/guilds/${guildId}/roles/${colorRole.id}`,
+      { method: "PATCH", body: { color } },
+    );
+  } else {
+    colorRole = await discordFetch<GuildRole>(`/guilds/${guildId}/roles`, {
+      method: "POST",
+      body: {
+        name: roleName,
+        color,
+        permissions: "0",
+        hoist: false,
+        mentionable: false,
+      },
+    });
+    await discordFetch(`/guilds/${guildId}/roles`, {
+      method: "PATCH",
+      body: [{ id: colorRole.id, position: megamodsRole.position + 1 }],
+    });
+  }
+
+  await discordFetch(
+    `/guilds/${guildId}/members/${userId}/roles/${colorRole.id}`,
+    { method: "PUT" },
+  );
+}
+
 // Type definitions
 interface GuildMemberResponse {
   user?: {

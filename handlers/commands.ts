@@ -18,6 +18,7 @@ import { handleBalance } from "../commands/balance";
 import { handleBank } from "../commands/bank";
 import { handlePay } from "../commands/pay";
 import { handlePayout } from "../commands/payout";
+import { handleMegaColor } from "../commands/megacolor";
 import { handleBlackjack } from "../commands/blackjack";
 import { handleDouble } from "../commands/double";
 import { handleWheel } from "../commands/wheel";
@@ -48,6 +49,7 @@ const commandHandlers: Record<
   bank: handleBank,
   pay: handlePay,
   payout: handlePayout,
+  megacolor: handleMegaColor,
   blackjack: handleBlackjack,
   double: handleDouble,
   wheel: handleWheel,
