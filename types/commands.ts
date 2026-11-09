@@ -222,11 +222,9 @@ export const COMMANDS: SlashCommand[] = [
     options: [
       {
         name: "color",
-        description: "Your custom color as a hex value, such as #ff0000.",
+        description: "Hex (with or without #) or a color name like red, gold, teal, or violet.",
         type: CommandOptionType.STRING,
         required: false,
-        min_length: 6,
-        max_length: 7,
       },
       {
         name: "reset",
