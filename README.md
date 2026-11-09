@@ -14,8 +14,7 @@ MEGABOT is a customized Discord bot written in **TypeScript** and deployed on AW
 - `/bless`: Blesses the mess!
 - `/bug <title> <description>`: Report a MEGABOT bug.
 - `/coin`: Flip a coin.
-- `/color color:<value>`: Set your name color using a six-digit hex value (with or without `#`) or a named color such as `red`, `gold`, `teal`, or `violet`. Available to all members.
-- `/color reset:true`: Remove your custom color and return to your normal role color.
+- `/color`: Set or reset your name color (available to all members).
 - `/dice`: Roll a dice.
 - `/double <wager>`: Play MEGACOIN double or nothing.
 - `/emote <search>`: Search for a 7TV emote.
@@ -35,7 +34,7 @@ MEGABOT is a customized Discord bot written in **TypeScript** and deployed on AW
 - `/weather <zipcode>`: Get a seven-day weather forecast.
 - `/wheel <wager>`: Spin the MEGACOIN wheel.
 
-For `/color`, give either `color` or `reset:true`, not both. The bot needs Manage Roles, its highest role must be above the color roles it creates, and those color roles must be above MEGAMODS to override that role's color. Music, AI chat/image, and persistent event commands are not supported in the serverless version.
+The bot needs Manage Roles, its highest role must be above the color roles it creates, and those color roles must be above MEGAMODS to override that role's color. Music, AI chat/image, and persistent event commands are not supported in the serverless version.
 
 ## Release announcements
 
