@@ -34,7 +34,7 @@ MEGABOT is a customized Discord bot written in **TypeScript** and deployed on AW
 - `/weather <zipcode>`: Get a seven-day weather forecast.
 - `/wheel <wager>`: Spin the MEGACOIN wheel.
 
-The bot needs Manage Roles, its highest role must be above the color roles it creates, and those color roles must be above MEGAMODS to override that role's color. Music, AI chat/image, and persistent event commands are not supported in the serverless version.
+Music, AI chat/image, and persistent event commands are not supported in the serverless version.
 
 ## Release announcements
 
