@@ -36,7 +36,6 @@ export const COLOR_PALETTE = [
   { name: "Green", value: "green", color: 0x2ecc71 },
   { name: "Blue", value: "blue", color: 0x3498db },
   { name: "Purple", value: "purple", color: 0x9b59b6 },
-  { name: "Pink", value: "pink", color: 0xe91e63 },
   { name: "Yellow", value: "yellow", color: 0xf1c40f },
   { name: "Orange", value: "orange", color: 0xe67e22 },
   { name: "Red", value: "red", color: 0xe74c3c },
@@ -44,9 +43,7 @@ export const COLOR_PALETTE = [
   { name: "Blue Gray", value: "blue-gray", color: 0x607d8b },
   { name: "Rose", value: "rose", color: 0xe35484 },
   { name: "Coral", value: "coral", color: 0xe25e32 },
-  { name: "Gold", value: "gold", color: 0xa4850a },
   { name: "Lime", value: "lime", color: 0x409c21 },
-  { name: "Sky Blue", value: "sky-blue", color: 0x2391c7 },
 ] as const;
 
 // All registered commands
