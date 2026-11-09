@@ -37,8 +37,15 @@ jobs:
             const summary = (nextHeading ? remaining.slice(0, nextHeading.index) : remaining).trim();
             if (!summary) throw new Error("The Discord Announcement section is empty.");
 
+            const bullets = summary
+              .split(/\r?\n/)
+              .map((line) => line.trim())
+              .filter(Boolean)
+              .map((line) => `• ${line.replace(/^[-*•]\s*/, "")}`)
+              .join("\n");
+
             const botId = process.env.DISCORD_APPLICATION_ID;
-            const content = `<@${botId}> **${release.tag_name} Release**\n${summary}`;
+            const content = `<@${botId}> **${release.tag_name} Release**\n${bullets}`;
             if (content.length > 2000) throw new Error("Discord announcement exceeds 2,000 characters.");
 
             const response = await fetch(
