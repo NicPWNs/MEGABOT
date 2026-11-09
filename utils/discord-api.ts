@@ -179,21 +179,50 @@ export async function ensureColorRoles(
     if (role) byValue.set(color.value, role);
   }
 
-  const colorRoles = roles.filter((role) =>
+  let currentRoles = roles;
+  let colorRoles = currentRoles.filter((role) =>
     role.name.startsWith(SHARED_COLOR_ROLE_PREFIX),
   );
-  if (colorRoles.some((role) => role.position <= megamodsRole.position)) {
-    const positions = colorRoles.map((role, index) => ({
-      id: role.id,
-      position: megamodsRole.position + index + 1,
-    }));
+  for (const colorRole of colorRoles) {
+    const currentMegamodsRole = currentRoles.find(
+      (role) => role.id === MEGAMODS_ROLE_ID,
+    );
+    const currentColorRole = currentRoles.find(
+      (role) => role.id === colorRole.id,
+    );
+    if (
+      !currentMegamodsRole ||
+      !currentColorRole ||
+      currentColorRole.position > currentMegamodsRole.position
+    ) {
+      continue;
+    }
     await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`, {
       method: "PATCH",
-      body: positions,
+      body: [{ id: currentColorRole.id, position: currentMegamodsRole.position + 1 }],
     });
+    currentRoles = await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`);
   }
 
-  return { roles, byValue, roleIds: new Set(colorRoles.map((role) => role.id)) };
+  colorRoles = currentRoles.filter((role) =>
+    role.name.startsWith(SHARED_COLOR_ROLE_PREFIX),
+  );
+
+  return {
+    roles: [
+      ...currentRoles.filter(
+        (role) => !role.name.startsWith(SHARED_COLOR_ROLE_PREFIX),
+      ),
+      ...colorRoles,
+    ],
+    byValue: new Map(
+      [...byValue.entries()].map(([value, role]) => [
+        value,
+        colorRoles.find((current) => current.id === role.id) ?? role,
+      ]),
+    ),
+    roleIds: new Set(colorRoles.map((role) => role.id)),
+  };
 }
 
 /** Assign a shared palette role, removing any previous shared or legacy color role. */
