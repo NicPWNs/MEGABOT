@@ -216,6 +216,26 @@ export const COMMANDS: SlashCommand[] = [
       },
     ],
   },
+  {
+    name: "megacolor",
+    description: "Set or reset your MEGAMODS name color.",
+    options: [
+      {
+        name: "color",
+        description: "Your custom color as a hex value, such as #ff0000.",
+        type: CommandOptionType.STRING,
+        required: false,
+        min_length: 6,
+        max_length: 7,
+      },
+      {
+        name: "reset",
+        description: "Reset your name color to the default MEGAMODS red.",
+        type: CommandOptionType.BOOLEAN,
+        required: false,
+      },
+    ],
+  },
 
   // Casino Commands
   {
