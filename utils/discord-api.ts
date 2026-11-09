@@ -119,7 +119,6 @@ export async function userHasRole(
   return member.roles.includes(roleId);
 }
 
-const MEGAMODS_ROLE_ID = "1022557623859556452";
 const SHARED_COLOR_ROLE_PREFIX = "MEGABOT-COLOR-";
 const LEGACY_COLOR_ROLE_PREFIX = "MEGAMOD-COLOR-";
 
@@ -150,16 +149,13 @@ export interface ColorRoleState {
   roleIds: Set<string>;
 }
 
-/** Ensure the shared palette roles exist and sit above MEGAMODS. */
+/** Ensure shared palette roles exist at the bottom of the guild role list. */
 export async function ensureColorRoles(
   guildId: string,
   requestedValues: string[] = [],
 ): Promise<ColorRoleState> {
   const roles = await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`);
-  const megamodsRole = roles.find((role) => role.id === MEGAMODS_ROLE_ID);
-  if (!megamodsRole) throw new Error("MEGAMODS role was not found");
 
-  const byValue = new Map<string, GuildRole>();
   for (const color of COLOR_PALETTE) {
     const roleName = `${SHARED_COLOR_ROLE_PREFIX}${color.value.toUpperCase()}`;
     let role = roles.find((existing) => existing.name === roleName);
@@ -176,52 +172,45 @@ export async function ensureColorRoles(
       });
       roles.push(role);
     }
-    if (role) byValue.set(color.value, role);
   }
 
-  let currentRoles = roles;
-  let colorRoles = currentRoles.filter((role) =>
-    role.name.startsWith(SHARED_COLOR_ROLE_PREFIX),
-  );
-  for (const colorRole of colorRoles) {
-    const currentMegamodsRole = currentRoles.find(
-      (role) => role.id === MEGAMODS_ROLE_ID,
+  let colorRoles = COLOR_PALETTE.flatMap((color) => {
+    const role = roles.find(
+      (existing) =>
+        existing.name ===
+        `${SHARED_COLOR_ROLE_PREFIX}${color.value.toUpperCase()}`,
     );
-    const currentColorRole = currentRoles.find(
-      (role) => role.id === colorRole.id,
-    );
-    if (
-      !currentMegamodsRole ||
-      !currentColorRole ||
-      currentColorRole.position > currentMegamodsRole.position
-    ) {
-      continue;
-    }
+    return role ? [role] : [];
+  });
+  if (colorRoles.some((role, index) => role.position !== index + 1)) {
     await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`, {
       method: "PATCH",
-      body: [{ id: currentColorRole.id, position: currentMegamodsRole.position + 1 }],
+      body: colorRoles.map((role, index) => ({ id: role.id, position: index + 1 })),
     });
-    currentRoles = await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`);
+    const updatedRoles = await discordFetch<GuildRole[]>(
+      `/guilds/${guildId}/roles`,
+    );
+    colorRoles = colorRoles.map(
+      (role) => updatedRoles.find((updated) => updated.id === role.id) ?? role,
+    );
   }
 
-  colorRoles = currentRoles.filter((role) =>
-    role.name.startsWith(SHARED_COLOR_ROLE_PREFIX),
+  const roleIds = new Set(colorRoles.map((role) => role.id));
+  const byValue = new Map(
+    COLOR_PALETTE.flatMap((color) => {
+      const role = colorRoles.find(
+        (existing) =>
+          existing.name ===
+          `${SHARED_COLOR_ROLE_PREFIX}${color.value.toUpperCase()}`,
+      );
+      return role ? [[color.value, role] as const] : [];
+    }),
   );
 
   return {
-    roles: [
-      ...currentRoles.filter(
-        (role) => !role.name.startsWith(SHARED_COLOR_ROLE_PREFIX),
-      ),
-      ...colorRoles,
-    ],
-    byValue: new Map(
-      [...byValue.entries()].map(([value, role]) => [
-        value,
-        colorRoles.find((current) => current.id === role.id) ?? role,
-      ]),
-    ),
-    roleIds: new Set(colorRoles.map((role) => role.id)),
+    roles: [...roles.filter((role) => !roleIds.has(role.id)), ...colorRoles],
+    byValue,
+    roleIds,
   };
 }
 
