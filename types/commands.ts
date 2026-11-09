@@ -52,7 +52,6 @@ export const COLOR_PALETTE = [
   { name: "Jade", value: "jade", color: 0x1c9c71 },
   { name: "Turquoise", value: "turquoise", color: 0x1b987f },
   { name: "Sky Blue", value: "sky-blue", color: 0x2391c7 },
-  { name: "Azure", value: "azure", color: 0x388adc },
 ] as const;
 
 // All registered commands
