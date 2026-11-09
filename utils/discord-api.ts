@@ -110,38 +110,6 @@ export async function userHasRole(
   return member.roles.includes(roleId);
 }
 
-/**
- * Get a role by name in a guild
- */
-export async function getRoleByName(
-  guildId: string,
-  roleName: string,
-): Promise<string | null> {
-  try {
-    const roles = await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`);
-    const role = roles.find(
-      (r) => r.name.toLowerCase() === roleName.toLowerCase(),
-    );
-    return role?.id || null;
-  } catch (error) {
-    console.error(`Failed to get roles for guild ${guildId}:`, error);
-    return null;
-  }
-}
-
-/**
- * Check if a user has a role by name
- */
-export async function userHasRoleByName(
-  guildId: string,
-  userId: string,
-  roleName: string,
-): Promise<boolean> {
-  const roleId = await getRoleByName(guildId, roleName);
-  if (!roleId) return false;
-  return userHasRole(guildId, userId, roleId);
-}
-
 const MEGAMODS_ROLE_ID = "1022557623859556452";
 const COLOR_ROLE_PREFIX = "MEGAMOD-COLOR-";
 

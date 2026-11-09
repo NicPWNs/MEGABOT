@@ -6,6 +6,8 @@ import {
 import { embedResponse, errorResponse } from "../utils/discord";
 import { Octokit } from "@octokit/rest";
 
+const FALLBACK_VERSION = "v3.1";
+
 export async function handleVersion(
   interaction: DiscordInteraction,
 ): Promise<InteractionResponse> {
@@ -22,7 +24,7 @@ export async function handleVersion(
       per_page: 1,
     });
 
-    const latestRelease = releases[0]?.tag_name || "v2.0.0";
+    const latestRelease = releases[0]?.tag_name || FALLBACK_VERSION;
 
     return embedResponse({
       title: "📦 Current Version",
@@ -34,7 +36,7 @@ export async function handleVersion(
     // Fallback to hardcoded version
     return embedResponse({
       title: "📦 Current Version",
-      description: `The latest <@${botId}> release is [**v2.0.0**](https://github.com/NicPWNs/MEGABOT/releases)`,
+      description: `The latest <@${botId}> release is [**${FALLBACK_VERSION}**](https://github.com/NicPWNs/MEGABOT/releases)`,
       color: 0xd89b82,
     });
   }
