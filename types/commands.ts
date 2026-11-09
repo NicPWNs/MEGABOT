@@ -33,7 +33,6 @@ export enum CommandOptionType {
 }
 
 export const COLOR_PALETTE = [
-  { name: "Teal", value: "teal", color: 0x1abc9c },
   { name: "Green", value: "green", color: 0x2ecc71 },
   { name: "Blue", value: "blue", color: 0x3498db },
   { name: "Purple", value: "purple", color: 0x9b59b6 },
@@ -47,10 +46,6 @@ export const COLOR_PALETTE = [
   { name: "Coral", value: "coral", color: 0xe25e32 },
   { name: "Gold", value: "gold", color: 0xa4850a },
   { name: "Lime", value: "lime", color: 0x409c21 },
-  { name: "Emerald", value: "emerald", color: 0x239a54 },
-  { name: "Mint", value: "mint", color: 0x3a9875 },
-  { name: "Jade", value: "jade", color: 0x1c9c71 },
-  { name: "Turquoise", value: "turquoise", color: 0x1b987f },
   { name: "Sky Blue", value: "sky-blue", color: 0x2391c7 },
 ] as const;
 
