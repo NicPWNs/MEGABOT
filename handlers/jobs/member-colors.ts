@@ -30,7 +30,7 @@ export async function handler(
     after = page.length === 1000 ? page[page.length - 1].user.id : undefined;
   } while (after);
 
-  const roles = await ensureColorRoles(GUILD_ID, []);
+  const roles = await ensureColorRoles(GUILD_ID);
   const roleById = new Map(roles.roles.map((role) => [role.id, role]));
   const uncolored = members.filter(
     (member) =>
@@ -52,11 +52,6 @@ export async function handler(
     member,
     color: COLOR_PALETTE[Math.floor(Math.random() * COLOR_PALETTE.length)],
   }));
-  const roleState = await ensureColorRoles(
-    GUILD_ID,
-    [...new Set(assignments.map(({ color }) => color.value))],
-  );
-
   let assigned = 0;
   for (const { member, color } of assignments) {
     if (context.getRemainingTimeInMillis() < 20_000) {
@@ -66,7 +61,7 @@ export async function handler(
       });
       break;
     }
-    const role = roleState.byValue.get(color.value);
+    const role = roles.byValue.get(color.value);
     if (!role) throw new Error(`Missing shared color role for ${color.value}`);
     try {
       await assignColorRole(
@@ -74,7 +69,7 @@ export async function handler(
         member.user.id,
         role.id,
         member.roles,
-        roleState,
+        roles,
       );
       assigned++;
     } catch (error) {

@@ -152,14 +152,13 @@ export interface ColorRoleState {
 /** Ensure shared palette roles exist at the bottom of the guild role list. */
 export async function ensureColorRoles(
   guildId: string,
-  requestedValues: string[] = [],
 ): Promise<ColorRoleState> {
   const roles = await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`);
 
   for (const color of COLOR_PALETTE) {
     const roleName = `${SHARED_COLOR_ROLE_PREFIX}${color.value.toUpperCase()}`;
     let role = roles.find((existing) => existing.name === roleName);
-    if (!role && requestedValues.includes(color.value)) {
+    if (!role) {
       role = await discordFetch<GuildRole>(`/guilds/${guildId}/roles`, {
         method: "POST",
         body: {
@@ -182,17 +181,25 @@ export async function ensureColorRoles(
     );
     return role ? [role] : [];
   });
-  if (colorRoles.some((role, index) => role.position !== index + 1)) {
-    await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`, {
-      method: "PATCH",
-      body: colorRoles.map((role, index) => ({ id: role.id, position: index + 1 })),
+  const bottomOrder = [...colorRoles].sort((a, b) => a.position - b.position);
+  if (bottomOrder.some((role, index) => role.position !== index + 1)) {
+    let currentRoles = roles;
+    for (const colorRole of bottomOrder) {
+      const currentRole = currentRoles.find((role) => role.id === colorRole.id);
+      if (!currentRole || currentRole.position === 1) continue;
+      await discordFetch<GuildRole[]>(`/guilds/${guildId}/roles`, {
+        method: "PATCH",
+        body: [{ id: currentRole.id, position: 1 }],
+      });
+      currentRoles = await discordFetch<GuildRole[]>(
+        `/guilds/${guildId}/roles`,
+      );
+    }
+    colorRoles = COLOR_PALETTE.flatMap((color) => {
+      const name = `${SHARED_COLOR_ROLE_PREFIX}${color.value.toUpperCase()}`;
+      const role = currentRoles.find((existing) => existing.name === name);
+      return role ? [role] : [];
     });
-    const updatedRoles = await discordFetch<GuildRole[]>(
-      `/guilds/${guildId}/roles`,
-    );
-    colorRoles = colorRoles.map(
-      (role) => updatedRoles.find((updated) => updated.id === role.id) ?? role,
-    );
   }
 
   const roleIds = new Set(colorRoles.map((role) => role.id));
@@ -247,7 +254,7 @@ export async function setMegamodColor(
   userId: string,
   colorValue: string,
 ): Promise<void> {
-  const roleState = await ensureColorRoles(guildId, [colorValue]);
+  const roleState = await ensureColorRoles(guildId);
   const role = roleState.byValue.get(colorValue);
   if (!role) throw new Error("Unknown palette color");
   const member = await getGuildMember(guildId, userId);
